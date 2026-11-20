@@ -1,0 +1,69 @@
+[
+  {
+    "file": "genuine_call_1.flac",
+    "label": "Genuine caller 1",
+    "description": "Real recording, speaker not used in calibration \u00b7 34 s",
+    "kind": "genuine",
+    "profile": "studio",
+    "parts": [
+      "real/yt_0009_p2_part_276.flac",
+      "real/yt_0009_p2_part_277.flac",
+      "real/yt_0009_p2_part_279.flac",
+      "real/yt_0009_p2_part_281.flac",
+      "real/yt_0009_p2_part_282.flac"
+    ]
+  },
+  {
+    "file": "genuine_call_2.flac",
+    "label": "Genuine caller 2",
+    "description": "Real recording, speaker not used in calibration \u00b7 35 s",
+    "kind": "genuine",
+    "profile": "studio",
+    "parts": [
+      "real/yt_0010_part_001.flac",
+      "real/yt_0010_part_002.flac",
+      "real/yt_0010_part_003.flac",
+      "real/yt_0010_part_004.flac",
+      "real/yt_0010_part_005.flac",
+      "real/yt_0010_part_006.flac",
+      "real/yt_0010_part_007.flac",
+      "real/yt_0010_part_009.flac"
+    ]
+  },
+  {
+    "file": "cloned_call_elevenlabs.flac",
+    "label": "Cloned voice: ElevenLabs",
+    "description": "Commercial voice clone, service not used in calibration \u00b7 16 s",
+    "kind": "cloned",
+    "profile": "studio",
+    "parts": [
+      "fake/el_0001_c_part_002.flac",
+      "fake/el_0001_c_part_003.flac",
+      "fake/el_0001_c_part_004.flac",
+      "fake/el_0001_c_part_005.flac"
+    ]
+  },
+  {
+    "file": "cloned_call_kokoro.flac",
+    "label": "Cloned voice: Kokoro TTS",
+    "description": "Open-source TTS, not used in calibration \u00b7 18 s",
+    "kind": "cloned",
+    "profile": "studio",
+    "parts": [
+      "fake/hg_0001_part_001.flac",
+      "fake/hg_0001_part_002.flac",
+      "fake/hg_0001_part_003.flac",
+      "fake/hg_0001_part_004.flac"
+    ]
+  },
+  {
+    "file": "scam_call_tts.wav",
+    "label": "Scam call: robot voice asks for OTP",
+    "description": "Windows text-to-speech reading a bank-fraud script \u00b7 23 s",
+    "kind": "cloned",
+    "profile": "default",
+    "parts": [
+      "generated with Windows System.Speech (Microsoft Zira)"
+    ]
+  }
+]

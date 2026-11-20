@@ -1,0 +1,40 @@
+test set,scorer,EER_%,AUC,FAR_single_%,MR_single_%,FAR_auto_%,MR_auto_%,FAR_oracle_%,MR_oracle_%,processing_accuracy_%
+"test speakers, clean",original,0.000,1.000,0.667,0.000,0.667,0.000,0.667,0.000,80.667
+"test speakers, clean",back-end,0.000,1.000,0.000,0.000,0.000,0.000,0.000,0.000,80.667
+"test speakers, clean",fused,0.000,1.000,0.000,0.000,0.000,0.000,0.000,0.000,80.667
+"test speakers, phone",original,2.000,0.995,4.667,2.667,6.000,2.667,2.667,2.667,97.667
+"test speakers, phone",back-end,0.000,1.000,0.000,0.000,0.000,0.667,0.000,0.667,97.667
+"test speakers, phone",fused,0.000,1.000,0.000,0.000,0.000,0.000,0.000,0.000,97.667
+"test speakers, noise suppression",original,5.000,0.988,4.667,6.000,5.333,5.333,5.333,5.333,97.333
+"test speakers, noise suppression",back-end,1.333,1.000,1.333,1.333,1.333,0.667,1.333,0.667,97.333
+"test speakers, noise suppression",fused,1.333,1.000,1.333,1.333,1.333,1.333,1.333,1.333,97.333
+"test speakers, spectral subtraction",original,1.333,0.992,1.333,1.333,3.333,1.333,3.333,1.333,92.000
+"test speakers, spectral subtraction",back-end,0.333,1.000,0.000,0.667,0.000,2.667,0.000,2.667,92.000
+"test speakers, spectral subtraction",fused,0.333,1.000,0.000,1.333,0.000,1.333,0.000,1.333,92.000
+"test speakers, auto-gain + noise suppression",original,2.000,0.998,3.333,0.667,10.000,0.667,6.000,0.667,88.333
+"test speakers, auto-gain + noise suppression",back-end,1.000,0.999,2.000,0.000,0.667,3.333,0.667,3.333,88.333
+"test speakers, auto-gain + noise suppression",fused,1.333,1.000,2.000,0.000,1.333,0.667,1.333,0.667,88.333
+"test speakers, Bluetooth CVSD",original,10.000,0.953,1.333,26.000,8.667,12.000,9.333,10.667,90.000
+"test speakers, Bluetooth CVSD",back-end,3.333,0.990,4.000,3.333,3.333,4.667,3.333,4.667,90.000
+"test speakers, Bluetooth CVSD",fused,4.000,0.991,3.333,4.667,4.000,5.333,4.000,4.000,90.000
+"test speakers, Bluetooth mSBC",original,2.000,0.996,2.667,2.667,2.000,2.667,2.000,2.667,98.000
+"test speakers, Bluetooth mSBC",back-end,0.000,1.000,1.333,0.000,0.000,0.667,0.000,0.667,98.000
+"test speakers, Bluetooth mSBC",fused,0.000,1.000,0.000,0.000,0.000,0.667,0.000,0.667,98.000
+"test speakers, Opus",original,4.667,0.989,32.667,0.000,13.333,2.000,13.333,2.000,94.000
+"test speakers, Opus",back-end,0.000,1.000,3.333,0.000,3.333,0.000,3.333,0.000,94.000
+"test speakers, Opus",fused,1.333,1.000,7.333,0.000,2.667,0.000,2.667,0.000,94.000
+"ElevenLabs+Kokoro, clean",original,8.227,0.956,0.429,51.037,0.429,47.303,0.429,47.303,59.494
+"ElevenLabs+Kokoro, clean",back-end,3.376,0.989,0.000,9.959,0.000,7.884,0.429,7.884,59.494
+"ElevenLabs+Kokoro, clean",fused,2.954,0.989,0.429,12.448,0.429,9.544,0.429,9.544,59.494
+"ElevenLabs+Kokoro, noise suppression",original,33.965,0.699,0.858,72.614,0.858,72.614,0.858,72.614,98.523
+"ElevenLabs+Kokoro, noise suppression",back-end,11.188,0.950,11.159,12.863,12.876,10.373,13.305,10.373,98.523
+"ElevenLabs+Kokoro, noise suppression",fused,12.662,0.946,7.296,18.672,9.871,15.768,10.300,15.768,98.523
+"ElevenLabs+Kokoro, Opus",original,45.146,0.589,32.618,57.676,12.876,78.423,12.876,80.083,92.827
+"ElevenLabs+Kokoro, Opus",back-end,14.135,0.919,8.584,20.747,8.584,21.162,8.584,21.162,92.827
+"ElevenLabs+Kokoro, Opus",fused,16.668,0.890,12.446,22.407,7.296,32.780,7.296,35.270,92.827
+"In-the-Wild (test sample)",original,4.667,0.992,4.667,5.667,3.333,9.667,4.667,5.667,29.667
+"In-the-Wild (test sample)",back-end,4.667,0.983,1.333,8.667,1.000,10.000,1.667,7.333,29.667
+"In-the-Wild (test sample)",fused,4.667,0.986,0.667,8.000,0.667,9.667,1.667,6.333,29.667
+"In-the-Wild, noise suppression",original,7.500,0.974,5.000,12.333,5.667,12.333,5.333,12.333,79.333
+"In-the-Wild, noise suppression",back-end,7.667,0.970,6.000,9.333,6.667,9.667,7.000,7.667,79.333
+"In-the-Wild, noise suppression",fused,7.333,0.976,4.333,8.333,5.667,9.000,6.000,7.667,79.333

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Caller · VoiceShield</title>
+<link rel="stylesheet" href="/static/ui.css?v=2611i">
+<script src="/static/shell.js?v=2611i"></script>
+</head>
+<body>
+<header id="topbar"></header>
+<main class="page">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow"><i data-i="phone" class="xs"></i>Call demo · caller device</div>
+      <h1>Caller</h1>
+      <p>The person phoning the customer: a genuine caller, or an attacker feeding a cloned voice into the call.</p>
+    </div>
+    <div class="toolbar">
+      <label class="field" style="min-width:0"><span>Room</span><input id="room" class="input" maxlength="32" value="demo" style="width:104px"></label>
+      <label class="field" style="min-width:260px"><span>Microphone</span>
+        <select id="micSelect" class="select"><option value="">System default microphone</option></select></label>
+    </div>
+  </div>
+
+  <div class="grid-caller">
+    <div class="stack">
+      <section class="card callcard">
+        <div id="avatar" class="avatar known"><i data-i="smartphone" class="xl"></i></div>
+        <div class="who">Customer · Ravi Kumar</div>
+        <div class="state"><span id="statusDot" class="speech-dot"></span><span id="status">Not connected</span></div>
+        <div id="timer" class="timer">00:00</div>
+        <div class="controls">
+          <div class="ctl"><button id="callBtn" class="round good" title="Call the customer"><i data-i="phone" class="lg"></i></button>Call</div>
+          <div class="ctl"><button id="micMode" class="round on" title="Mute / unmute your microphone"><i data-i="mic" class="lg"></i></button><span id="micLbl">Mic live</span></div>
+          <div class="ctl"><button id="hangBtn" class="round crit" title="Hang up" disabled><i data-i="phone-off" class="lg"></i></button>Hang up</div>
+        </div>
+        <div style="margin-top:18px; display:grid; gap:10px; justify-items:start; text-align:left">
+          <label class="switch"><input id="hearCustomer" type="checkbox" checked>Hear the customer on this device</label>
+          <p id="micState" class="xs muted"></p>
+        </div>
+        <p class="note" style="margin-top:14px"><i data-i="info" class="sm"></i> Open <a href="/customer" target="_blank">Customer</a>
+          in another window (or on a phone) with the same room, click <b>Go online</b>, then call. Your microphone is sent raw,
+          without echo cancellation or noise suppression, so the detector hears the real voice.</p>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="headicon"><i data-i="rupee"></i></span>
+          <div><h3>Ask for money</h3><div class="sub">What a scammer asks for on the phone</div></div></div>
+        <div class="card-body">
+          <div class="grid-2" style="gap:10px">
+            <label class="field"><span>Amount (₹)</span><input id="amount" class="input num" type="number" min="1" value="49999"></label>
+            <label class="field"><span>Pay to</span><input id="payee" class="input" maxlength="40" value="SBI ••••7712"></label>
+          </div>
+          <button id="askBtn" class="btn block" disabled><i data-i="send"></i>Send payment request to the customer</button>
+          <p class="xs muted">Shows up in the customer's bank app. VoiceShield decides whether it can go through.</p>
+        </div>
+      </section>
+    </div>
+
+    <section class="card attack">
+      <div class="card-head"><span class="headicon crit"><i data-i="zap"></i></span>
+        <div><h2>Attacker toolkit</h2><div class="sub">Feed a recording into the call instead of your microphone</div></div>
+        <div class="end"><span class="chip crit"><span class="dot"></span>Red-team demo</span></div></div>
+      <div class="card-body">
+        <p class="small ink-2">This is how a scammer uses a voice clone: the AI voice is played <b>into the call</b>. The customer's
+          side never sees a file; it only hears the audio, exactly like a phone call.</p>
+        <div id="clips" class="list"></div>
+        <label class="file"><i data-i="upload"></i><span id="fileLbl">Or choose your own recording (a clone you made, wav / mp3 / flac)</span>
+          <input id="clipFile" type="file" accept="audio/*"></label>
+        <div class="btn-row">
+          <button id="playBtn" class="btn danger lg" disabled><i data-i="play"></i>Play into the call</button>
+          <button id="stopPlayBtn" class="btn lg" disabled><i data-i="stop"></i>Stop</button>
+          <label class="switch" style="margin-left:auto"><input id="hearClip" type="checkbox" checked>Play it here too (for the audience)</label>
+        </div>
+        <div class="progress"><div id="playBar"></div></div>
+        <p id="playState" class="small ink-2"></p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<audio id="remoteAudio" autoplay></audio>
+<script src="/static/vs-client.js?v=2611i"></script>
+<script src="/static/caller.js?v=2611i"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "mic": {
+    "llr_threshold": -1.635,
+    "created": "2026-11-20 17:59",
+    "source": "laptop Microphone Array, enhancements OFF, user's voice, 2 sessions (same recordings as the original mic profile)",
+    "n_genuine_windows": 40,
+    "method": "genuine 95th percentile + 1.5",
+    "genuine_median_llr": -5.215
+  },
+  "studio": {
+    "llr_threshold": 0.0,
+    "created": "2026-11-20 19:58",
+    "source": "dev split of garystafford/deepfake-audio-detection: 116 real clips (4 speakers), 116 Hume fakes",
+    "method": "window-level EER on dev recordings",
+    "n_genuine_windows": 334,
+    "n_fake_windows": 230,
+    "dev_window_eer": 0.37,
+    "genuine_median_llr": -9.6,
+    "fake_median_llr": 8.54
+  }
+}

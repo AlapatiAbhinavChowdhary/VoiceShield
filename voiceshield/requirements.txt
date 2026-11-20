@@ -1,0 +1,13 @@
+fastapi>=0.115
+uvicorn[standard]>=0.30
+numpy>=1.26
+scipy>=1.11
+soundfile>=0.12
+onnxruntime>=1.18
+huggingface_hub>=0.23
+websockets>=12
+faster-whisper>=1.1
+pytest>=8
+httpx>=0.27
+# Optional, NVIDIA GPU only (makes speech-to-text ~10x faster):
+#   pip install nvidia-cublas-cu12 "nvidia-cudnn-cu12==9.*"

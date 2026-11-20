@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# ONNX models are large (1.26 GB each); setup_models.py downloads them. The small Step 8c back-end is kept.
+models/*
+!models/step8c_backend.npz
+
+# run-time data: audit log, enrolled voiceprints, logs, downloaded calibration clips. Line profiles are kept.
+data/*
+!data/profiles.json
+!data/profiles_step8c.json

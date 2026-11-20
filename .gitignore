@@ -1,0 +1,12 @@
+# local tool settings and unrelated files in this folder
+.claude/
+*.exe
+*.winmd
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Our own voice recordings are not released (privacy); the result tables in recordings/ are
+recordings/*.wav

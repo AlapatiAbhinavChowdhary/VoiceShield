@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>VoiceShield · Command center</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%2322d3ee'/%3E%3Cpath d='M7 12.5h1.6l1.4-3 2 5.5 1.5-3.5H17' fill='none' stroke='%2304131a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/ui.css?v=2611i">
+<script src="/static/shell.js?v=2611i"></script>
+</head>
+<body>
+<header id="topbar"></header>
+<main class="page" id="main">
+
+<!-- =============================================================== COMMAND CENTER -->
+<section id="v-live" class="view hidden" aria-labelledby="h-live">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow"><i data-i="radar" class="xs"></i>Live detection</div>
+      <h1 id="h-live">Command center</h1>
+      <p>VoiceShield listens to the caller, scores every 4 seconds of speech for AI-generated voice, checks the voiceprint and the words, and decides every second.</p>
+    </div>
+  </div>
+
+  <div class="controlbar" role="group" aria-label="Session settings">
+    <label class="field"><span>Caller claims to be</span><select id="claimed" class="select"></select></label>
+    <label class="field"><span>Call language</span>
+      <select id="lang" class="select"><option value="">Auto-detect</option><option value="en">English</option>
+        <option value="hi">Hindi / Hinglish</option><option value="te">Telugu</option></select></label>
+    <label class="field"><span>Line profile</span><select id="profile" class="select"></select></label>
+    <label class="field"><span>Microphone</span><select id="micSelect" class="select"><option value="">System default microphone</option></select></label>
+    <div class="acts">
+      <button id="micBtn" class="btn primary lg"><i data-i="mic"></i>Start monitoring</button>
+      <button id="stopBtn" class="btn lg" disabled><i data-i="stop"></i>Stop</button>
+    </div>
+  </div>
+
+  <div class="cc-grid">
+    <div class="stack">
+      <section id="verdictBox" class="verdict" aria-live="polite">
+        <div id="gauge" class="gauge"></div>
+        <div class="verdict-text">
+          <div class="state"><span id="vIcon"></span><span id="vState"></span></div>
+          <h2 id="vTitle"></h2>
+          <p id="vWhy" class="why"></p>
+        </div>
+        <div class="facts">
+          <div class="fact"><span class="label">Verdict</span><span id="verdict" class="val">–</span></div>
+        </div>
+        <div class="hero-metrics" style="grid-column:1/-1">
+          <div><div class="label">AI-voice probability</div><div class="val" id="mProb">–</div><div class="hint">latest window, calibrated to this line</div></div>
+          <div><div class="label">Windows flagged</div><div class="val" id="mWin">–</div><div class="hint">of the last 5 analysed</div></div>
+          <div><div class="label">Session</div><div class="val" id="clock">0.0 s</div><div class="hint"><span id="speechS">0.0 s</span> of speech analysed</div></div>
+          <div><div class="label">Detector latency</div><div class="val" id="lat">–</div><div class="hint">per 4 s window, this laptop</div></div>
+        </div>
+      </section>
+
+      <div id="action" class="alert hidden" role="alert"></div>
+
+      <section class="card wave-card">
+        <div class="card-head"><span class="headicon brand"><i data-i="audio-lines"></i></span>
+          <div><h3>Incoming audio</h3><div class="sub" id="srcLabel">Microphone · raw signal, no browser noise suppression</div></div>
+          <div class="end"><span class="chip"><span id="speechDot" class="speech-dot"></span>Speech</span></div></div>
+        <div class="wave-stage" id="waveStage">
+          <canvas id="wave" aria-label="Live audio waveform"></canvas>
+          <div class="wave-overlay"><span class="state-pill" id="wavePill">Idle</span></div>
+          <div class="wave-empty" id="waveEmpty"><div><b>No audio yet</b>Start monitoring, play a demo call or stream a recording.</div></div>
+        </div>
+        <div class="wave-meta"><span>last 8 s · bars coloured by the decision at that moment</span><span id="levelInfo">input level –</span></div>
+        <div class="lane">
+          <div class="lane-label"><span>Analysed windows · suspicious segments</span>
+            <span class="legend" style="letter-spacing:0;text-transform:none;font-weight:500">
+              <span><span class="sw bar" style="background:var(--chart-good)"></span>consistent with real</span>
+              <span><span class="sw bar" style="background:var(--chart-warn)"></span>suspicious</span>
+              <span><span class="sw bar" style="background:var(--chart-crit)"></span>while held</span></span></div>
+          <div class="seglane"><canvas id="lane" aria-label="Analysed windows timeline"></canvas></div>
+        </div>
+        <div class="card-foot"><span class="privacy"><i data-i="lock" class="sm"></i>Audio is analysed in memory and never stored. Only scores and decisions are logged.</span></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="headicon"><i data-i="activity"></i></span>
+          <div><h3>Risk over time</h3><div class="sub">Running risk of the call and the AI-voice score of every window</div></div>
+          <div class="end legend"><span><span class="sw" style="background:var(--cyan)"></span>Overall risk</span>
+            <span><span class="sw dot" style="background:var(--series-2)"></span>Window score</span></div></div>
+        <div class="card-body"><div class="chart-wrap"><canvas id="chart"></canvas></div></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="headicon"><i data-i="layers"></i></span>
+          <div><h3>Detector windows</h3><div class="sub">Every 4 s window the models scored, newest first</div></div></div>
+        <div class="card-body" style="padding-top:8px">
+          <div class="table-wrap" style="max-height:300px">
+            <table class="table" id="log"><thead><tr><th>t (s)</th><th title="Detector score (log-odds, higher = more likely AI)">Score</th><th>p(fake)</th><th>Audio type</th><th>Voice match</th><th class="r">Risk</th><th>Decision</th><th class="r">ms</th></tr></thead><tbody></tbody></table>
+          </div>
+          <div id="logEmpty" class="empty"><i data-i="layers"></i>Windows appear here once 2 s of speech have arrived.</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="stack">
+      <div class="grid-3" style="grid-template-columns:1fr;gap:10px">
+        <div class="meter"><div class="meter-head"><i data-i="wave" class="sm"></i>AI-generated voice<span id="sigVoiceV" class="v">–</span></div>
+          <div class="meter-track"><div id="sigVoice" class="meter-fill"></div></div><div class="meter-sub">Detector, averaged over recent windows</div></div>
+        <div class="meter"><div class="meter-head"><i data-i="fingerprint" class="sm"></i>Voice ≠ claimed person<span id="sigIdV" class="v off">off</span></div>
+          <div class="meter-track"><div id="sigId" class="meter-fill"></div></div><div id="sigIdS" class="meter-sub">Pick who the caller claims to be</div></div>
+        <div class="meter"><div class="meter-head"><i data-i="message" class="sm"></i>Scam language<span id="sigScamV" class="v">–</span></div>
+          <div class="meter-track"><div id="sigScam" class="meter-fill"></div></div><div class="meter-sub">OTP, threats, urgency… (en / hi / te)</div></div>
+      </div>
+
+      <section class="card">
+        <div class="card-head"><span class="headicon"><i data-i="shield"></i></span><div><h3>System response</h3><div class="sub">What VoiceShield does at each level</div></div></div>
+        <div class="card-body response" id="response">
+          <div class="act" data-l="PASS"><i data-i="shield-check"></i><div><b>Monitor</b><p>Payments allowed. Keep listening.</p></div></div>
+          <div class="act" data-l="VERIFY"><i data-i="alert"></i><div><b>Verify out of band</b><p>OTP to the registered phone or call back on the official number.</p></div></div>
+          <div class="act" data-l="HOLD"><i data-i="octagon"></i><div><b>Hold transactions, alert security</b><p>Payment requests on this call are blocked automatically.</p></div></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="headicon"><i data-i="clock"></i></span><div><h3>Detection events</h3><div class="sub">Alerts, scam tactics and actions in this session</div></div></div>
+        <div class="card-body" style="padding-top:6px"><ul id="events" class="feed"></ul>
+          <div id="eventsEmpty" class="empty" style="padding:18px 8px"><i data-i="shield-check"></i>No events yet.</div></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="headicon"><i data-i="message"></i></span>
+          <div><h3>Live transcript</h3><div id="asrInfo" class="sub">Scam phrases highlighted</div></div></div>
+        <div class="card-body"><div id="transcript" class="transcript"></div></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="headicon"><i data-i="music"></i></span><div><h3>Demo calls</h3><div class="sub">Streamed as if live · you hear them too</div></div></div>
+        <div class="card-body">
+          <div id="samples" class="list"><div class="skeleton" style="height:52px"></div><div class="skeleton" style="height:52px"></div></div>
+          <label class="file"><i data-i="upload"></i><span>Stream your own recording (wav / mp3 / flac)</span><input id="fileInput" type="file" accept="audio/*"></label>
+          <button id="saveBtn" class="btn ghost sm" disabled title="Downloads your last microphone session to this computer only"><i data-i="download" class="sm"></i>Save last mic recording (.wav)</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================== VOICE ANALYSIS -->
+<section id="v-analysis" class="view hidden" aria-labelledby="h-analysis">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow"><i data-i="audio-lines" class="xs"></i>Forensics</div>
+      <h1 id="h-analysis">Voice analysis</h1>
+      <p>Load a recording, then play it through the live pipeline. Each 4-second window is scored as it plays and marked on the timeline.</p>
+    </div>
+  </div>
+  <div class="controlbar" role="group" aria-label="Recording to analyse">
+    <label class="field" style="flex:2 1 260px"><span>Recording</span><select id="aSample" class="select"><option value="">Choose a demo call…</option></select></label>
+    <label class="field"><span>Line profile</span><select id="aProfile" class="select"></select></label>
+    <label class="file" style="flex:1 1 220px;height:36px;padding:0 12px"><i data-i="upload" class="sm"></i><span id="aFileLbl">or upload a file</span><input id="aFile" type="file" accept="audio/*"></label>
+    <div class="acts">
+      <button id="aPlay" class="btn primary lg" disabled><i data-i="play"></i>Analyse &amp; play</button>
+      <button id="aStop" class="btn lg" disabled><i data-i="stop"></i>Stop</button>
+    </div>
+  </div>
+  <div class="cc-grid">
+    <div class="stack">
+      <section class="card">
+        <div class="card-head"><span class="headicon brand"><i data-i="file"></i></span>
+          <div><h3 id="aName">No recording loaded</h3><div class="sub" id="aMeta">Pick a demo call or upload a file</div></div>
+          <div class="end player"><span class="time"><span id="aTime">0:00.0</span> / <span id="aDur">0:00.0</span></span></div></div>
+        <div class="card-body">
+          <div class="lane-label"><span>Waveform</span><span>playhead follows playback</span></div>
+          <div class="scrub" id="aScrub"><canvas id="aWave" aria-label="Waveform of the recording"></canvas><div class="playhead hidden" id="aHead"></div></div>
+          <div class="lane-label" style="margin-top:14px"><span>Spectrogram · 0–8 kHz</span><span>brighter = more energy</span></div>
+          <div class="scrub"><canvas id="aSpec" aria-label="Spectrogram of the recording"></canvas><div class="playhead hidden" id="aHead2"></div></div>
+          <div class="lane-label" style="margin-top:14px"><span>Detector windows · suspicious segments</span>
+            <span class="legend" style="letter-spacing:0;text-transform:none;font-weight:500">
+              <span><span class="sw bar" style="background:var(--chart-good)"></span>real</span>
+              <span><span class="sw bar" style="background:var(--chart-warn)"></span>suspicious</span>
+              <span><span class="sw bar" style="background:var(--chart-crit)"></span>held</span></span></div>
+          <div class="seglane"><canvas id="aLane" aria-label="Detector windows over the recording"></canvas></div>
+          <div id="aEmpty" class="empty"><i data-i="audio-lines"></i><b>Nothing analysed yet</b>Windows are scored in real time while the recording plays.</div>
+        </div>
+      </section>
+      <section class="card">
+        <div class="card-head"><span class="headicon"><i data-i="layers"></i></span><div><h3>Window log</h3><div class="sub">Model outputs for every window of this recording</div></div></div>
+        <div class="card-body" style="padding-top:8px"><div class="table-wrap" style="max-height:320px">
+          <table class="table" id="aLog"><thead><tr><th>t (s)</th><th>Score</th><th>p(fake)</th><th>Window prob.</th><th>Audio type</th><th class="r">Risk</th><th>Decision</th></tr></thead><tbody></tbody></table></div></div>
+      </section>
+    </div>
+    <div class="stack">
+      <section class="card">
+        <div class="card-head"><span class="headicon"><i data-i="target"></i></span><div><h3>Assessment</h3><div class="sub" id="aStatus">Waiting for a recording</div></div></div>
+        <div class="card-body">
+          <div class="verdict-scale" id="aScale">
+            <div class="PASS"><b><i data-i="shield-check" class="sm"></i>Authentic</b><p>PASS · no evidence of cloning</p></div>
+            <div class="VERIFY"><b><i data-i="alert" class="sm"></i>Suspicious</b><p>VERIFY · confirm another way</p></div>
+            <div class="HOLD"><b><i data-i="octagon" class="sm"></i>Spoofed</b><p>HOLD · likely cloned voice</p></div>
+          </div>
+          <div id="aReasons" class="small ink-2"></div>
+          <dl class="kv" id="aKv"></dl>
+        </div>
+      </section>
+      <section class="card">
+        <div class="card-head"><span class="headicon"><i data-i="info"></i></span><div><h3>How to read this</h3></div></div>
+        <div class="card-body small ink-2">
+          <p><b class="ink">Score</b> is the detector's log-odds that a 4 s window is AI-generated: below 0 leans real, above 0 leans fake.</p>
+          <p><b class="ink">Window probability</b> compares that score with this line's calibrated cut-off: above 50% the window counts as suspicious.</p>
+          <p><b class="ink">Risk</b> averages recent windows and adds the voiceprint and scam-language checks. VERIFY from 45, HOLD from 75 with 3 of 5 windows flagged.</p>
+          <p><b class="ink">Audio type</b> is what the Step 8c back-end recognises: clean, phone line, noise suppression, Bluetooth or Opus.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================== HISTORY -->
+<section id="v-history" class="view hidden" aria-labelledby="h-history">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow"><i data-i="history" class="xs"></i>Audit log</div>
+      <h1 id="h-history">Detection history</h1>
+      <p>Every session the server analysed. Only scores and decisions are stored: no audio, no transcripts, no voiceprints.</p>
+    </div>
+    <button class="btn" id="hRefresh"><i data-i="refresh" class="sm"></i>Refresh</button>
+  </div>
+  <section class="card flush">
+    <div class="filters">
+      <div class="search"><i data-i="search" class="sm"></i><input id="hSearch" class="input" placeholder="Search source, profile or #id" aria-label="Search sessions"></div>
+      <div class="seg" id="hVerdict" role="group" aria-label="Filter by verdict">
+        <button aria-pressed="true" data-v="">All</button><button aria-pressed="false" data-v="PASS">Pass</button>
+        <button aria-pressed="false" data-v="VERIFY">Verify</button><button aria-pressed="false" data-v="HOLD">Hold</button></div>
+      <select id="hMode" class="select" style="width:auto" aria-label="Filter by mode"><option value="">All modes</option><option value="monitor">Monitoring</option>
+        <option value="calibrate">Calibration</option><option value="enroll">Enrolment</option></select>
+      <span class="muted small" id="hCount" style="margin-left:auto"></span>
+    </div>
+    <div class="card-body">
+      <div class="table-wrap" style="max-height:none">
+        <table class="table" id="hTable"><thead><tr>
+          <th class="sortable" data-k="id">Session<span class="arr"></span></th><th class="sortable" data-k="started">Started<span class="arr"></span></th>
+          <th>Source</th><th>Mode</th><th>Verdict</th><th class="sortable" data-k="max_risk">Max risk<span class="arr"></span></th>
+          <th class="sortable r" data-k="speech_s">Speech<span class="arr"></span></th><th class="r">Windows</th><th class="r" title="Mean detector score">Mean score</th><th></th></tr></thead>
+          <tbody></tbody></table>
+      </div>
+      <div id="hEmpty" class="empty hidden"><i data-i="search"></i><b>No sessions match</b>Change the filters or run a session from the command center.</div>
+    </div>
+    <div class="card-foot"><span id="hPageInfo"></span><div class="pager" style="margin-left:auto">
+      <button class="btn sm" id="hPrev"><i data-i="arrow-left" class="sm"></i>Newer</button><button class="btn sm" id="hNext">Older<i data-i="chevron" class="sm"></i></button></div></div>
+  </section>
+</section>
+
+<!-- =============================================================== THREAT DETAILS -->
+<section id="v-call" class="view hidden" aria-labelledby="h-call">
+  <div class="page-head">
+    <div>
+      <a href="#/history" class="small" style="display:flex;width:max-content;gap:6px;align-items:center;margin-bottom:10px"><i data-i="arrow-left" class="sm"></i>Detection history</a>
+      <div class="eyebrow" id="cEyebrow"><i data-i="shield-alert" class="xs"></i>Investigation</div>
+      <h1 id="h-call">Loading…</h1>
+      <p id="cSub"></p>
+    </div>
+    <div id="cBadge"></div>
+  </div>
+  <div class="grid-4" id="cKpis" style="margin-bottom:16px"></div>
+  <div class="grid-3" style="gap:16px;margin-bottom:16px">
+    <section class="card">
+      <div class="card-head"><span class="headicon brand"><i data-i="cpu"></i></span><div><div class="evidence-head"><span class="n">1</span>Model prediction</div><h3>Synthetic-voice detector</h3></div></div>
+      <div class="card-body"><div id="cScore"></div><div id="cModel"></div></div>
+    </section>
+    <section class="card">
+      <div class="card-head"><span class="headicon indigo"><i data-i="fingerprint"></i></span><div><div class="evidence-head"><span class="n">2</span>Supporting signals</div><h3>Voiceprint &amp; scam language</h3></div></div>
+      <div class="card-body" id="cSignals"></div>
+    </section>
+    <section class="card">
+      <div class="card-head"><span class="headicon"><i data-i="shield"></i></span><div><div class="evidence-head"><span class="n">3</span>Security actions</div><h3>What was done</h3></div></div>
+      <div class="card-body"><ul class="timeline" id="cActions"></ul></div>
+    </section>
+  </div>
+  <section class="card" style="margin-bottom:16px">
+    <div class="card-head"><span class="headicon"><i data-i="activity"></i></span><div><h3>Risk over the call</h3><div class="sub">Recomputed from the stored window log</div></div>
+      <div class="end legend"><span><span class="sw" style="background:var(--cyan)"></span>Overall risk</span><span><span class="sw dot" style="background:var(--series-2)"></span>Window score</span></div></div>
+    <div class="card-body"><div class="chart-wrap"><canvas id="cChart"></canvas></div></div>
+  </section>
+  <section class="card">
+    <div class="card-head"><span class="headicon"><i data-i="layers"></i></span><div><h3>Window log</h3><div class="sub">As stored in the audit database</div></div>
+      <div class="end"><span class="privacy"><i data-i="lock" class="sm"></i>No audio or transcript stored</span></div></div>
+    <div class="card-body" style="padding-top:8px"><div class="table-wrap" style="max-height:360px">
+      <table class="table" id="cLog"><thead><tr><th>t (s)</th><th>Score</th><th>p(fake)</th><th>Window prob.</th><th>Voice match</th><th class="r">Risk</th><th>Decision</th><th class="r">ms</th></tr></thead><tbody></tbody></table></div></div>
+  </section>
+</section>
+
+<!-- =============================================================== ANALYTICS -->
+<section id="v-analytics" class="view hidden" aria-labelledby="h-analytics">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow"><i data-i="chart" class="xs"></i>Security analytics</div>
+      <h1 id="h-analytics">Analytics</h1>
+      <p>Computed from this server's audit log (the most recent 200 sessions) and, for model quality, from the offline evaluation.</p>
+    </div>
+    <div class="row"><label class="switch"><input id="anAll" type="checkbox">Include lab-console tests</label>
+      <button class="btn" id="anRefresh"><i data-i="refresh" class="sm"></i>Refresh</button></div>
+  </div>
+  <div class="grid-4" id="anKpis" style="margin-bottom:16px"></div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <section class="card"><div class="card-head"><span class="headicon"><i data-i="chart"></i></span><div><h3>Outcomes by day</h3><div class="sub">Monitored sessions</div></div>
+      <div class="end legend"><span><span class="sw bar" style="background:var(--chart-good)"></span>Pass</span><span><span class="sw bar" style="background:var(--chart-warn)"></span>Verify</span><span><span class="sw bar" style="background:var(--chart-crit)"></span>Hold</span></div></div>
+      <div class="card-body"><div id="anDays" class="skeleton" style="height:220px"></div></div></section>
+    <section class="card"><div class="card-head"><span class="headicon"><i data-i="gauge"></i></span><div><h3>Risk distribution</h3><div class="sub">Highest risk reached per session</div></div>
+      <div class="end legend"><span><span class="sw bar" style="background:var(--series-1)"></span>Sessions</span></div></div>
+      <div class="card-body"><div id="anRisk" class="skeleton" style="height:220px"></div></div></section>
+  </div>
+  <div class="grid-3" style="gap:16px;margin-bottom:16px">
+    <section class="card"><div class="card-head"><span class="headicon"><i data-i="cpu"></i></span><div><h3>Detector latency</h3><div class="sub">Median ms per 4 s window, recent sessions</div></div></div>
+      <div class="card-body"><div id="anLat" class="skeleton" style="height:180px"></div><div id="anLatStats"></div></div></section>
+    <section class="card"><div class="card-head"><span class="headicon crit"><i data-i="message"></i></span><div><h3>Scam tactics heard</h3><div class="sub">Across monitored sessions</div></div></div>
+      <div class="card-body" id="anTactics"></div></section>
+    <section class="card"><div class="card-head"><span class="headicon"><i data-i="lock"></i></span><div><h3>Prevention actions</h3><div class="sub">Recorded by the customer app</div></div></div>
+      <div class="card-body" id="anActions"></div></section>
+  </div>
+  <section class="card">
+    <div class="card-head"><span class="headicon indigo"><i data-i="flask"></i></span><div><h3>Model performance · offline evaluation</h3>
+      <div class="sub">Equal error rate on unseen test sets (Kaggle T4, Step 8c). Lower is better. Measured once; not live data.</div></div></div>
+    <div class="card-body" id="anModel"></div>
+  </section>
+</section>
+
+<!-- =============================================================== INCIDENTS -->
+<section id="v-incidents" class="view hidden" aria-labelledby="h-inc">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow"><i data-i="shield-alert" class="xs"></i>Security operations</div>
+      <h1 id="h-inc">Incidents</h1>
+      <p>Every protected call with the reasons and what was done. Refreshes every 2 seconds.</p>
+    </div>
+    <div class="row"><label class="switch"><input id="iAll" type="checkbox">Include lab-console tests</label>
+      <span class="chip live"><span class="dot"></span><span id="iUpdated">Live</span></span></div>
+  </div>
+  <div class="grid-4" style="margin-bottom:16px">
+    <div class="kpi"><span class="ki brand"><i data-i="activity" class="lg"></i></span><div><div class="label">Calls monitored</div><div id="kCalls" class="big">–</div></div></div>
+    <div class="kpi"><span class="ki crit"><i data-i="octagon" class="lg"></i></span><div><div class="label">HOLD · likely spoofed</div><div id="kHold" class="big">–</div></div></div>
+    <div class="kpi"><span class="ki warn"><i data-i="alert" class="lg"></i></span><div><div class="label">VERIFY · suspicious</div><div id="kVerify" class="big">–</div></div></div>
+    <div class="kpi"><span class="ki crit"><i data-i="lock" class="lg"></i></span><div><div class="label">Payments blocked</div><div id="kBlocked" class="big">–</div></div></div>
+  </div>
+  <section class="card flush">
+    <div class="card-body">
+      <div class="table-wrap" style="max-height:none">
+        <table class="table" id="inc"><thead><tr><th>Verdict</th><th>Call</th><th>Line · caller</th><th>Max risk</th>
+          <th>Why VoiceShield acted</th><th>Scam tactics</th><th>Prevention</th></tr></thead><tbody></tbody></table>
+      </div>
+      <div id="emptyInc" class="empty hidden"><i data-i="shield-check"></i><b>No incidents</b>Start a call from the Caller and Customer screens.</div>
+    </div>
+  </section>
+</section>
+
+<!-- =============================================================== SETTINGS -->
+<section id="v-settings" class="view hidden" aria-labelledby="h-settings">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow"><i data-i="settings" class="xs"></i>System</div>
+      <h1 id="h-settings">Settings &amp; enrolment</h1>
+      <p>Enrol the voices that may call, calibrate this microphone, and see how the detector is configured.</p>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <section class="card">
+      <div class="card-head"><span class="headicon indigo"><i data-i="fingerprint"></i></span><div><h3>Voiceprints</h3><div class="sub">25 s of speech per person · only a 256-number voiceprint is kept</div></div></div>
+      <div class="card-body">
+        <div class="row"><input id="vpName" class="input" maxlength="40" placeholder="Name, e.g. Abhinav" style="flex:1;min-width:160px" aria-label="Name to enrol">
+          <button id="enrollBtn" class="btn"><i data-i="mic" class="sm"></i>Enrol with microphone</button></div>
+        <p id="vpStatus" class="small ink-2"></p>
+        <div id="vpList" class="list"></div>
+      </div>
+    </section>
+    <section class="card">
+      <div class="card-head"><span class="headicon brand"><i data-i="sliders"></i></span><div><h3>Calibrate this microphone</h3><div class="sub">Once per laptop and room · saves line profile <code>mic</code></div></div></div>
+      <div class="card-body">
+        <p class="small ink-2">Read any paragraph aloud for about 25 s in your normal voice. The cut-off is set just above how your real voice scores on this line. Turn <b class="ink">off Windows audio enhancements</b> and avoid Bluetooth headsets first: both make real voices look synthetic.</p>
+        <button id="calBtn" class="btn primary"><i data-i="sliders" class="sm"></i>Calibrate with my voice</button>
+        <p id="calStatus" class="small ink-2"></p>
+      </div>
+    </section>
+  </div>
+  <div class="grid-2">
+    <section class="card">
+      <div class="card-head"><span class="headicon"><i data-i="gauge"></i></span><div><h3>Line profiles</h3><div class="sub">A cut-off only fits the score it was set on</div></div></div>
+      <div class="card-body" style="padding-top:8px"><div class="table-wrap" style="max-height:none"><table class="table" id="profTable"><thead><tr><th>Profile</th><th class="r">Cut-off</th><th>How it was set</th></tr></thead><tbody></tbody></table></div></div>
+    </section>
+    <section class="card">
+      <div class="card-head"><span class="headicon"><i data-i="cpu"></i></span><div><h3>Detection engine</h3><div class="sub">Read from the running server</div></div></div>
+      <div class="card-body"><dl class="kv" id="sysKv"></dl></div>
+    </section>
+  </div>
+</section>
+</main>
+
+<script src="/static/vs-client.js?v=2611i"></script>
+<script src="/static/app.js?v=2611i"></script>
+</body>
+</html>

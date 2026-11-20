@@ -1,0 +1,191 @@
+file,llr_original,llr_step8c,processing,auto_threshold
+laptop_mic_enhancements_OFF_1.wav,-7.582,-3.349,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-8.722,-4.624,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-9.305,-4.282,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-9.954,-4.469,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-10.385,-4.845,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-10.344,-5.847,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-10.139,-5.68,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-9.78,-6.159,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-9.848,-4.798,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-10.555,-5.926,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-10.371,-6.515,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-9.987,-6.52,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-9.595,-5.585,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-9.513,-5.913,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-10.026,-7.061,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-9.988,-6.875,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-10.293,-7.462,clean,-2.75
+laptop_mic_enhancements_OFF_1.wav,-10.268,-6.706,Bluetooth mSBC,-1.062
+laptop_mic_enhancements_OFF_1.wav,-9.069,-5.819,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-4.159,-3.225,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-8.303,-5.108,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-9.223,-4.343,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-8.92,-3.496,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-8.837,-2.921,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-9.604,-5.028,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-9.632,-5.453,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-9.391,-7.12,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-10.216,-6.155,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-10.316,-5.739,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-9.176,-3.881,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-9.557,-5.322,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-9.628,-5.782,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-8.645,-3.146,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-8.989,-3.305,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-9.26,-3.845,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-6.154,-1.809,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-9.249,-3.5,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-9.16,-3.278,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-9.493,-4.643,clean,-2.75
+laptop_mic_enhancements_OFF_2.wav,-9.531,-6.561,clean,-2.75
+laptop_mic_enhancements_ON_1.wav,-8.933,-5.65,Opus,-1.034
+laptop_mic_enhancements_ON_1.wav,-8.706,-5.177,Opus,-1.034
+laptop_mic_enhancements_ON_1.wav,-6.906,-3.089,Opus,-1.034
+laptop_mic_enhancements_ON_1.wav,-2.879,-2.112,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-3.195,-0.398,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-4.602,-1.715,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-7.738,-3.032,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-7.345,-4.359,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-7.124,-3.74,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-7.355,-3.095,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-9.019,-4.512,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-8.36,-3.369,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-9.027,-5.153,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-8.762,-4.63,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-8.485,-4.122,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-7.745,-4.282,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-6.298,-3.018,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-4.979,-3.323,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-2.354,-1.216,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-2.942,-2.396,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-4.499,-1.902,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-4.418,-2.368,noise suppression,-2.234
+laptop_mic_enhancements_ON_1.wav,-4.51,-3.785,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-4.835,-4.082,Opus,-1.034
+laptop_mic_enhancements_ON_2.wav,-1.167,-0.318,Opus,-1.034
+laptop_mic_enhancements_ON_2.wav,-2.244,0.286,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-2.516,1.11,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-4.25,-0.416,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-0.078,-0.569,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-2.296,-2.173,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-1.05,-0.613,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-3.244,-1.437,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-4.27,-1.709,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-3.853,-1.098,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-2.134,-0.506,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,0.236,1.748,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-2.565,0.985,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-2.569,0.015,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,1.066,3.073,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,0.541,1.171,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,1.871,1.966,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-1.401,0.077,noise suppression,-2.234
+laptop_mic_enhancements_ON_2.wav,-2.718,-1.482,noise suppression,-2.234
+scam_call_windows_tts.wav,10.711,13.961,Bluetooth mSBC,-1.062
+scam_call_windows_tts.wav,10.712,12.455,Bluetooth mSBC,-1.062
+scam_call_windows_tts.wav,10.717,13.814,Opus,-1.034
+scam_call_windows_tts.wav,10.712,12.345,Opus,-1.034
+scam_call_windows_tts.wav,10.713,13.262,Bluetooth mSBC,-1.062
+scam_call_windows_tts.wav,10.724,14.17,Bluetooth mSBC,-1.062
+scam_call_windows_tts.wav,10.7,12.327,Bluetooth mSBC,-1.062
+scam_call_windows_tts.wav,10.71,11.997,Opus,-1.034
+scam_call_windows_tts.wav,10.699,9.913,Opus,-1.034
+scam_call_windows_tts.wav,10.701,11.101,Opus,-1.034
+scam_call_windows_tts.wav,10.701,10.405,Opus,-1.034
+scam_call_windows_tts.wav,10.703,11.38,Opus,-1.034
+scam_call_windows_tts.wav,10.693,10.343,Opus,-1.034
+scam_call_windows_tts.wav,10.687,10.592,Opus,-1.034
+scam_call_windows_tts.wav,10.677,10.102,Opus,-1.034
+scam_call_windows_tts.wav,10.678,10.228,Opus,-1.034
+scam_call_windows_tts.wav,10.677,10.912,Bluetooth mSBC,-1.062
+scam_call_windows_tts.wav,10.663,12.109,Bluetooth mSBC,-1.062
+genuine_call_1.flac,-10.089,-9.289,Opus,-1.034
+genuine_call_1.flac,-10.007,-9.919,Opus,-1.034
+genuine_call_1.flac,-9.738,-8.071,Opus,-1.034
+genuine_call_1.flac,-8.891,-8.84,clean,-2.75
+genuine_call_1.flac,-9.557,-8.11,clean,-2.75
+genuine_call_1.flac,-9.584,-6.194,Opus,-1.034
+genuine_call_1.flac,-10.334,-9.18,clean,-2.75
+genuine_call_1.flac,-10.194,-9.936,clean,-2.75
+genuine_call_1.flac,-10.378,-10.084,clean,-2.75
+genuine_call_1.flac,-10.276,-7.353,clean,-2.75
+genuine_call_1.flac,-9.221,-8.705,clean,-2.75
+genuine_call_1.flac,-9.243,-7.397,clean,-2.75
+genuine_call_1.flac,-9.166,-6.319,clean,-2.75
+genuine_call_1.flac,-9.946,-9.508,clean,-2.75
+genuine_call_1.flac,-9.327,-8.424,clean,-2.75
+genuine_call_1.flac,-10.324,-9.139,clean,-2.75
+genuine_call_1.flac,-10.852,-11.666,clean,-2.75
+genuine_call_1.flac,-9.558,-9.479,clean,-2.75
+genuine_call_1.flac,-10.12,-12.095,clean,-2.75
+genuine_call_1.flac,-10.083,-9.839,clean,-2.75
+genuine_call_1.flac,-10.096,-9.367,clean,-2.75
+genuine_call_1.flac,-10.107,-8.976,clean,-2.75
+genuine_call_1.flac,-7.766,-7.36,clean,-2.75
+genuine_call_1.flac,-9.753,-9.387,phone line (G.711),-1.696
+genuine_call_1.flac,-9.638,-10.558,clean,-2.75
+genuine_call_1.flac,-6.953,-7.435,clean,-2.75
+genuine_call_1.flac,-7.869,-8.753,clean,-2.75
+genuine_call_1.flac,-8.752,-8.959,clean,-2.75
+genuine_call_1.flac,-9.491,-10.361,clean,-2.75
+genuine_call_1.flac,-10.603,-11.129,clean,-2.75
+genuine_call_1.flac,-10.093,-7.827,clean,-2.75
+genuine_call_2.flac,-9.781,-6.262,clean,-2.75
+genuine_call_2.flac,-10.561,-8.684,clean,-2.75
+genuine_call_2.flac,-10.337,-8.425,clean,-2.75
+genuine_call_2.flac,-10.893,-7.073,clean,-2.75
+genuine_call_2.flac,-10.86,-6.359,clean,-2.75
+genuine_call_2.flac,-10.494,-5.831,clean,-2.75
+genuine_call_2.flac,-11.163,-7.807,clean,-2.75
+genuine_call_2.flac,-8.329,-6.232,clean,-2.75
+genuine_call_2.flac,-8.23,-8.064,clean,-2.75
+genuine_call_2.flac,-11.02,-10.161,clean,-2.75
+genuine_call_2.flac,-10.741,-8.958,clean,-2.75
+genuine_call_2.flac,-11.249,-9.105,clean,-2.75
+genuine_call_2.flac,-10.612,-7.194,clean,-2.75
+genuine_call_2.flac,-10.704,-7.577,clean,-2.75
+genuine_call_2.flac,-10.221,-8.334,clean,-2.75
+genuine_call_2.flac,-11.054,-8.172,clean,-2.75
+genuine_call_2.flac,-10.596,-6.824,clean,-2.75
+genuine_call_2.flac,-10.56,-8.1,clean,-2.75
+genuine_call_2.flac,-10.0,-8.174,clean,-2.75
+genuine_call_2.flac,-10.036,-8.023,clean,-2.75
+genuine_call_2.flac,-10.551,-9.49,clean,-2.75
+genuine_call_2.flac,-10.397,-8.48,clean,-2.75
+genuine_call_2.flac,-10.375,-8.314,clean,-2.75
+genuine_call_2.flac,-10.368,-8.943,clean,-2.75
+genuine_call_2.flac,-9.809,-7.369,clean,-2.75
+genuine_call_2.flac,-10.45,-8.093,clean,-2.75
+genuine_call_2.flac,-10.441,-9.681,clean,-2.75
+genuine_call_2.flac,-9.71,-8.962,clean,-2.75
+genuine_call_2.flac,-11.597,-9.241,clean,-2.75
+genuine_call_2.flac,-11.102,-8.814,clean,-2.75
+cloned_call_elevenlabs.flac,-6.57,-1.057,clean,-2.75
+cloned_call_elevenlabs.flac,-2.048,0.933,clean,-2.75
+cloned_call_elevenlabs.flac,-3.049,1.119,clean,-2.75
+cloned_call_elevenlabs.flac,-6.325,0.924,clean,-2.75
+cloned_call_elevenlabs.flac,-2.897,2.269,clean,-2.75
+cloned_call_elevenlabs.flac,-6.632,0.891,clean,-2.75
+cloned_call_elevenlabs.flac,-7.334,0.293,clean,-2.75
+cloned_call_elevenlabs.flac,-7.551,0.052,clean,-2.75
+cloned_call_elevenlabs.flac,-5.81,1.677,clean,-2.75
+cloned_call_elevenlabs.flac,-3.52,2.103,clean,-2.75
+cloned_call_elevenlabs.flac,-5.594,1.054,clean,-2.75
+cloned_call_elevenlabs.flac,-7.743,-1.08,clean,-2.75
+cloned_call_elevenlabs.flac,-5.793,0.422,clean,-2.75
+cloned_call_kokoro.flac,-10.138,-4.805,clean,-2.75
+cloned_call_kokoro.flac,-9.95,-4.294,clean,-2.75
+cloned_call_kokoro.flac,-8.275,-2.266,clean,-2.75
+cloned_call_kokoro.flac,-6.545,-1.663,clean,-2.75
+cloned_call_kokoro.flac,-8.09,-2.251,clean,-2.75
+cloned_call_kokoro.flac,-6.381,-2.573,clean,-2.75
+cloned_call_kokoro.flac,-8.846,-1.714,clean,-2.75
+cloned_call_kokoro.flac,-9.804,-0.989,clean,-2.75
+cloned_call_kokoro.flac,-6.492,-0.524,clean,-2.75
+cloned_call_kokoro.flac,-7.388,0.028,clean,-2.75
+cloned_call_kokoro.flac,-6.524,0.494,clean,-2.75
+cloned_call_kokoro.flac,-0.395,1.914,clean,-2.75
+cloned_call_kokoro.flac,-1.6,1.413,clean,-2.75
+cloned_call_kokoro.flac,-2.814,1.058,clean,-2.75
+cloned_call_kokoro.flac,-4.025,0.434,clean,-2.75

@@ -1,0 +1,48 @@
+{
+  "models_dir": "models",
+  "detector_file": "wav2vec2-large-antideepfake.onnx",
+  "detector_mode": "step8c",
+  "layers_file": "voiceshield_layers.onnx",
+  "backend_file": "step8c_backend.npz",
+  "vad_file": "silero_vad.onnx",
+  "detector_threads": 0,
+
+  "window_seconds": 4.0,
+  "hop_seconds": 1.0,
+  "min_speech_seconds": 2.0,
+  "vad_threshold": 0.5,
+  "vad_hangover_ms": 300,
+
+  "risk": {
+    "llr_threshold": -4.07,
+    "llr_scale": 1.0,
+    "ema_alpha": 0.4,
+    "verify_at": 45,
+    "hold_at": 75,
+    "hold_k": 3,
+    "hold_n": 5,
+    "identity_at": 50,
+    "scam_at": 50
+  },
+
+  "speaker": {
+    "enabled": true,
+    "model_file": "voxceleb_resnet34_LM.onnx",
+    "threshold": 0.45,
+    "scale": 0.08,
+    "min_enroll_windows": 5
+  },
+
+  "asr": {
+    "enabled": true,
+    "model": "small",
+    "cpu_model": "base",
+    "device": "auto",
+    "cpu_threads": 4,
+    "min_utterance_seconds": 0.6,
+    "max_utterance_seconds": 8.0
+  },
+
+  "audit_db": "data/audit.db",
+  "webhook_url": null
+}

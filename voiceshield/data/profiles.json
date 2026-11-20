@@ -1,0 +1,20 @@
+{
+  "studio": {
+    "llr_threshold": -5.631,
+    "created": "2026-11-09 23:29",
+    "source": "dev split of garystafford/deepfake-audio-detection: 116 real clips (4 speakers), 116 Hume fakes",
+    "method": "window-level EER on dev recordings",
+    "n_genuine_windows": 334,
+    "n_fake_windows": 230,
+    "dev_window_eer": 2.13,
+    "genuine_median_llr": -10.11,
+    "fake_median_llr": 7.52
+  },
+  "mic": {
+    "llr_threshold": -6.011,
+    "created": "2026-11-10 15:47",
+    "source": "laptop Microphone Array, enhancements OFF, user's voice, 2 sessions",
+    "n_genuine_windows": 40,
+    "method": "genuine 95th percentile + 1.5"
+  }
+}

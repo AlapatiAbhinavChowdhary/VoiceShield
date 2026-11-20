@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Customer Phone · VoiceShield</title>
+<link rel="stylesheet" href="/static/ui.css?v=2611i">
+<script src="/static/shell.js?v=2611i"></script>
+</head>
+<body>
+<header id="topbar"></header>
+<main class="page">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow"><i data-i="smartphone" class="xs"></i>Call demo · customer device</div>
+      <h1>Customer phone</h1>
+      <p>The person receiving the call. VoiceShield listens to the caller in real time and protects every payment.</p>
+    </div>
+    <div class="toolbar">
+      <label class="field" style="min-width:0"><span>Room</span><input id="room" class="input" maxlength="32" value="demo" style="width:104px"></label>
+      <label class="field"><span>Caller claims to be</span><select id="claimed" class="select"><option value="">Unknown caller</option></select></label>
+      <label class="field"><span>Call language</span>
+        <select id="lang" class="select"><option value="">Auto-detect</option><option value="en">English</option>
+          <option value="hi">Hindi / Hinglish</option><option value="te">Telugu</option></select></label>
+      <label class="field"><span>Line profile</span><select id="profile" class="select"></select></label>
+    </div>
+  </div>
+
+  <div class="grid-customer">
+    <div class="stack">
+      <section class="card callcard">
+        <div id="avatar" class="avatar"><i data-i="user" class="xl"></i></div>
+        <div id="who" class="who">Unknown caller</div>
+        <div class="state"><span id="statusDot" class="speech-dot"></span><span id="status">Offline</span></div>
+        <div id="timer" class="timer">00:00</div>
+        <div id="offlineCtl" class="controls">
+          <button id="joinBtn" class="btn primary lg"><i data-i="live"></i>Go online</button>
+        </div>
+        <div id="ringCtl" class="controls hidden">
+          <div class="ctl"><button id="rejectBtn" class="round crit" title="Decline"><i data-i="phone-off" class="lg"></i></button>Decline</div>
+          <div class="ctl"><button id="answerBtn" class="round good" title="Answer"><i data-i="phone" class="lg"></i></button>Answer</div>
+        </div>
+        <div id="callCtl" class="controls hidden">
+          <div class="ctl"><button id="talkBtn" class="round" title="Send your microphone to the caller"><i data-i="mic-off" class="lg"></i></button><span id="talkLbl">Muted</span></div>
+          <div class="ctl"><button id="speakerBtn" class="round" title="Play the caller on this device"><i data-i="volume-x" class="lg"></i></button><span id="speakerLbl">Speaker off</span></div>
+          <div class="ctl"><button id="endBtn" class="round crit" title="End call"><i data-i="phone-off" class="lg"></i></button>End</div>
+        </div>
+        <p class="note" style="margin-top:18px"><i data-i="info" class="sm"></i> Both windows on one laptop? Keep
+          <b>Muted</b> and <b>Speaker off</b> (or use wired earphones), otherwise the caller's mic hears itself. On a separate device, turn the speaker on.</p>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="headicon"><i data-i="sliders"></i></span>
+          <div><h3>Calibrate this call line</h3><div class="sub">Once per setup, with a genuine caller</div></div></div>
+        <div class="card-body">
+          <p class="small ink-2">During a call, the genuine caller talks normally for 25 s. VoiceShield learns how real speech
+            sounds on this line and saves it as profile <code>call</code>.</p>
+          <button id="calBtn" class="btn block" disabled><i data-i="sliders"></i>Calibrate with the caller's voice</button>
+          <p id="calStatus" class="small ink-2"></p>
+        </div>
+      </section>
+    </div>
+
+    <div class="stack">
+      <section id="verdictBox" class="verdict">
+        <div id="gauge" class="gauge"></div>
+        <div>
+          <div class="state"><span id="vIcon"></span><span id="vState"></span></div>
+          <h2 id="vTitle"></h2>
+          <p id="vWhy" class="why"></p>
+        </div>
+        <div class="facts">
+          <div class="fact"><span class="label">Verdict</span><span id="verdict" class="val">–</span></div>
+          <div class="fact"><span class="label">Call time</span><span id="clock" class="val">0.0 s</span></div>
+        </div>
+      </section>
+
+      <div class="grid-3">
+        <div class="meter"><div class="meter-head"><i data-i="wave" class="sm"></i>Synthetic voice<span id="sigVoiceV" class="v">–</span></div>
+          <div class="meter-track"><div id="sigVoice" class="meter-fill"></div></div><div class="meter-sub">AI-generated speech detector</div></div>
+        <div class="meter"><div class="meter-head"><i data-i="fingerprint" class="sm"></i>Voice ≠ claimed person<span id="sigIdV" class="v off">off</span></div>
+          <div class="meter-track"><div id="sigId" class="meter-fill"></div></div><div id="sigIdS" class="meter-sub">Pick who the caller claims to be</div></div>
+        <div class="meter"><div class="meter-head"><i data-i="message" class="sm"></i>Scam language<span id="sigScamV" class="v">–</span></div>
+          <div class="meter-track"><div id="sigScam" class="meter-fill"></div></div><div id="sigScamS" class="meter-sub">OTP, threats, urgency… (en / hi / te)</div></div>
+      </div>
+
+      <div id="action" class="alert hidden"></div>
+
+      <section class="card">
+        <div class="card-head"><h3>Risk during the call</h3>
+          <div class="end legend"><span><span class="sw" style="background:var(--series-1)"></span>Overall risk</span>
+            <span><span class="sw dot" style="background:var(--series-2)"></span>Synthetic-voice score per window</span></div></div>
+        <div class="card-body"><div class="chart-wrap"><canvas id="chart"></canvas></div></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="headicon"><i data-i="message"></i></span>
+          <div><h3>What the caller is saying</h3><div id="asrInfo" class="sub">Live transcript · scam phrases highlighted</div></div></div>
+        <div class="card-body"><div id="transcript" class="transcript"></div></div>
+      </section>
+    </div>
+
+    <div class="col-bank">
+      <div class="phone-frame"><div class="phone-screen">
+        <div class="phone-notch"></div>
+        <div id="phone" class="sms hidden"></div>
+        <div class="app-head"><b><i data-i="bank"></i>MyBank</b><span class="chip good"><i data-i="shield-check" class="sm"></i>VoiceShield on</span></div>
+        <div class="balance-card">
+          <small>Available balance</small>
+          <div class="amt">₹<span id="balance">1,25,000</span></div>
+          <div class="acct"><span>Savings ••••4321</span><span>Ravi Kumar</span></div>
+        </div>
+        <div class="app-sec"><h4>Payment requests</h4><div id="request"></div></div>
+        <div class="app-sec"><h4>Activity</h4><ul id="activity" class="feed"></ul></div>
+      </div></div>
+    </div>
+  </div>
+</main>
+
+<audio id="remoteAudio" autoplay></audio>
+<script src="/static/vs-client.js?v=2611i"></script>
+<script src="/static/customer.js?v=2611i"></script>
+</body>
+</html>

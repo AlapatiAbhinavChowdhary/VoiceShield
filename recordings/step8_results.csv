@@ -1,0 +1,27 @@
+test set,model,EER_%,AUC,false_alarm_on_real_%,missed_fakes_%
+"test speakers, clean",original,0.0,1.0,0.667,0.0
+"test speakers, clean",DSP-aware LoRA,0.0,1.0,0.667,0.0
+"test speakers, phone",original,2.0,0.995,4.667,2.667
+"test speakers, phone",DSP-aware LoRA,2.0,0.995,4.667,2.667
+"test speakers, noise suppression",original,5.0,0.988,4.667,6.0
+"test speakers, noise suppression",DSP-aware LoRA,5.0,0.988,4.667,6.0
+"test speakers, spectral subtraction",original,1.333,0.992,1.333,1.333
+"test speakers, spectral subtraction",DSP-aware LoRA,1.333,0.992,1.333,1.333
+"test speakers, auto-gain + noise suppression",original,2.0,0.998,3.333,0.667
+"test speakers, auto-gain + noise suppression",DSP-aware LoRA,2.0,0.998,3.333,0.667
+"test speakers, Bluetooth CVSD",original,10.0,0.953,1.333,26.667
+"test speakers, Bluetooth CVSD",DSP-aware LoRA,10.0,0.953,1.333,26.667
+"test speakers, Bluetooth mSBC",original,2.0,0.996,2.667,2.667
+"test speakers, Bluetooth mSBC",DSP-aware LoRA,2.0,0.996,2.667,2.667
+"test speakers, Opus",original,4.667,0.989,32.667,0.0
+"test speakers, Opus",DSP-aware LoRA,4.667,0.989,32.667,0.0
+"ElevenLabs+Kokoro, clean",original,8.227,0.956,0.429,51.037
+"ElevenLabs+Kokoro, clean",DSP-aware LoRA,8.227,0.956,0.429,51.037
+"ElevenLabs+Kokoro, noise suppression",original,33.965,0.699,0.858,72.614
+"ElevenLabs+Kokoro, noise suppression",DSP-aware LoRA,33.965,0.699,0.858,72.614
+"ElevenLabs+Kokoro, Opus",original,45.146,0.589,32.618,58.091
+"ElevenLabs+Kokoro, Opus",DSP-aware LoRA,45.146,0.589,32.618,58.091
+In-the-Wild (test sample),original,4.667,0.992,4.667,5.667
+In-the-Wild (test sample),DSP-aware LoRA,4.667,0.992,4.667,5.667
+"In-the-Wild, noise suppression",original,7.5,0.974,5.0,12.333
+"In-the-Wild, noise suppression",DSP-aware LoRA,7.5,0.974,5.0,12.333
