@@ -18,7 +18,7 @@ Protocol (client -> server):
     2. binary  little-endian int16 mono PCM chunks (any size, ~100 ms is good)
     3. text  {"type": "stop"}   -> server replies with "summary" ("calibrated" / "enrolled") and closes
 Server -> client: "ready", "vad", "score", "transcript", "action", "calib_window", "enroll_window",
-                  "summary", "calibrated", "enrolled", "error".
+                  "summary", "calibrated", "enrolled", "error", "warning" (a window failed; the call goes on).
 """
 import asyncio
 import json
@@ -249,7 +249,8 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
         profile_name, profile = S["profiles"].get(start.get("profile"))
         threshold = float(profile["llr_threshold"])
         auto = bool(profile.get("auto"))         # Step 8c "auto" profile: each window brings its own cut-off
-        claimed = start.get("claimed") or None
+        claimed = start.get("claimed") if isinstance(start.get("claimed"), str) else None
+        claimed = (claimed or "").strip() or None
         enrolled = S["voiceprints"].get(claimed) if claimed else None
         if claimed and enrolled is None:
             claimed = None
@@ -266,6 +267,7 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
         utt_q: asyncio.Queue = asyncio.Queue()
         send_lock = asyncio.Lock()
         collected: list = []                     # calibration llrs or enrollment voiceprints
+        failures = {"n": 0}                      # windows the detector could not score
 
         async def send(msg: dict) -> None:
             async with send_lock:
@@ -311,7 +313,15 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
                     await send({"type": "enroll_window", "n": len(collected), "t": round(t, 2),
                                 "speech_s": round(speech_s, 2)})
                     continue
-                r, emb = await asyncio.gather(loop.run_in_executor(S["pool"], S["detector"].score, w), embed(w))
+                try:
+                    r, emb = await asyncio.gather(loop.run_in_executor(S["pool"], S["detector"].score, w), embed(w))
+                except Exception as e:           # one bad window must not silently end the analysis of the call
+                    log.exception("scoring failed at %.1f s", t)
+                    failures["n"] += 1
+                    if failures["n"] == 1:
+                        await send({"type": "warning", "t": round(t, 2),
+                                    "message": f"A window could not be analysed ({type(e).__name__}); still listening."})
+                    continue
                 lat = (time.perf_counter() - t0) * 1000
                 base = {"t": round(t, 2), "speech_s": round(speech_s, 2), "llr": r["llr"], "p_fake": r["p_fake"],
                         "latency_ms": round(lat, 1)}
@@ -385,7 +395,11 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
                         await send({"type": "vad", "t": round(proc.seconds, 2), "speech": proc.in_speech,
                                     "speech_s": round(proc.speech_seconds, 2)})
                 elif m.get("text"):
-                    if json.loads(m["text"]).get("type") == "stop":
+                    try:
+                        msg = json.loads(m["text"])
+                    except ValueError:                   # garbage text must not leave the call open in the audit log
+                        continue
+                    if isinstance(msg, dict) and msg.get("type") == "stop":
                         break
         except (WebSocketDisconnect, RuntimeError):
             pass

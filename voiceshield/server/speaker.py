@@ -15,7 +15,7 @@ from pathlib import Path
 import numpy as np
 import onnxruntime as ort
 
-from .config import SR
+from .config import SR, write_text_atomic
 
 # ------------------------------------------------------------------ Kaldi-compatible fbank (numpy)
 _FRAME, _SHIFT, _NFFT, _NMEL = 400, 160, 512, 80          # 25 ms / 10 ms at 16 kHz, as WeSpeaker expects
@@ -113,7 +113,9 @@ class Voiceprints:
         return sorted(self.all())
 
     def get(self, name: str | None) -> np.ndarray | None:
-        rec = self.all().get(name or "")
+        if not isinstance(name, str):
+            return None
+        rec = self.all().get(name)
         return None if rec is None else np.asarray(rec["embedding"], float)
 
     def save(self, name: str, embedding: np.ndarray, seconds: float, source: str = "") -> dict:
@@ -123,8 +125,7 @@ class Voiceprints:
         data = self.all()
         data[name] = {"embedding": [round(float(v), 6) for v in embedding], "seconds": round(seconds, 1),
                       "source": source, "created": time.strftime("%Y-%m-%d %H:%M")}
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        self.path.write_text(json.dumps(data), encoding="utf-8")
+        write_text_atomic(self.path, json.dumps(data))
         return {k: v for k, v in data[name].items() if k != "embedding"}
 
     def delete(self, name: str) -> bool:
@@ -132,5 +133,5 @@ class Voiceprints:
         if name not in data:
             return False
         del data[name]
-        self.path.write_text(json.dumps(data), encoding="utf-8")
+        write_text_atomic(self.path, json.dumps(data))
         return True

@@ -526,3 +526,49 @@ def test_ws_rejects_bad_start(client):
     with client.websocket_connect("/ws/stream") as ws:
         ws.send_json({"hello": 1})
         assert ws.receive_json()["type"] == "error"
+
+
+def test_ws_odd_start_fields_and_garbage_text_still_end_the_call(client):
+    """A list as profile, a dict as claimed person and non-JSON text mid-call must not break the call or the audit."""
+    with client.websocket_connect("/ws/stream") as ws:
+        ws.send_json({"type": "start", "sample_rate": SR, "source": "test", "profile": ["x"], "claimed": {"a": 1}})
+        ready = ws.receive_json()
+        assert ready["type"] == "ready" and ready["profile"] == "default" and ready["claimed"] is None
+        pcm = (speech(6, amp=0.05) * 32767).astype("<i2")
+        for i in range(0, len(pcm), SR // 10):
+            ws.send_bytes(pcm[i:i + SR // 10].tobytes())
+            if i == SR:
+                ws.send_text("not json")
+                ws.send_text("[1, 2]")
+        ws.send_json({"type": "stop"})
+        while (m := ws.receive_json())["type"] != "summary":
+            pass
+    assert m["verdict"] == "PASS"
+    assert client.get(f"/api/calls/{ready['call_id']}").json()["verdict"] == "PASS"
+
+
+class FlakyDetector(StubDetector):
+    """Fails on every other window, like a transient runtime error."""
+    def __init__(self):
+        self.n = 0
+
+    def score(self, w):
+        self.n += 1
+        if self.n % 2 == 0:
+            raise RuntimeError("boom")
+        return super().score(w)
+
+
+def test_ws_detector_error_warns_and_keeps_scoring(tmp_path):
+    from fastapi.testclient import TestClient
+    from server.app import create_app
+    cfg = replace(Config(), audit_db=str(tmp_path / "audit.db"), profiles_file=str(tmp_path / "profiles.json"),
+                  voiceprints_file=str(tmp_path / "voiceprints.json"), vad_hangover_ms=0)
+    det = FlakyDetector()
+    app = create_app(cfg, detector=det, vad=StubVad(), speaker=StubSpeaker(), transcriber=StubTranscriber())
+    with TestClient(app) as c:
+        det.n = 0                                             # the warm-up call at start-up does not count
+        _, msgs = run_call(c, speech(14, amp=0.3))            # loud = fake for the stub
+    kinds = [m["type"] for m in msgs]
+    assert kinds.count("warning") == 1 and kinds.count("score") >= 3
+    assert msgs[-1]["type"] == "summary" and msgs[-1]["verdict"] == "HOLD"

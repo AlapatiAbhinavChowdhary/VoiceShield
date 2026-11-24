@@ -8,6 +8,15 @@ ROOT = Path(__file__).resolve().parent.parent
 SR = 16000                       # every model here works on 16 kHz mono
 
 
+def write_text_atomic(path: str | os.PathLike, text: str) -> None:
+    """Write to a temporary file, then rename it: a crash never leaves a half-written JSON file behind."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(text, encoding="utf-8")
+    os.replace(tmp, path)
+
+
 @dataclass
 class RiskConfig:
     llr_threshold: float = -4.07  # log-odds of p_fake = 0.0168, the dev-set EER threshold from Step 4

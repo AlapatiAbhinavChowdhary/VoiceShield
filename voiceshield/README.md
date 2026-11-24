@@ -67,6 +67,16 @@ py -3.12 -m venv .venv
 
 `setup_models.py` downloads about 2 GB, once. Then open **http://127.0.0.1:8000** in Chrome or Edge, or run `python run.py --port 8010` if port 8000 is busy.
 
+**On demo day:** double-click **`start_demo.bat`**. It runs the pre-flight check (`tools/preflight.py`), then starts the server and opens the browser. The check changes nothing. It looks at:
+- model files and settings;
+- line profiles and enrolled voiceprints;
+- free memory and the port;
+- the GPU;
+- the demo recordings;
+- on Windows, which microphones are active and whether audio enhancements are off on the built-in microphone.
+
+It stops only on real blockers (`FAIL`); warnings are advice.
+
 Optional, NVIDIA GPU only: install this to make speech-to-text about 10× faster (about 1 GB):
 
 ```bash
@@ -218,6 +228,8 @@ Rules:
 | `python tools/build_demo.py` | rebuilds `samples/` and the `studio` profile from the public dataset: dev split for calibration, test split for the demo calls |
 | `python tools/build_demo.py --profile-only` | only recalibrates `studio` for the current `detector_mode` |
 | `python tools/compare_step8c.py files...` | original detector vs Step 8c on the same speech windows: scores, audio type, CPU time |
+| `python tools/preflight.py` | demo-day check of this laptop (models, memory, port, GPU, microphones and enhancements); exit code 1 on a blocker |
+| `python tools/attack_test.py --claim NAME clone.wav` | Step 9: plays a clone of an enrolled person through the full pipeline with that identity claimed |
 | `python -m pytest -q` | runs the tests: fast stub tests always, real-model tests once the models are downloaded |
 
 ## WebSocket protocol (for the Step 7 call app)
@@ -232,9 +244,11 @@ Server messages:
 - `score`: per window. Contains `llr`, `p_fake`, `window_score`, `window_threshold`, `risk` (0–100), `level`, `verdict` and `latency_ms`. In Step 8c mode it also has `llr_original` (the detector's own score) and `processing` (the recognised audio type).
 - `action`: when the level first rises to VERIFY or HOLD, with the prevention message
 - `summary`: at the end. Calibration mode sends `calibrated` instead.
+- `warning`: a window could not be analysed (for example a runtime error in the detector). The call goes on, and it is sent once per call.
 
 ## Files
 ```
+start_demo.bat       demo day: pre-flight check, then start the server and open the browser
 run.py               start the server
 setup_models.py      download the ONNX models
 config.json          window/hop, VAD and risk-engine settings, audit DB, optional webhook_url
@@ -245,7 +259,8 @@ static/              ui.css (design system, dark) + shell.js (sidebar, icons, to
                      customer.html/js, caller.html/js; security.html redirects to the Incidents view;
                      vs-client.js (shared WebRTC + analysis client). No external libraries or fonts; works offline
 samples/             demo calls + samples.json
-tools/               score_file.py, calibrate.py, stream_file.py, build_demo.py, compare_step8c.py
+tools/               score_file.py, calibrate.py, stream_file.py, build_demo.py, compare_step8c.py,
+                     attack_test.py (Step 9), preflight.py (demo-day check)
 tests/               test_core.py (stub models), test_models.py (real models)
 data/                profiles.json / profiles_step8c.json (line profiles per detector mode), audit.db (run time)
 models/              ONNX models; Step 8c adds voiceshield_layers.onnx + step8c_backend.npz (Kaggle output)

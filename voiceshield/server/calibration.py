@@ -14,6 +14,8 @@ from pathlib import Path
 
 import numpy as np
 
+from .config import write_text_atomic
+
 GENUINE_MARGIN = 1.5            # log-odds above the genuine 95th percentile
 CLIP = (-9.5, 0.0)              # never calibrate outside this range
 MIN_WINDOWS = 5
@@ -56,7 +58,7 @@ class Profiles:
 
     def get(self, name: str | None) -> tuple[str, dict]:
         profiles = self.all()
-        name = name if name in profiles else "default"
+        name = name if isinstance(name, str) and name in profiles else "default"
         return name, profiles[name]
 
     def save(self, name: str, threshold: float, **info) -> dict:
@@ -64,8 +66,7 @@ class Profiles:
             raise ValueError(f"profile name must be letters/digits/-/_ and not one of {sorted(self.reserved)}")
         saved = json.loads(self.path.read_text(encoding="utf-8")) if self.path.exists() else {}
         saved[name] = {"llr_threshold": round(float(threshold), 3), "created": time.strftime("%Y-%m-%d %H:%M"), **info}
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        self.path.write_text(json.dumps(saved, indent=2), encoding="utf-8")
+        write_text_atomic(self.path, json.dumps(saved, indent=2))
         return saved[name]
 
 

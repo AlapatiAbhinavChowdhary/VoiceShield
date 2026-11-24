@@ -509,6 +509,10 @@ function onMessage(m) {
       $("vpName").value = "";
       loadVoiceprints(m.name).then(() => { store.set("vs-claimed", m.name); VSUI.loadStatus(); });
       break;
+    case "warning":
+      addEvent("warn", "alert", "Analysis warning", m.message, m.t);
+      VSUI.toast("warn", "Analysis warning", m.message);
+      break;
     case "error":
       $(S.mode === "enroll" ? "vpStatus" : "calStatus").textContent = m.message;
       setVerdict("IDLE", { state: "Error", title: "Not saved", why: m.message });
