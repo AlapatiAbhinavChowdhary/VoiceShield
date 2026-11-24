@@ -196,6 +196,20 @@ The new detector is now switched on in the live server. One setting in `config.j
 - **Honest exception:** with the stricter `studio` setting, the Kokoro clone dropped from HOLD to VERIFY.
 - **Still unsolved:** the laptop's Windows noise removal still caused one false alarm out of two sessions. **Rule for the demo: keep Windows audio enhancements OFF.**
 
+### Step 9: the hardest attack, a clone of *you*
+What if the scammer clones the voice of the very person they pretend to be? Then the voiceprint check (Guard B) may be fooled, because the voice really sounds like that person.
+
+- **How we tested it:**
+  - We made a clone of the enrolled team member's own voice on the laptop (kNN-VC), with his consent, from about 2 minutes of his own recordings, and made it read the bank-fraud script. Nothing was uploaded anywhere.
+  - Then we attacked the system while claiming to be him: first offline, then by playing the clone *into a real call* between the Customer and Caller screens (an automated test, run twice).
+- **What happened:**
+  - **Guard B was almost fooled:** the clone's voiceprint similarity was 0.41, and the cut-off is 0.45. His real voice scores 0.95.
+  - **Guard A caught it anyway:** the AI-voice detector flagged **every single window** (18 of 18) as machine-made.
+  - **Offline:** HOLD after 4.4 seconds.
+  - **Through the live call:** VERIFY after about 4 seconds, HOLD after 8–10 seconds, and the scammer's ₹49,999 payment request was **blocked automatically** both times.
+- **The lesson:** this is exactly why VoiceShield uses several guards. When one is nearly fooled, another one catches the attack.
+- **Still to test:** the same attack with an expensive commercial clone (for example ElevenLabs) of the enrolled person.
+
 ### The research paper
 Everything above is written up as a two-column research paper (`docs/paper/voiceshield_paper.tex`). It includes the negative results, because reporting what did *not* work is part of honest science.
 
@@ -265,11 +279,19 @@ Design choices:
 
 ## 9. What is left to do
 
-1. **Final attack test:** a clone of the enrolled person's own voice, plus a scam script, through the call demo.
+**Done:**
+- the attack test with an open-source clone of the enrolled person (Step 9);
+- the presentation slides;
+- the demo video script (`docs/demo_video_script.md`);
+- the paper's screenshots and GitHub link.
+
+**Still open:**
+1. **Premium attack test:** the same attack with a premium clone (for example ElevenLabs) of the enrolled person. This needs an account and the person's consent.
 2. **Call calibration:** record real callers through the call app to set the `call` cut-off.
-3. **Live microphone check** of the new detector.
-4. **Wrap-up:** demo video, final report, presentation slides, and the teacher's progress document.
-5. **Optional:** run the detector on the graphics card, and use a real phone as the caller.
+3. **Live microphone check** of the new detector with a real person speaking.
+4. **Record the demo video** using the script.
+5. **Paper details:** confirm the author list and three references.
+6. **Optional:** run the detector on the graphics card, and use a real phone as the caller.
 
 ---
 

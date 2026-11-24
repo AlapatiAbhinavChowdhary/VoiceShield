@@ -893,6 +893,48 @@ Notebook: `notebooks/step8c_frozen_backend.ipynb`; builder and CPU test in `note
 - **The Windows-enhancement false alarm is reduced but not solved.** Session 1 dropped from a false HOLD to VERIFY, but session 2 is still held. The simulated noise suppression in training does not cover Windows' noise suppression + beam-forming + auto-gain. **Rule unchanged: Windows audio enhancements OFF.**
 - **The `auto` profile is more sensitive on raw mic audio:** a genuine session reached 44.6, just under VERIFY. Use the calibrated `mic` profile for live demos, and `auto` only for lines that have not been calibrated.
 
+### Step 9: attack with a clone of the enrolled person (24 Nov 2026)
+
+**Question:** what happens when the caller is an AI clone of the very person they claim to be? The voiceprint is then expected to match, so the detector and the scam rules must carry the decision.
+
+**The clone (made locally, with consent; never uploaded):**
+- **Method:** kNN-VC (WavLM-Large + prematched HiFi-GAN, `bshall/knn-vc`, the method of Step 3), run on the laptop CPU.
+  - Script: `notebooks/build`-style helper in the scratchpad.
+  - A small stand-in for `torchaudio`, because torch 2.15 has no matching torchaudio build.
+- **Reference:** 119 s of the enrolled team member's own laptop recordings (`recordings/laptop_mic_enhancements_*.wav`).
+- **Content:** the robot-voice bank-fraud script (`samples/scam_call_tts.wav`).
+- **Output:** `recordings/step9_clone_of_enrolled_user.wav` (23.1 s). It is git-ignored, like all personal recordings.
+
+**Offline, full pipeline** (`tools/attack_test.py`; the caller claims to be the enrolled person; `default` profiles):
+
+| Caller | Voiceprint similarity (cut-off 0.45) | Detector windows flagged | Scam tactics | Verdict (original / Step 8c) |
+|---|---|---|---|---|
+| Clone of the enrolled person + scam script | **0.41** (min 0.31) | **18/18** (median score 10.6 / 14.1) | 3 of 4 | **HOLD at 4.4 s** / **HOLD at 4.4 s** |
+| The enrolled person's real voice | 0.95 (min 0.79) | 0/19 | none | PASS (max 3) / PASS (max 9) |
+| Robot-voice scam script | −0.06 | 18/18 | 4 | HOLD at 4.4 s / HOLD at 4.4 s |
+
+**Through the live call:**
+- **Setup:** two automated runs of the two-window demo (headless Chrome, a real WebRTC call, the clone uploaded on the caller page and played into the call). The customer claims to be the enrolled person, `default` profile, Step 8c detector.
+
+| Run | VERIFY | HOLD | Voiceprint similarity (mean, min) | ₹49,999 transfer |
+|---|---|---|---|---|
+| 1 | 4.5 s (voice ≠ claimed person, 97/100) | 7.8 s (synthetic voice 78 + mismatch 80) | 0.32, 0.18 | **blocked automatically** |
+| 2 | 3.8 s | 10.0 s | 0.33, 0.05 | **blocked automatically** |
+
+- **Screenshots:** `docs/assets/ui-customer-hold.png` and `ui-caller-attack.png`, also used as the paper's Figure 3a/b.
+
+**Findings:**
+- **The voiceprint nearly accepted the clone.** Offline it scored 0.41, only 0.04 below the cut-off. A better clone would pass it, as expected.
+- **The AI-voice detector carried the decision.** Every window was flagged by both detectors.
+- **Through the call, the Opus channel lowered the clone's similarity further** (0.32), so identity mismatch also fired. HOLD came a little later (7.8–10 s) than offline, because of real-time analysis of call audio.
+- **Scam words in the clone were transcribed slightly worse.** "Fraud department" became "Frog Department", so the "claims to be a bank" tactic was missed. The other three tactics were found.
+- **Limits:**
+  - the clone is open-source and made from 2 min of speech, and kNN-VC clones were easy for this detector in Step 3;
+  - the test was digital, not played through a loudspeaker;
+  - **a premium clone (e.g. ElevenLabs) of the enrolled person is still to be tested.**
+
+The two-window call test also confirms the redesigned customer and caller pages work end to end: call setup, injection, verdicts, the bank-app block, incident logging.
+
 ---
 
 ## 9. Sources

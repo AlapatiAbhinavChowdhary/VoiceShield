@@ -70,8 +70,8 @@ It does this with **three independent checks** that cover for each other:
 <td width="50%"><img src="docs/assets/ui-incidents.png" alt="Incidents table for the security team"><br><sub><b>🚨 Incidents</b>: the bank security team's live view. It refreshes every 2 s and pops up a notice on every new HOLD.</sub></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/assets/ui-customer.png" alt="Customer phone with the bank app"><br><sub><b>📱 Customer phone</b>: the person being called, with a bank app that enforces the verdict.</sub></td>
-<td width="50%"><img src="docs/assets/ui-caller.png" alt="Caller page with the attacker toolkit"><br><sub><b>☎️ Caller</b>: a genuine caller, or an attacker who plays a cloned voice <i>into</i> the call.</sub></td>
+<td width="50%"><img src="docs/assets/ui-customer-hold.png" alt="Customer phone during the Step 9 attack: HOLD and the 49,999 rupee payment blocked"><br><sub><b>📱 Customer phone</b> during the Step 9 attack: <b>HOLD</b>, and the bank app <b>blocks the ₹49,999 payment</b> automatically.</sub></td>
+<td width="50%"><img src="docs/assets/ui-caller-attack.png" alt="Caller page playing a cloned voice into the call"><br><sub><b>☎️ Caller</b>: the attacker plays a clone of the enrolled person's own voice <i>into</i> the live call.</sub></td>
 </tr>
 </table>
 
@@ -184,6 +184,18 @@ Simple probes on each of the detector's 25 layers show that the **middle layers 
 
 <sub>Both detectors use their own `default` cut-off. The exported model reproduces the original detector's score to within 0.0003 and adds about 5% CPU time (about 340 ms per window). With the stricter <code>studio</code> profile the Kokoro clone stays at VERIFY. Windows audio enhancements must stay <b>off</b>.</sub>
 
+### 5 · The hardest attack: a clone of the person the caller claims to be
+
+We cloned the enrolled team member's **own voice** locally, with consent, from 2 minutes of his recordings (kNN-VC), made it read the bank-fraud script, and attacked the system while claiming to be him:
+
+| Caller (claims to be the enrolled person) | 🧬 Voiceprint (cut-off 0.45) | 🤖 AI-voice detector | Verdict |
+|---|:---:|:---:|:---:|
+| **Clone of his voice + scam script** | 0.41, *almost* accepted | **18 / 18** windows flagged | 🔴 **HOLD at 4.4 s** |
+| … the same clone **through the live WebRTC call** (2 runs) | 0.32 | median score 13 | 🟡 VERIFY 3.8–4.5 s → 🔴 **HOLD 7.8–10 s**, ₹49,999 **blocked** |
+| His real voice | 0.95, matches | 0 / 19 | 🟢 PASS |
+
+> The voiceprint alone would nearly have let the clone through. The AI-voice detector caught every window, and that is exactly why VoiceShield never relies on one check. Still open: the same attack with a *premium* clone.
+
 ---
 
 ## 🗺️ The journey
@@ -203,6 +215,7 @@ Simple probes on each of the detector's 25 layers show that the **middle layers 
 | **8c** | **Frozen detector + 25-layer back-end** | ✅ mean EER **9.7% → 4.1%**, nothing forgotten |
 | **8d** | **Step 8c in the live server** | ✅ ElevenLabs clone **VERIFY → HOLD** |
 | UI | Security-console redesign | ✅ live waveform, forensics, investigation, analytics |
+| **9** | **Attack: a clone of the enrolled person's own voice** | ✅ the voiceprint nearly accepted it (0.41 vs 0.45), but the detector flagged **18/18** windows: **HOLD**, and ₹49,999 **blocked** through the live call |
 
 <sub>✅ worked &nbsp;·&nbsp; ❌ tried and rejected (reported honestly) &nbsp;·&nbsp; 🔬 research finding. Every number comes from the <a href="docs/SIH26104_Research_and_Build_Plan.md">results log</a>.</sub>
 
@@ -281,7 +294,8 @@ VoiceShield/
 - [x] Real-time fusion of AI voice, voiceprint and scam language
 - [x] Two-party call demo with automatic payment blocking
 - [x] Detector repaired for consumer audio processing (Step 8c), live in the server
-- [ ] Attack test with a clone of the *enrolled* person's own voice through the call
+- [x] Attack test with a clone of the *enrolled* person's own voice through the call (open-source clone, Step 9)
+- [ ] The same attack with a *premium* clone of the enrolled person
 - [ ] Calibrate the call channel (`call` profile) with real callers
 - [ ] Train with *real* device processing: Windows still causes one false alarm with enhancements on
 - [ ] Detector on the GPU, and a real phone as the caller (HTTPS)

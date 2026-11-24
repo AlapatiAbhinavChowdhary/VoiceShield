@@ -3,12 +3,12 @@
 % impersonation in calls (SIH 2026, problem statement SIH26104).
 % Single file, no .bib needed. Compile with pdfLaTeX (Overleaf default).
 %
-% Screenshots (upload to the Overleaf project with exactly these names;
+% Screenshots (provided next to this file in docs/paper/; upload them to the Overleaf project with these names;
 % a grey box "Image file not supplied" is shown until you do):
 %   customer.png   /customer page during a HOLD (verdict, signals, bank app)
 %   caller.png     /caller page (attacker injecting a recording)
 %   security.png   /security dashboard with the incident
-%   console.png    lab console (/) with the risk chart and transcript
+%   console.png    command center during a HOLD (provided in docs/paper/)
 % Crop browser tabs and the taskbar with the trim values of \shotimg if needed.
 %
 % BEFORE SUBMISSION: check every number against
@@ -113,7 +113,7 @@ Full fine-tuning on 3,760 in-domain clips did not beat the original on unseen de
 In live tests on a laptop, a premium AI voice played into the microphone was held after 5.3\,s while the same script read by a person passed, and in a two-browser WebRTC call an injected scam recording was held after about 4\,s of speech and the transfer was blocked automatically.
 We also found that consumer audio processing is a major hidden failure mode: operating-system microphone enhancements turned a genuine voice into a false alarm, noise suppression raised the EER on premium clones from 8.2\% to 34.0\% and the Opus codec to 45.1\%, and Opus flagged 32.7\% of real voices at the default threshold.
 Two parameter-efficient fine-tuning methods (LoRA, 1.1\% of the weights), one with the label loss only and one anchored to the original model by a teacher-student consistency loss, both learned Bluetooth and Opus conditions on development data but lost accuracy on real-world fakes (In-the-Wild development EER 4.0\% to 9.5\%), so the original model was kept.
-We then left the detector frozen. Linear probes on its 25 hidden layers showed that the middle transformer blocks keep the most evidence under processing and that much of the damage is in the original read-out, not in the representation. A layer-weighted back-end with 1,050 parameters, fused with the original head, reduced the mean EER over 13 unseen test sets from 9.7\% to 4.1\%: on premium clones from 8.2\% to 3.0\%, under noise suppression from 34.0\% to 12.7\% and under Opus from 45.1\% to 16.7\%, with no loss on In-the-Wild (4.7\%). A processing classifier that selects a per-processing threshold reduced Opus false alarms on genuine speech from 32.7\% to 13.3\% for the original detector and to 2.7\% for the fused score, but moved errors rather than reducing them overall. In the live server, with the default thresholds, the fused score raised two premium clones from VERIFY to HOLD while genuine callers stayed at PASS. Its processing classifier recognised real Windows noise suppression, but that processing still caused a false alarm in one of two sessions.
+We then left the detector frozen. Linear probes on its 25 hidden layers showed that the middle transformer blocks keep the most evidence under processing and that much of the damage is in the original read-out, not in the representation. A layer-weighted back-end with 1,050 parameters, fused with the original head, reduced the mean EER over 13 unseen test sets from 9.7\% to 4.1\%: on premium clones from 8.2\% to 3.0\%, under noise suppression from 34.0\% to 12.7\% and under Opus from 45.1\% to 16.7\%, with no loss on In-the-Wild (4.7\%). A processing classifier that selects a per-processing threshold reduced Opus false alarms on genuine speech from 32.7\% to 13.3\% for the original detector and to 2.7\% for the fused score, but moved errors rather than reducing them overall. In the live server, with the default thresholds, the fused score raised two premium clones from VERIFY to HOLD while genuine callers stayed at PASS. Its processing classifier recognised real Windows noise suppression, but that processing still caused a false alarm in one of two sessions. We also tested a clone of the enrolled user's own voice, made from two minutes of speech. It nearly passed the voiceprint check (similarity 0.41 against a cut-off of 0.45), but the detector flagged it in every window. The call was held, and the transfer requested during a live call was blocked.
 We report the defects we found, negative results and the limits of a small evaluation with simulated processing.
 
 \medskip
@@ -284,9 +284,19 @@ The call verdict only escalates. Scam words from a genuine, matching voice there
 
 \subsection{Call Demonstrator and Prevention}
 \label{sec:call}
-The demonstrator has three web pages (Figure~\ref{fig:overview}). The \texttt{/caller} page is the genuine caller or the attacker; it sends the raw microphone, or \emph{injects a recording into the call} through Web Audio, and can send a payment request. The \texttt{/customer} page answers the call, plays the caller, and streams the \emph{remote} audio to the server; it shows the verdict, the three signals, a risk chart, the transcript and a mock banking app. The \texttt{/security} page lists incidents with their reasons, scam tactics and prevention actions. The browsers are connected by a WebRTC peer connection (W3C, 2021); the server only relays signalling messages. The Opus codec (Valin et al., 2012) is set to mono, 128\,kbit/s and no discontinuous transmission, so that the call codec adds as few artefacts as possible.
+The demonstrator has three web pages (Figure~\ref{fig:overview}). The \texttt{/caller} page is the genuine caller or the attacker; it sends the raw microphone, or \emph{injects a recording into the call} through Web Audio, and can send a payment request. The \texttt{/customer} page answers the call, plays the caller, and streams the \emph{remote} audio to the server; it shows the verdict, the three signals, a risk chart, the transcript and a mock banking app. The security team's \emph{Incidents} view lists the protected calls with their reasons, scam tactics and prevention actions. The browsers are connected by a WebRTC peer connection (W3C, 2021); the server only relays signalling messages. The Opus codec (Valin et al., 2012) is set to mono, 128\,kbit/s and no discontinuous transmission, so that the call codec adds as few artefacts as possible.
 
-The prevention workflow is: PASS allows a payment; VERIFY requires an out-of-band check, either an OTP sent to the customer's registered phone with a ``never share this on a call'' warning, or hanging up and calling back the official number; HOLD blocks a pending or new payment automatically and alerts the security team. Each step is recorded against the call (for example \texttt{TRANSFER\_BLOCKED}, \texttt{OTP\_SENT}, \texttt{CALLBACK\_REQUESTED}). The audit database stores scores, decisions and the \emph{names} of scam tactics only; audio, transcripts and voiceprints are never logged, and voiceprints can be deleted from the console. All four pages share one design system with light and dark themes and use no external fonts or libraries, so the demonstration works offline (Figure~\ref{fig:ui}).
+The prevention workflow is: PASS allows a payment; VERIFY requires an out-of-band check, either an OTP sent to the customer's registered phone with a ``never share this on a call'' warning, or hanging up and calling back the official number; HOLD blocks a pending or new payment automatically and alerts the security team. Each step is recorded against the call (for example \texttt{TRANSFER\_BLOCKED}, \texttt{OTP\_SENT}, \texttt{CALLBACK\_REQUESTED}). The audit database stores scores, decisions and the \emph{names} of scam tactics only; audio, transcripts and voiceprints are never logged, and voiceprints can be deleted from the console. A single-page console serves the operator and the security team with seven views:
+\begin{itemize}\setlength\itemsep{0pt}
+\item a live command center;
+\item a forensic voice analysis, with waveform, spectrogram and per-window verdicts;
+\item the incident list;
+\item the detection history;
+\item an investigation view that keeps the model's prediction, the supporting signals and the actions taken apart;
+\item analytics computed from the audit log;
+\item settings for enrolment and calibration.
+\end{itemize}
+The live waveform is drawn from the same PCM chunks that are streamed to the detector, so it shows exactly the audio being judged, coloured by the verdict at the time it was captured. Status is never shown by colour alone. The pages use no external fonts or libraries, so the demonstration works offline (Figure~\ref{fig:ui}).
 
 \begin{figure*}[t]
 \centering
@@ -342,13 +352,13 @@ The prevention workflow is: PASS allows a payment; VERIFY requires an out-of-ban
 \vspace{6pt}
 \begin{minipage}[t]{0.485\textwidth}\centering
 \shotimg{\linewidth}{security.png}{0pt 0pt 0pt 0pt}\\[2pt]
-{\scriptsize (c) Security dashboard with the incident and its reasons}
+{\scriptsize (c) Incidents view for the security team}
 \end{minipage}\hfill
 \begin{minipage}[t]{0.485\textwidth}\centering
 \shotimg{\linewidth}{console.png}{0pt 0pt 0pt 0pt}\\[2pt]
-{\scriptsize (d) Lab console: risk chart, signals and transcript}
+{\scriptsize (d) Command center during the demo scam call (HOLD at 4.4 s)}
 \end{minipage}
-\caption{\textbf{Screenshots of the prototype.} (a)~The customer sees the verdict, the three signals and the reasons; the banking app blocks the payment. (b)~The caller page can send the microphone or a recording into the WebRTC call. (c)~Incidents with verdict, scam tactics and prevention events. (d)~The console used for calibration, enrolment and offline files.}
+\caption{\textbf{Screenshots of the prototype}, captured from the running system. (a)~The customer sees the verdict, the three signals and the reasons; the banking app blocks the payment. (b)~The caller page can send the microphone or a recording into the WebRTC call. (c)~Incidents with verdict, scam tactics and prevention events. (d)~The command center: verdict and risk, AI-voice probability of the latest window, the three signals, and the system response.}
 \label{fig:ui}
 \end{figure*}
 
@@ -850,6 +860,45 @@ Laptop mic, enh. on, session 2 & false HOLD (6.2 s) & false HOLD (15.8 s)\\
 \end{tabular}
 \end{table}
 
+\subsection{Attack with a Clone of the Enrolled Person (Step 9)}
+\label{sec:attack}
+The hardest case for the voiceprint check is a clone of the very person the caller claims to be.
+
+\textbf{The clone.} We made one locally with kNN-VC (Baas et al., 2023), with the team member's consent:
+\begin{itemize}\setlength\itemsep{0pt}
+\item the target voice came from 119\,s of the enrolled team member's own laptop recordings;
+\item the clone reads the bank-fraud script of the demo.
+\end{itemize}
+We ran it through the full pipeline with that identity claimed (Table~\ref{tab:attack}).
+
+\textbf{Offline.} The voiceprint similarity of the clone was 0.41, close to the cut-off of 0.45 (the genuine speaker scored 0.95). The identity check alone therefore nearly accepted it. The AI-voice detector flagged all 18 windows, with both the original detector and Step 8c. Together with the scam rules, the call reached HOLD after 4.4\,s.
+
+\textbf{Through a live call.} We played the clone into a WebRTC call in two automated runs of the call demonstrator.
+\begin{itemize}\setlength\itemsep{0pt}
+\item The call reached VERIFY after 3.8--4.5\,s, because the voice did not match the claimed person. The call channel lowered the mean similarity to 0.32.
+\item It reached HOLD after 7.8--10.0\,s.
+\item The Rs.~49,999 transfer requested during the call was blocked automatically.
+\end{itemize}
+
+\textbf{Limits of this test.} The clone is an open-source one made from two minutes of speech. A premium clone of the enrolled person has not been tested.
+
+\begin{table}[t]
+\centering\footnotesize
+\caption{\textbf{Attack with a clone of the enrolled person (Step 9).} The caller claims to be the enrolled team member. Similarity: mean voiceprint cosine (cut-off 0.45). Offline rows use the full pipeline with Step 8c; call rows are two automated runs of the two-window demonstrator.}
+\label{tab:attack}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{0.34\columnwidth}p{0.14\columnwidth}p{0.17\columnwidth}p{0.27\columnwidth}@{}}
+\toprule
+\textbf{Caller} & \textbf{Similarity} & \textbf{Detector} & \textbf{Verdict}\\
+\midrule
+Clone of the enrolled person + scam script, offline & 0.41 & 18/18 windows & HOLD at 4.4 s\\
+Same clone through the WebRTC call & 0.32--0.33 & median score 13 & VERIFY 3.8--4.5 s, HOLD 7.8--10.0 s, transfer blocked\\
+Enrolled person's real voice, offline & 0.95 & 0/19 windows & PASS\\
+Robot-voice scam script, offline & $-0.06$ & 18/18 windows & HOLD at 4.4 s\\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Software Quality}
 \label{sec:tests}
 The server has 41 fast tests with stubbed models and 9 tests with the real models, all passing. They cover the resampler, VAD windowing, invariance to the chunk size, risk escalation, calibration rules, multilingual scam tactics, the voiceprint store, utterance cutting, the WebSocket flows (genuine, cloned, 44.1\,kHz input, calibration, enrolment, claimed identity, invalid start), the signalling relay (join, offer and answer relay, peer left, invalid role refused), the prevention-event interface and the web pages. The real-model tests check that voiceprints separate two real speakers, that the scam call reaches HOLD with ``asks for OTP'', and that the Step 8c model reproduces the original detector's score and gives the expected verdicts on the demo calls. Every Kaggle notebook is first run end to end on the CPU with stub data and weights of the real shapes, including LoRA training, merging and ONNX export (difference between ONNX and PyTorch outputs below $10^{-4}$), because a failed GPU run costs hours of queue time. For Step 8c the same test also checks the serving path: the ONNX layer outputs and the NumPy back-end reproduce the notebook's features and fused scores.
@@ -927,14 +976,14 @@ Multilingual, Indian accents & Hindi and Telugu tested for the detector; scam ru
 
 \textbf{Limitations.}
 \label{sec:limits}
-(i) A good clone \emph{of the enrolled person} can pass the voiceprint check; the voiceprint mainly targets human impersonators and clones of someone else. (ii) The key fused case, a premium clone reading a scam script through the call, is covered by unit tests but not yet by real premium-clone audio through WebRTC. (iii) Genuine-caller and human-impersonator scenarios through the call, and a calibrated profile for the call channel, still need live microphones. (iv) The scam rules are keyword based and can fire on innocent words. (v) The demonstrator uses a WebRTC call, not a cellular call. (vi) The detector slows down on a busy laptop. (vii) Three fine-tuning runs have not improved the detector. The frozen-detector back-end did, but it was measured mainly on simulated processing. On real audio it was checked only on the demo calls and on four laptop sessions of one speaker, and the laptop's own noise suppression still caused one false alarm, so the enhancements must stay off.
+(i) A good clone \emph{of the enrolled person} can pass the voiceprint check: our open-source clone came within 0.04 of the cut-off, and the voiceprint mainly targets human impersonators and clones of someone else. (ii) An open-source clone of the enrolled person was held through the call (Section~\ref{sec:attack}), but a premium clone of the enrolled person through the call remains untested. (iii) Genuine-caller and human-impersonator scenarios through the call, and a calibrated profile for the call channel, still need live microphones. (iv) The scam rules are keyword based and can fire on innocent words. (v) The demonstrator uses a WebRTC call, not a cellular call. (vi) The detector slows down on a busy laptop. (vii) Three fine-tuning runs have not improved the detector. The frozen-detector back-end did, but it was measured mainly on simulated processing. On real audio it was checked only on the demo calls and on four laptop sessions of one speaker, and the laptop's own noise suppression still caused one false alarm, so the enhancements must stay off.
 
 \textbf{Future work.}
 \label{sec:future}
 The back-end now runs in the live server. Its training views should next include real device processing: recordings through operating-system enhancements, Bluetooth headsets and VoIP applications, and re-recorded corpora such as RTCFake (RTCFake, 2026). These would show how much of the gain carries over, and they target the false alarm that the laptop's noise suppression still causes. The back-end itself could pool over time with attention instead of the mean, or use more training generators. Beyond the model: an attack test with a clone of the enrolled person and premium clones through the call; a calibrated call-channel profile; the detector on the GPU; a phone as the caller over HTTPS; a learned scam classifier for Hinglish; and a larger, multi-speaker live evaluation.
 
 \section{Conclusion}
-We built VoiceShield, a real-time system that fuses a synthetic-voice detector, a voiceprint check and scam-language rules into an explainable PASS/VERIFY/HOLD decision and blocks a payment when a call is judged an impersonation. A post-trained SSL detector worked zero-shot on Indian-language clones and real-world deepfakes, and our own fine-tuning did not beat it, which we report as a negative result. In live tests a premium AI voice was held after 5.3\,s while the same script read by a person passed, and an injected scam call was held after about 4\,s of speech with the transfer blocked. Our main finding is that consumer audio processing, from operating-system microphone enhancements to noise suppression and VoIP codecs, can turn a genuine voice into a false alarm and make premium clones nearly undetectable. Two parameter-efficient fine-tuning methods, one of them anchored to the original model, learned the processed conditions but lost accuracy on real-world fakes and were rejected by model selection. Keeping the detector frozen worked better. Layer-wise probes showed that the evidence survives processing mainly in the middle blocks and that much of the damage is in the read-out. A 1,050-parameter back-end fused with the original head reduced the mean EER over 13 unseen test sets from 9.7\% to 4.1\%, including premium clones under Opus from 45.1\% to 16.7\%, without any loss on real-world deepfakes. An automatic per-processing threshold removed most of the Opus false alarms but only moved errors overall. In the live server, with the default thresholds, the back-end turned two premium clones that had only reached VERIFY into HOLDs, without false alarms on genuine callers. It did not fully remove the false alarms caused by the laptop's own noise suppression, so a deployed detector must still control and calibrate its input chain.
+We built VoiceShield, a real-time system that fuses a synthetic-voice detector, a voiceprint check and scam-language rules into an explainable PASS/VERIFY/HOLD decision and blocks a payment when a call is judged an impersonation. A post-trained SSL detector worked zero-shot on Indian-language clones and real-world deepfakes, and our own fine-tuning did not beat it, which we report as a negative result. In live tests a premium AI voice was held after 5.3\,s while the same script read by a person passed, and an injected scam call was held after about 4\,s of speech with the transfer blocked. Our main finding is that consumer audio processing, from operating-system microphone enhancements to noise suppression and VoIP codecs, can turn a genuine voice into a false alarm and make premium clones nearly undetectable. Two parameter-efficient fine-tuning methods, one of them anchored to the original model, learned the processed conditions but lost accuracy on real-world fakes and were rejected by model selection. Keeping the detector frozen worked better. Layer-wise probes showed that the evidence survives processing mainly in the middle blocks and that much of the damage is in the read-out. A 1,050-parameter back-end fused with the original head reduced the mean EER over 13 unseen test sets from 9.7\% to 4.1\%, including premium clones under Opus from 45.1\% to 16.7\%, without any loss on real-world deepfakes. An automatic per-processing threshold removed most of the Opus false alarms but only moved errors overall. In the live server, with the default thresholds, the back-end turned two premium clones that had only reached VERIFY into HOLDs, without false alarms on genuine callers. It did not fully remove the false alarms caused by the laptop's own noise suppression, so a deployed detector must still control and calibrate its input chain. A clone of the enrolled person nearly passed the voiceprint check but was caught by the detector in every window. That case shows why the decision should rest on several independent signals.
 
 % =====================================================================
 \section{Author Contributions}
@@ -948,8 +997,7 @@ An AI coding assistant (Claude Code) implemented most of the server, the web pag
 We thank Lovely Professional University for guidance and support, and the authors of the AntiDeepfake, WeSpeaker, Silero VAD, Whisper, Kathbath, IndicSynth and In-the-Wild resources for releasing them.
 
 \section{Data and Code Availability}
-% Add the repository URL when it is public.
-The code, notebooks and results log are available from the authors on request. The public data sets can be obtained from their publishers under their licences; our own voice recordings are not released.
+The code, the Kaggle notebooks, the results log and the figures are available at \url{https://github.com/AlapatiAbhinavChowdhary/VoiceShield}. The large model files are downloaded by a setup script. The public data sets can be obtained from their publishers under their licences. Our own voice recordings and voiceprints are not released.
 
 \begin{thebibliography}{50}
 \setlength{\itemsep}{2pt}
