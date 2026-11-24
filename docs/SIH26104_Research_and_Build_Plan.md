@@ -935,6 +935,47 @@ Notebook: `notebooks/step8c_frozen_backend.ipynb`; builder and CPU test in `note
 
 The two-window call test also confirms the redesigned customer and caller pages work end to end: call setup, injection, verdicts, the bank-app block, incident logging.
 
+### Step 10: genuine and cloned calls through WebRTC, and the `call` line profile (25 Nov 2026)
+
+**Goal:** check for false alarms on genuine callers when their voice reaches the detector through the real call channel (WebRTC, Opus mono 128 kbit/s), and calibrate the `call` line profile. Until now, genuine callers had only been tested offline or on the laptop microphone.
+
+**Method:**
+- The same automated two-tab call as in Step 9: headless Chrome, audio muted, the recording injected into the call on the caller page.
+- No identity claimed, so only the detector (Step 8c, fused) and the scam rules decide.
+- **Calibration of `call`:** 48 s of genuine speech from the *dev* speakers only (yt_0001, yt_0003, yt_0007, yt_0013; never the demo speakers yt_0009 / yt_0010), played through the call. Then the customer page's "Calibrate with the caller's voice" button, the same rule as `mic` (95th percentile + 1.5, kept between -9.5 and 0).
+- **Calls:** the four demo calls through the call, once with `default` (-1.91) and once with the new `call` profile.
+- Numbers: `recordings/step10_webrtc_calls.csv`.
+
+**Calibration:**
+- 21 genuine windows: median -5.77, 95th percentile -0.87, maximum -0.67. Clean genuine speech scores about -9.6.
+- The rule gave +0.63, capped at **0.00**.
+- At the `default` threshold (-1.91), 3 of the 21 genuine windows (14%) were above the cut-off.
+- **So the Opus call channel moves genuine dev speech about 4 log-odds units toward "fake".** This is the Step 8 Opus effect, here on a real WebRTC call at a high bitrate.
+
+**Demo calls through WebRTC:**
+
+| Call | `default` (-1.91) | `call` (0.00) |
+|---|---|---|
+| Genuine caller 1 | PASS, 0 of 31 windows flagged, max risk 2 | PASS, 0 of 31, max risk 0 |
+| Genuine caller 2 | PASS, 0 of 31, max risk 40 | PASS, 0 of 31, max risk 40 |
+| ElevenLabs clone | **HOLD 8.3 s** (VERIFY 6.0 s), 12 of 13 flagged | HOLD 9.3 s (VERIFY 7.3 s), 9 of 13 |
+| Kokoro clone | **HOLD 14.1 s** (VERIFY 10.7 s), 10 of 15 flagged | VERIFY 15.8 s only, 5 of 15 |
+
+Times are seconds of call audio. Genuine caller 2's risk of 40 comes from the scam rules, not the voice (no window flagged).
+
+**Findings:**
+- **No false alarm on genuine callers through the real call channel**, with either profile. Isolated high windows of dev speakers (14% at `default`) do not escalate, because HOLD needs 3 of 5 suspicious windows and a high running risk.
+- **Both premium clones are held through the call with `default`.** The calibrated `call` profile is too lenient, because its cut-off hit the cap of 0: Kokoro only reached VERIFY.
+- **Decision:**
+  - The `call` profile was **not kept**.
+  - The customer page selects `call` automatically when it exists, so keeping it would have weakened the call demo.
+  - The call demo uses `default`.
+  - Re-calibrate `call` only with a real genuine caller on the demo network, and compare it with `default` before using it.
+- **Limits:**
+  - two genuine demo speakers and four dev speakers;
+  - one browser, one network (localhost);
+  - a real network adds packet loss and lower Opus bitrates, which the Step 8 results suggest will move genuine speech further.
+
 ---
 
 ## 9. Sources

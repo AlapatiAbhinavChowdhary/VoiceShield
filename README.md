@@ -186,13 +186,13 @@ Simple probes on each of the detector's 25 layers show that the **middle layers 
 
 ### 5 · The hardest attack: a clone of the person the caller claims to be
 
-We cloned the enrolled team member's **own voice** locally, with consent, from 2 minutes of his recordings (kNN-VC), made it read the bank-fraud script, and attacked the system while claiming to be him:
+We cloned the enrolled team member's **own voice** locally, with consent, from 2 minutes of that member's recordings (kNN-VC), made it read the bank-fraud script, and attacked the system while claiming to be that member:
 
 | Caller (claims to be the enrolled person) | 🧬 Voiceprint (cut-off 0.45) | 🤖 AI-voice detector | Verdict |
 |---|:---:|:---:|:---:|
-| **Clone of his voice + scam script** | 0.41, *almost* accepted | **18 / 18** windows flagged | 🔴 **HOLD at 4.4 s** |
+| **Clone of the member's voice + scam script** | 0.41, *almost* accepted | **18 / 18** windows flagged | 🔴 **HOLD at 4.4 s** |
 | … the same clone **through the live WebRTC call** (2 runs) | 0.32 | median score 13 | 🟡 VERIFY 3.8–4.5 s → 🔴 **HOLD 7.8–10 s**, ₹49,999 **blocked** |
-| His real voice | 0.95, matches | 0 / 19 | 🟢 PASS |
+| The member's real voice | 0.95, matches | 0 / 19 | 🟢 PASS |
 
 > The voiceprint alone would nearly have let the clone through. The AI-voice detector caught every window, and that is exactly why VoiceShield never relies on one check. Still open: the same attack with a *premium* clone.
 

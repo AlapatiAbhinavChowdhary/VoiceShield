@@ -1,0 +1,10 @@
+call,profile,threshold,verdict,max_risk,windows,flagged_windows,median_llr,verify_t_s,hold_t_s
+genuine_call_1,default,-1.912,PASS,1.9,31,0,-9.21,,
+genuine_call_2,default,-1.912,PASS,40.2,31,0,-8.67,,
+cloned_call_elevenlabs,default,-1.912,HOLD,95.2,13,12,1.41,5.984,8.288
+cloned_call_kokoro,default,-1.912,HOLD,94.5,15,10,-0.45,10.688,14.08
+genuine_call_1,call,0.0,PASS,0.1,31,0,-9.28,,
+genuine_call_2,call,0.0,PASS,40.0,31,0,-8.32,,
+cloned_call_elevenlabs,call,0.0,HOLD,79.5,13,9,1.41,7.296,9.28
+cloned_call_kokoro,call,0.0,VERIFY,67.4,15,5,-0.92,15.776,
+calibration_dev_genuine_48s,call (calibrate),capped 0.00,CALIBRATION,,21,3 above -1.91,-5.77,,

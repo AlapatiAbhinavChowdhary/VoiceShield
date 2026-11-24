@@ -200,10 +200,10 @@ The new detector is now switched on in the live server. One setting in `config.j
 What if the scammer clones the voice of the very person they pretend to be? Then the voiceprint check (Guard B) may be fooled, because the voice really sounds like that person.
 
 - **How we tested it:**
-  - We made a clone of the enrolled team member's own voice on the laptop (kNN-VC), with his consent, from about 2 minutes of his own recordings, and made it read the bank-fraud script. Nothing was uploaded anywhere.
-  - Then we attacked the system while claiming to be him: first offline, then by playing the clone *into a real call* between the Customer and Caller screens (an automated test, run twice).
+  - We made a clone of the enrolled team member's own voice on the laptop (kNN-VC), with that member's consent, from about 2 minutes of the member's own recordings, and made it read the bank-fraud script. Nothing was uploaded anywhere.
+  - Then we attacked the system while claiming to be that member: first offline, then by playing the clone *into a real call* between the Customer and Caller screens (an automated test, run twice).
 - **What happened:**
-  - **Guard B was almost fooled:** the clone's voiceprint similarity was 0.41, and the cut-off is 0.45. His real voice scores 0.95.
+  - **Guard B was almost fooled:** the clone's voiceprint similarity was 0.41, and the cut-off is 0.45. The member's real voice scores 0.95.
   - **Guard A caught it anyway:** the AI-voice detector flagged **every single window** (18 of 18) as machine-made.
   - **Offline:** HOLD after 4.4 seconds.
   - **Through the live call:** VERIFY after about 4 seconds, HOLD after 8–10 seconds, and the scammer's ₹49,999 payment request was **blocked automatically** both times.
