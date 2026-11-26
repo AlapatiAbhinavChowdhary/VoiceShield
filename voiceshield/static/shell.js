@@ -3,10 +3,25 @@
 // the segment lane, spectrogram + overview renderers and small SVG charts. Exposes window.VSUI only.
 // Everything is drawn from real data handed in by the pages; nothing here invents signal or scores.
 (function () {
+  // ---------------------------------------------------------------- theme (before first paint: no flash)
+  const THEME_KEY = "vs-theme";
+  const savedTheme = (() => { try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } })();
+  if (savedTheme === "light") document.documentElement.dataset.theme = "light";
+  function setTheme(t) {
+    if (t === "light") document.documentElement.dataset.theme = "light"; else delete document.documentElement.dataset.theme;
+    try { localStorage.setItem(THEME_KEY, t); } catch (e) { /* private mode: theme lasts for this page only */ }
+    const b = document.getElementById("themeBtn");
+    if (b) { b.innerHTML = icon(t === "light" ? "moon" : "sun"); b.setAttribute("aria-label", t === "light" ? "Switch to dark theme" : "Switch to light theme"); b.title = b.getAttribute("aria-label"); }
+    window.dispatchEvent(new CustomEvent("vs-theme", { detail: t }));
+  }
+  const theme = () => (document.documentElement.dataset.theme === "light" ? "light" : "dark");
   // ---------------------------------------------------------------- icons (24x24 stroke, Lucide style)
   const SH = "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z";
   const P = {
     shield: [SH], "shield-check": [SH, "m9 12 2 2 4-4"], "shield-alert": [SH, "M12 8v4", "M12 16h.01"],
+    sun: ["M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z", "M12 2v2", "M12 20v2", "m4.93 4.93 1.41 1.41", "m17.66 17.66 1.41 1.41", "M2 12h2", "M20 12h2", "m6.34 17.66-1.41 1.41", "m19.07 4.93-1.41 1.41"],
+    moon: ["M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"],
+    flask: ["M9 3h6", "M10 3v6.5L4.5 19a1.5 1.5 0 0 0 1.3 2.25h12.4A1.5 1.5 0 0 0 19.5 19L14 9.5V3", "M7 15h10"],
     logo: [SH, "M8 12.5h1.4l1.3-2.8 1.9 5.3 1.4-3.3H16"],
     alert: ["m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3", "M12 9v4", "M12 17h.01"],
     octagon: ["M2.59 16.73A2 2 0 0 1 2 15.31V8.69a2 2 0 0 1 .59-1.42l4.68-4.68A2 2 0 0 1 8.69 2h6.62a2 2 0 0 1 1.42.59l4.68 4.68A2 2 0 0 1 22 8.69v6.62a2 2 0 0 1-.59 1.42l-4.68 4.68a2 2 0 0 1-1.42.59H8.69a2 2 0 0 1-1.42-.59z", "m15 9-6 6", "m9 9 6 6"],
@@ -114,8 +129,11 @@
     top.innerHTML =
       `<button class="iconbtn menu" id="menuBtn" aria-label="Open navigation">${icon("menu")}</button>` +
       `<div class="crumbs" id="crumbs"></div><div class="spacer"></div>` +
-      `<button class="session-pill hidden" id="sessionPill" title="Go to the live session"></button>`;
+      `<button class="session-pill hidden" id="sessionPill" title="Go to the live session"></button>` +
+      `<button class="iconbtn" id="themeBtn" type="button"></button>`;
     document.getElementById("menuBtn").onclick = () => document.body.classList.toggle("nav-open");
+    setTheme(theme());
+    document.getElementById("themeBtn").onclick = () => setTheme(theme() === "light" ? "dark" : "light");
     setActive(active, title);
     loadStatus();
     setInterval(loadStatus, 15000);
@@ -571,6 +589,6 @@
   function fmtTick(v) { return v >= 1000 ? `${(v / 1000).toFixed(v >= 10000 ? 0 : 1)}k` : Number.isInteger(v) ? String(v) : v.toFixed(1); }
   function fmtNum(v, f) { return f ? f(v) : (Number.isInteger(v) ? String(v) : Number(v).toFixed(1)); }
 
-  window.VSUI = { icon, hydrate, mountTopbar, setActive, loadStatus, toast, confirmDialog, VERDICT, setGauge, RiskChart,
+  window.VSUI = { setTheme, theme, icon, hydrate, mountTopbar, setActive, loadStatus, toast, confirmDialog, VERDICT, setGauge, RiskChart,
                   LiveWave, SegLane, spectrogram, drawImageFit, drawOverview, fitCanvas, barChart, css, esc };
 })();

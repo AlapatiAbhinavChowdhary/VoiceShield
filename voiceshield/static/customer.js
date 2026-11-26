@@ -12,6 +12,7 @@ async function init() {
   VSUI.mountTopbar("/customer");
   VSUI.hydrate();
   U.chart = new VSUI.RiskChart($("chart"), { height: 190 });
+  window.addEventListener("vs-theme", () => U.chart.draw());
   $("room").value = new URLSearchParams(location.search).get("room") || store.get("vs-room") || "demo";
   $("lang").value = store.get("vs-cust-lang") || "";
   $("lang").onchange = () => store.set("vs-cust-lang", $("lang").value);
@@ -34,7 +35,9 @@ async function loadSettings(chooseProfile) {
   try { U.cfg = await api("/api/status"); } catch (e) { setCall("offline", "VoiceShield server not reachable"); return; }
   U.chart.thresholds(U.cfg.risk.verify_at, U.cfg.risk.hold_at);
   const profs = U.cfg.profiles;
-  const want = chooseProfile || store.get("vs-cust-profile") || (profs.call ? "call" : profs.mic ? "mic" : "default");
+  // the call line is WebRTC/Opus, not the laptop mic: use a calibrated `call` profile if there is one, else `default`
+  // (Step 10: through a real call `default` passed genuine callers and held both premium clones)
+  const want = chooseProfile || store.get("vs-cust-profile") || (profs.call ? "call" : "default");
   $("profile").innerHTML = Object.entries(profs).map(([n, p]) =>
     `<option value="${esc(n)}">${esc(n)} · cut-off ${p.auto ? "per audio type" : fmt(p.llr_threshold)}</option>`).join("");
   $("profile").value = profs[want] ? want : "default";

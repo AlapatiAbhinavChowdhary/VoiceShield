@@ -52,6 +52,7 @@ async function init() {
   loadSamples(); loadVoiceprints();
   setVerdict("IDLE"); emptyTranscript(); renderResponse(null); setSignals({ voice: null, identity: null, scam: null });
   window.addEventListener("hashchange", route);
+  window.addEventListener("vs-theme", () => route());      // charts read their colours from the theme when drawn
   route();
   pollBadge(); setInterval(pollBadge, 6000);
 }
