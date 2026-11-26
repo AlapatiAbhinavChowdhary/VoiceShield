@@ -77,6 +77,7 @@ class Config:
     # scam rules: ignore "never share your OTP"-style protective advice (tools/eval_scam.py: on the labelled set,
     # false alarms 7 -> 2 of 12 benign calls, recall unchanged 12/12). false = the original keyword behaviour.
     scam_context: bool = True
+    evidence_key_file: str = "data/evidence_key.json"   # Ed25519 signing key, created on first use (git-ignored)
 
     def path(self, p: str) -> Path:
         p = Path(p)

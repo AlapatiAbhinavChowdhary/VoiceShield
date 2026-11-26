@@ -355,7 +355,8 @@ def client(tmp_path):
     from fastapi.testclient import TestClient
     from server.app import create_app
     cfg = replace(Config(), audit_db=str(tmp_path / "audit.db"), profiles_file=str(tmp_path / "profiles.json"),
-                  voiceprints_file=str(tmp_path / "voiceprints.json"), vad_hangover_ms=0)
+                  voiceprints_file=str(tmp_path / "voiceprints.json"), vad_hangover_ms=0,
+                  evidence_key_file=str(tmp_path / "evidence_key.json"))
     app = create_app(cfg, detector=StubDetector(), vad=StubVad(), speaker=StubSpeaker(), transcriber=StubTranscriber())
     with TestClient(app) as c:
         yield c
@@ -660,6 +661,36 @@ def test_evidence_file_is_tamper_evident(client):
     assert hashlib.sha256(_json.dumps(ev["call"], sort_keys=True, separators=(",", ":"),
                                       ensure_ascii=False).encode()).hexdigest() != ev["sha256"]
     assert client.get("/api/calls/999999/evidence").status_code == 404
+
+
+def test_ed25519_rfc8032_vector():
+    from server import ed25519
+    sk = bytes.fromhex("9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60")
+    pk = ed25519.public_key(sk)
+    assert pk.hex() == "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a"
+    sig = ed25519.sign(sk, b"")
+    assert sig.hex() == ("e5564300c360ac729086e2cc806e828a84877f1eb8e5d974d873e065224901555fb8821590a33bacc61e39701cf9b46bd25b"
+                         "f5f0595bbe24655141438e7a100b")
+    assert ed25519.verify(pk, b"", sig) and not ed25519.verify(pk, b"x", sig)
+    assert not ed25519.verify(pk, b"", sig[:-1] + bytes([sig[-1] ^ 1]))
+
+
+def test_signed_evidence_verifies_and_detects_tampering(client):
+    ready, _ = run_call(client, speech(6, amp=0.3))
+    ev = client.get(f"/api/calls/{ready['call_id']}/evidence").json()
+    key = client.get("/api/evidence/public-key").json()
+    assert ev["signature"]["alg"] == "Ed25519" and ev["signature"]["public_key"] == key["public_key"]
+    ok = client.post("/api/evidence/verify", content=json.dumps(ev)).json()
+    assert ok["verdict"] == "authentic" and ok["signed_by_this_server"] is True
+    bad = json.loads(json.dumps(ev)); bad["call"]["verdict"] = "PASS"
+    assert client.post("/api/evidence/verify", content=json.dumps(bad)).json()["verdict"] == "tampered"
+    forged = json.loads(json.dumps(ev)); forged["generated_at"] = "2020-01-01T00:00:00Z"      # digest fine, signature not
+    r = client.post("/api/evidence/verify", content=json.dumps(forged)).json()
+    assert r["verdict"] == "tampered" and r["digest_ok"] and r["signature"] == "invalid"
+    old = {k: v for k, v in ev.items() if k != "signature"}                                  # files made before signing
+    assert client.post("/api/evidence/verify", content=json.dumps(old)).json()["verdict"] == "intact-unsigned"
+    assert client.post("/api/evidence/verify", content=b"not json").json()["verdict"] == "invalid"
+    assert client.post("/api/evidence/verify", content=b"[1,2]").json()["verdict"] == "invalid"
 
 
 def test_ws_busy_when_too_many_streams(tmp_path):

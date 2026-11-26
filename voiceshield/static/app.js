@@ -739,9 +739,26 @@ async function loadCall(id) {
     try {
       const ev = await api(`/api/calls/${c.id}/evidence`);
       $("cPrintHead").innerHTML = `<b>VoiceShield incident report · session #${c.id}</b><span>Generated ${esc(fmtDate(Date.parse(ev.generated_at) / 1000))} · ` +
-        `detector ${esc(ev.server.detector_mode)} · SHA-256 of the record: <code>${esc(ev.sha256)}</code></span>`;
+        `detector ${esc(ev.server.detector_mode)} · SHA-256 of the record: <code>${esc(ev.sha256)}</code>` +
+        (ev.signature ? ` · signed Ed25519, key <code>${esc(ev.signature.key_id)}</code>` : "") + `</span>`;
     } catch (e) { $("cPrintHead").innerHTML = `<b>VoiceShield incident report · session #${c.id}</b>`; }
     window.print();
+  };
+  $("cVerifyOut").hidden = true;
+  $("cVerifyIn").onchange = async (e) => {                // check a downloaded evidence file against this server's key
+    const f = e.target.files[0]; e.target.value = "";
+    if (!f) return;
+    const out = $("cVerifyOut");
+    try {
+      const r = await fetch("/api/evidence/verify", { method: "POST", headers: { "Content-Type": "application/json" }, body: await f.text() }).then((x) => x.json());
+      const cls = r.verdict === "authentic" && r.signed_by_this_server ? "good" : r.verdict === "intact-unsigned" || r.verdict === "authentic" ? "warn" : "crit";
+      const word = { authentic: r.signed_by_this_server ? "Authentic · signed by this server" : "Valid signature · another key", "intact-unsigned": "Intact · not signed",
+        tampered: "Tampered", invalid: "Not an evidence file" }[r.verdict] || r.verdict;
+      out.className = `verify-out tag ${cls}`; out.hidden = false;
+      out.innerHTML = `${I(cls === "good" ? "shield-check" : cls === "warn" ? "alert" : "x", "xs")}<b>${esc(word)}</b>` +
+        `<span>${esc(f.name)}${r.call_id ? ` · session #${esc(r.call_id)}` : ""} · ${esc(r.detail || "")}</span>`;
+      VSUI.toast(cls === "good" ? "good" : cls === "warn" ? "warn" : "crit", word, r.detail || "");
+    } catch (err) { VSUI.toast("crit", "Verification failed", err.message); }
   };
   const W = c.window_log || [], E = c.events || [], monitor = c.mode === "monitor";
   const flagged = W.filter((w) => (w.window_score ?? 0) >= 0.5).length;

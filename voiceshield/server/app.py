@@ -6,7 +6,9 @@
     GET  /api/samples        demo recordings in samples/
     GET  /api/health         liveness: detector mode, live analyses (limit: config max_streams), uptime
     GET  /api/calls          audit log of recent calls;  /api/calls/{id} for one call
-    GET  /api/calls/{id}/evidence   downloadable record + SHA-256 of its canonical JSON (tamper-evident)
+    GET  /api/calls/{id}/evidence   downloadable record + SHA-256 of its canonical JSON + Ed25519 signature
+    GET  /api/evidence/public-key   this server's evidence-signing key;  POST /api/evidence/verify  check a file
+    GET  /api/lab/scenarios         scenario lab;  POST /api/lab/run/{id}  run one (not audited, not during calls)
     GET  /api/voiceprints    enrolled people;  DELETE /api/voiceprints/{name}
     GET  /api/incidents      monitored calls with alerts and prevention actions (security screen)
     POST /api/calls/{id}/events   prevention action from the customer app (transfer blocked, OTP verified, ...)
@@ -47,6 +49,8 @@ from .models import VadModel, load_detector
 from .offline import make_processor
 from .quality import audio_quality, confidence
 from . import lab
+from .evidence import EvidenceSigner
+from .evidence import check as evidence_check
 from .risk import LEVELS, RiskEngine
 from .scam import CallScam
 from .speaker import CallVoice, SpeakerModel, Voiceprints
@@ -220,8 +224,35 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
                            "detector": getattr(S["detector"], "provider", "?")},
                 "verify": "sha256 of json.dumps(call, sort_keys=True, separators=(',', ':'), ensure_ascii=False)",
                 "sha256": hashlib.sha256(canon.encode("utf-8")).hexdigest(), "call": c}
+        try:                                                  # added 26 Nov 2026: Ed25519 signature (extra field)
+            body["signature"] = signer().sign(c["id"], body["generated_at"], body["sha256"])
+        except Exception as e:                                # a signing failure must not block the evidence file
+            log.warning("evidence signing failed: %s", e)
         return JSONResponse(body, headers={"Content-Disposition":
                                            f'attachment; filename="voiceshield-session-{call_id}-evidence.json"'})
+
+    def signer() -> EvidenceSigner:
+        if "signer" not in S:
+            S["signer"] = EvidenceSigner(cfg.path(cfg.evidence_key_file))
+        return S["signer"]
+
+    @app.get("/api/evidence/public-key")
+    def evidence_key():
+        """This server's evidence-signing public key: share it with whoever must check evidence files offline."""
+        return signer().info()
+
+    @app.post("/api/evidence/verify")
+    async def evidence_verify(request: Request):
+        raw = await request.body()
+        if len(raw) > 5_000_000:
+            raise HTTPException(413, "evidence file too large")
+        try:
+            ev = json.loads(raw)
+        except ValueError:
+            return {"verdict": "invalid", "detail": "not a JSON file"}
+        if not isinstance(ev, dict):
+            return {"verdict": "invalid", "detail": "not a VoiceShield evidence file"}
+        return evidence_check(ev, signer().info()["public_key"])
 
     @app.get("/api/voiceprints")
     def voiceprints():

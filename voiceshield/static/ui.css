@@ -721,3 +721,7 @@ dialog.modal .mf { padding: 16px 20px 18px; display: flex; justify-content: flex
 .spinner { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--brand-line); border-top-color: var(--cyan); animation: spin .8s linear infinite; flex: none; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 2.4s; } }
+
+/* evidence verification result (investigation header) */
+.verify-out { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; max-width: 520px; padding: 6px 10px; margin: 0; font-size: 12px; line-height: 1.35; }
+.verify-out span { color: var(--ink-2); flex-basis: 100%; }

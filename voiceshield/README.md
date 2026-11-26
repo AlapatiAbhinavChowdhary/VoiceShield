@@ -219,6 +219,29 @@ Rules:
 - With genuine and fake recordings, the cut-off is the equal-error-rate point.
 - Never calibrate on the recordings you demo with.
 
+## Signed evidence
+Every call's investigation page offers **Print report**, **Evidence file** and **Verify a file**.
+
+An evidence file contains:
+- the full audit record (scores, decisions, prevention actions; never audio);
+- the SHA-256 of its canonical JSON;
+- since 26 Nov 2026, an **Ed25519 signature** by this server.
+
+How the key works:
+- The signing key is created on first use in `data/evidence_key.json`. It is git-ignored and never sent out.
+- `GET /api/evidence/public-key` gives the public half to share with a bank.
+
+Checking a file:
+- Offline: `python tools/verify_evidence.py FILE --public-key HEX` (exit 0 = authentic).
+- On the server: `POST /api/evidence/verify`.
+
+What it detects:
+- A file whose record was edited, which fails the digest.
+- A file whose signed fields were changed, which fails the signature.
+- Older unsigned files still verify by digest and report "intact-unsigned".
+
+Ed25519 is implemented with the standard library (`server/ed25519.py`, checked against RFC 8032 test vector 1). It is not constant-time, which is acceptable for a local demo server.
+
 ## Scenario lab (console → Scenario lab, `#/lab`)
 Eleven repeatable scenarios run through the real decision chain:
 - **Calls:** a genuine call; ElevenLabs and Kokoro clones; a synthetic fake bank officer with real speech-to-text.
