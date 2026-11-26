@@ -11,3 +11,4 @@ pytest>=8
 httpx>=0.27
 # Optional, NVIDIA GPU only (makes speech-to-text ~10x faster):
 #   pip install nvidia-cublas-cu12 "nvidia-cudnn-cu12==9.*"
+cryptography>=42   # Ed25519 evidence signatures (falls back to a stdlib implementation if missing)

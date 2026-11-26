@@ -31,25 +31,67 @@ def message(call_id, generated_at: str, sha256: str) -> bytes:
     return f"{FORMAT}|{call_id}|{generated_at}|{sha256}".encode("utf-8")
 
 
+def _dpapi(data: bytes, protect: bool) -> bytes:
+    """Windows DPAPI (CryptProtectData / CryptUnprotectData): only this Windows user account can decrypt."""
+    import ctypes
+    from ctypes import wintypes
+
+    class BLOB(ctypes.Structure):
+        _fields_ = [("cbData", wintypes.DWORD), ("pbData", ctypes.POINTER(ctypes.c_char))]
+    buf = ctypes.create_string_buffer(data, len(data))
+    inp, out = BLOB(len(data), ctypes.cast(buf, ctypes.POINTER(ctypes.c_char))), BLOB()
+    fn = ctypes.windll.crypt32.CryptProtectData if protect else ctypes.windll.crypt32.CryptUnprotectData
+    if not fn(ctypes.byref(inp), None, None, None, None, 0, ctypes.byref(out)):
+        raise OSError("DPAPI call failed")
+    try:
+        return ctypes.string_at(out.pbData, out.cbData)
+    finally:
+        ctypes.windll.kernel32.LocalFree(out.pbData)
+
+
 class EvidenceSigner:
+    """Key file: {"seed_dpapi": base64} on Windows (encrypted to this user), else {"seed_hex"} with 0600 rights.
+    A plain key from an earlier version is re-saved protected with the SAME key, so old evidence keeps verifying.
+    An unreadable key file is never overwritten (that would orphan every signature made with it)."""
+
     def __init__(self, path: Path):
+        import base64
+        import os
+        import sys
         self.path = Path(path)
+        win = sys.platform == "win32"
         if self.path.exists():
             k = json.loads(self.path.read_text(encoding="utf-8"))
-            self._seed = bytes.fromhex(k["seed_hex"])
+            self._seed = _dpapi(base64.b64decode(k["seed_dpapi"]), False) if "seed_dpapi" in k else bytes.fromhex(k["seed_hex"])
             self.created = k.get("created", "")
+            migrate = win and "seed_dpapi" not in k
         else:
             self._seed = secrets.token_bytes(32)
             self.created = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+            migrate = True
         self.public = ed25519.public_key(self._seed)
         self.key_id = hashlib.sha256(self.public).hexdigest()[:16]
-        if not self.path.exists():
-            write_text_atomic(self.path, json.dumps({"alg": "Ed25519", "seed_hex": self._seed.hex(),
-                                                     "public_key": self.public.hex(), "key_id": self.key_id,
-                                                     "created": self.created}, indent=1))
+        self.protection = "unknown"
+        if migrate:
+            rec = {"alg": "Ed25519", "public_key": self.public.hex(), "key_id": self.key_id, "created": self.created}
+            try:
+                rec["seed_dpapi"] = base64.b64encode(_dpapi(self._seed, True)).decode() if win else None
+            except OSError:
+                rec["seed_dpapi"] = None
+            if not rec["seed_dpapi"]:
+                rec.pop("seed_dpapi"); rec["seed_hex"] = self._seed.hex()
+            write_text_atomic(self.path, json.dumps(rec, indent=1))
+        k = json.loads(self.path.read_text(encoding="utf-8"))
+        self.protection = "Windows DPAPI (this user only)" if "seed_dpapi" in k else "file permissions"
+        if "seed_hex" in k:
+            try:
+                os.chmod(self.path, 0o600)
+            except OSError:
+                pass
 
     def info(self) -> dict:
-        return {"alg": "Ed25519", "public_key": self.public.hex(), "key_id": self.key_id, "created": self.created}
+        return {"alg": "Ed25519", "public_key": self.public.hex(), "key_id": self.key_id, "created": self.created,
+                "backend": ed25519.BACKEND, "key_protection": self.protection}
 
     def sign(self, call_id, generated_at: str, sha256: str) -> dict:
         sig = ed25519.sign(self._seed, message(call_id, generated_at, sha256))

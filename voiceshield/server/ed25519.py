@@ -1,8 +1,8 @@
-"""Ed25519 signatures (RFC 8032), standard library only, after the RFC's Python reference implementation.
+"""Ed25519 signatures (RFC 8032) for incident evidence.
 
-Used to sign incident evidence so that anyone holding the server's public key can check that an evidence file
-came from this VoiceShield server and was not edited. It is not constant-time: fine for signing evidence on a
-local server, not for keys exposed to timing attacks by untrusted parties.
+Uses the audited `cryptography` library (OpenSSL) when it is installed (requirements.txt), and otherwise the
+standard-library reference implementation below, after the RFC's Python code. The reference code is not
+constant-time: acceptable as a fallback for a local demo server, not for keys exposed to timing attacks.
 """
 import hashlib
 
@@ -90,12 +90,12 @@ def _expand(secret: bytes):
     return a, h[32:]
 
 
-def public_key(secret: bytes) -> bytes:
+def _public_key_ref(secret: bytes) -> bytes:
     a, _ = _expand(secret)
     return _compress(_mul(a, _G))
 
 
-def sign(secret: bytes, msg: bytes) -> bytes:
+def _sign_ref(secret: bytes, msg: bytes) -> bytes:
     a, prefix = _expand(secret)
     A = _compress(_mul(a, _G))
     r = _sha512_modq(prefix + msg)
@@ -104,7 +104,38 @@ def sign(secret: bytes, msg: bytes) -> bytes:
     return Rs + int.to_bytes(s, 32, "little")
 
 
-def verify(public: bytes, msg: bytes, signature: bytes) -> bool:
+# ---------------------------------------------------------------- backend: the audited library when installed
+# Ed25519 is deterministic, so the library and the reference code produce byte-identical keys and signatures:
+# evidence signed by either verifies with either (checked in the tests whenever the library is present).
+try:
+    from cryptography.exceptions import InvalidSignature
+    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey, Ed25519PublicKey
+    from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
+    BACKEND = "cryptography (OpenSSL)"
+
+    def public_key(secret: bytes) -> bytes:
+        return Ed25519PrivateKey.from_private_bytes(secret).public_key().public_bytes(Encoding.Raw, PublicFormat.Raw)
+
+    def sign(secret: bytes, msg: bytes) -> bytes:
+        return Ed25519PrivateKey.from_private_bytes(secret).sign(msg)
+
+    def verify(public: bytes, msg: bytes, signature: bytes) -> bool:
+        if len(public) != 32 or len(signature) != 64:
+            return False
+        try:
+            Ed25519PublicKey.from_public_bytes(public).verify(signature, msg)
+            return True
+        except (InvalidSignature, ValueError):
+            return False
+except ImportError:                                        # stdlib fallback: same results, not constant-time
+    BACKEND = "built-in RFC 8032 reference (stdlib)"
+    public_key, sign = _public_key_ref, _sign_ref
+
+    def verify(public: bytes, msg: bytes, signature: bytes) -> bool:
+        return verify_ref(public, msg, signature)
+
+
+def verify_ref(public: bytes, msg: bytes, signature: bytes) -> bool:
     if len(public) != 32 or len(signature) != 64:
         return False
     A, R = _decompress(public), _decompress(signature[:32])
