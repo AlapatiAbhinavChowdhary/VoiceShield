@@ -4,7 +4,9 @@
     GET  /                   test console (static/index.html)
     GET  /api/status         models, settings, line profiles, enrolled voiceprints
     GET  /api/samples        demo recordings in samples/
+    GET  /api/health         liveness: detector mode, live analyses (limit: config max_streams), uptime
     GET  /api/calls          audit log of recent calls;  /api/calls/{id} for one call
+    GET  /api/calls/{id}/evidence   downloadable record + SHA-256 of its canonical JSON (tamper-evident)
     GET  /api/voiceprints    enrolled people;  DELETE /api/voiceprints/{name}
     GET  /api/incidents      monitored calls with alerts and prevention actions (security screen)
     POST /api/calls/{id}/events   prevention action from the customer app (transfer blocked, OTP verified, ...)

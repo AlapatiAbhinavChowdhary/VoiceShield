@@ -244,6 +244,7 @@ Server messages:
 - `score`: per window. Contains `llr`, `p_fake`, `window_score`, `window_threshold`, `risk` (0–100), `level`, `verdict` and `latency_ms`. In Step 8c mode it also has `llr_original` (the detector's own score) and `processing` (the recognised audio type).
 - `action`: when the level first rises to VERIFY or HOLD, with the prevention message
 - `summary`: at the end. Calibration mode sends `calibrated` instead.
+- `error` with "Server busy": more than `max_streams` (config, default 4) live analyses at once.
 - `warning`: a window could not be analysed (for example a runtime error in the detector). The call goes on, and it is sent once per call.
 
 ## Files
