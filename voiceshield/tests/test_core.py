@@ -663,6 +663,23 @@ def test_evidence_file_is_tamper_evident(client):
     assert client.get("/api/calls/999999/evidence").status_code == 404
 
 
+def test_open_call_row_shows_the_attack_while_it_happens(client):
+    with client.websocket_connect("/ws/stream") as ws:
+        ws.send_json({"type": "start", "sample_rate": SR, "source": "test"})
+        cid = ws.receive_json()["call_id"]
+        pcm = (np.clip(speech(12, amp=0.3), -1, 1) * 32767).astype("<i2")     # loud = fake for the stub
+        for i in range(0, len(pcm), SR // 10):
+            ws.send_bytes(pcm[i:i + SR // 10].tobytes())
+        while not ((m := ws.receive_json())["type"] == "action" and m["level"] == "HOLD"):
+            pass
+        row = client.get(f"/api/calls/{cid}").json()
+        assert row["ended"] is None and row["verdict"] == "HOLD" and row["max_risk"] >= 75   # live, not "PASS 0"
+        ws.send_json({"type": "stop"})
+        while ws.receive_json()["type"] != "summary":
+            pass
+    assert client.get(f"/api/calls/{cid}").json()["verdict"] == "HOLD"
+
+
 def test_ed25519_rfc8032_vector():
     from server import ed25519
     sk = bytes.fromhex("9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60")

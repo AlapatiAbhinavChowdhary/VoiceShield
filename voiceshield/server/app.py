@@ -386,6 +386,7 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
         send_lock = asyncio.Lock()
         collected: list = []                     # calibration llrs or enrollment voiceprints
         failures = {"n": 0}                      # windows the detector could not score
+        live_row = {"v": "PASS", "r": 0.0}       # what the audit row last showed for this open call
 
         async def send(msg: dict) -> None:
             async with send_lock:
@@ -393,6 +394,9 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
 
         async def decide(t: float) -> dict:
             st = risk.state()
+            if mode == "monitor" and (st["verdict"] != live_row["v"] or st["risk"] > live_row["r"] + 1):
+                live_row["v"], live_row["r"] = st["verdict"], max(live_row["r"], st["risk"])
+                audit.progress(call_id, st["verdict"], live_row["r"])    # live views see the attack as it happens
             if st["escalated"]:
                 level = st["level"]
                 msg = f"{level}: " + "; ".join(st["reasons"]) + ". " + ACTIONS[level]

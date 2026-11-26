@@ -51,6 +51,14 @@ class Audit:
     def event(self, call_id: int, t: float, kind: str, detail: str = "") -> None:
         self._exec("INSERT INTO events VALUES (?, ?, ?, ?)", (call_id, t, kind, detail))
 
+    def progress(self, call_id: int, verdict: str, max_risk: float) -> None:
+        """While a call is open, keep its row's verdict and peak risk current, so the Incidents and History views
+        show a live attack as it happens instead of 'PASS, risk 0' until the call ends. Escalation only."""
+        rank = "CASE verdict WHEN 'HOLD' THEN 2 WHEN 'VERIFY' THEN 1 ELSE 0 END"
+        new = {"HOLD": 2, "VERIFY": 1}.get(verdict, 0)
+        self._exec(f"UPDATE calls SET verdict = CASE WHEN ? > {rank} THEN ? ELSE verdict END, "
+                   "max_risk = MAX(COALESCE(max_risk, 0), ?) WHERE id=? AND ended IS NULL", (new, verdict, max_risk, call_id))
+
     def end_call(self, call_id: int, verdict: str, max_risk: float, audio_s: float, speech_s: float) -> dict:
         with self.lock:
             row = self.db.execute("SELECT COUNT(*) n, AVG(llr) m FROM windows WHERE call_id=?", (call_id,)).fetchone()
