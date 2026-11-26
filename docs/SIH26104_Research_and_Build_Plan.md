@@ -1011,6 +1011,93 @@ Fixing these needs intent understanding beyond rules; that is future work.
 
 ---
 
+### Step 12: scam intent beyond keywords (27 Nov 2026)
+
+**Question:** do the keyword + context rules generalise to scams phrased differently from the ones they were designed on?
+
+**Data:** three team-written call sets with different degrees of independence:
+
+| Set | Content | Independence |
+|---|---|---|
+| `scam_eval.json` (development) | 24 calls | The rules were designed on it. |
+| `scam_eval_heldout.json` | 24 new calls: indirect scams and hard negatives (genuine delivery OTP, genuine bank, police and family money talk) | Not used for tuning, but its errors were seen before the frame layer was designed. |
+| `scam_eval_blind.json` | 16 calls | Written before the frame layer was coded; scored once, no changes after. |
+
+**Approaches tried:**
+1. **N-gram classifier:** a hashed word and character n-gram logistic regression (`server/intent.py`, 102 training utterances in `server/intent_train.json`). Five-fold cross-validation on the training set gave about 0.5 accuracy (chance): the hard negatives share the scam vocabulary, and 100 examples are far too few. **Negative result:** it stays a documented experiment and is not wired into the server.
+2. **Intent frames** (`server/frames.py`): a request aimed at the listener (share / read / pay / deposit / scan / install / buy / bhejo / बताइए …), plus a sensitive object (code / OTP / PIN / money / fee / gift card / QR / app …), plus a manipulation pretext anywhere in the call (threat, authority, reward, emergency, urgency or secrecy, "mistake"). Protective advice is ignored.
+
+**Results** (call flagged at score ≥ 0.5):
+
+| Set | Shipped rules: P / R / F1 | Intent frames: P / R / F1 |
+|---|---|---|
+| Development | 0.86 / 1.00 / 0.92 | 0.92 / 0.92 / 0.92 |
+| Held-out (errors seen) | 0.40 / **0.17** / 0.23 | 0.91 / 0.83 / 0.87 |
+| Blind | 0.67 / **0.25** / 0.36 | **0.89 / 1.00 / 0.94** |
+
+**Findings:**
+- **The keyword rules do not generalise to indirect scams:** recall 0.17 and 0.25 on the new sets.
+- **The frames catch most of them.** Remaining errors:
+  - two missed scams (electricity disconnection, loan fee);
+  - one genuine delivery-OTP call flagged (held-out);
+  - one Hindi bank warning flagged on the blind set ("कोई भी … माँगे तो … न बताएँ" is a protective phrasing the advice filter misses). It was left unfixed so the blind number stays honest.
+
+**Decision:**
+- Frames run in **shadow mode** (`config.scam_semantic = "shadow"`). They are shown in the live transcript and the lab and never change a decision.
+- Before going live they need real call transcripts: all three sets are team-written and small (64 calls).
+
+---
+
+### Step 13: why noisy genuine calls get held, and a safer HOLD rule (27 Nov 2026)
+
+**Suite:** `tools/eval_robustness.py`, controlled.
+- **Genuine recordings (8):** 2 demo callers (test split), 2 raw laptop-mic sessions (local), 4 dev-split speakers.
+- **Spoofed recordings (8):** ElevenLabs, Kokoro, Windows TTS, the Step 9 kNN-VC clone, 4 groups of Hume dev fakes.
+- **Conditions (7):** clean, white noise 20 / 10 / 5 dB, babble 10 dB, G.711 phone line, phone + white noise 15 dB.
+- Scored once by the live pipeline: Step 8c fused score, default cut-off −1.91. Per-window scores and quality are in `eval/robustness_windows.json`.
+
+**Window level:**
+
+| Condition | EER | AUC | Genuine flagged at cut-off | Spoof missed at cut-off |
+|---|---|---|---|---|
+| Clean | 2.3% | 0.997 | 2.3% | 2.4% |
+| Phone line | 3.4% | 0.996 | 10.1% | 1.4% |
+| White 20 dB | 5.7% | 0.984 | 12.3% | 3.8% |
+| Phone + white 15 dB | 14.7% | 0.937 | 12.7% | 16.6% |
+| White 10 dB | 21.5% | 0.886 | 21.1% | 22.0% |
+| White 5 dB | 34.5% | 0.732 | 39.5% | 29.0% |
+| Babble 10 dB | 39.9% | 0.619 | 0.0% | **100%** |
+
+**Cause of the false HOLD:**
+- Steady noise shifts *genuine* speech toward "synthetic" at a fixed cut-off: 21% of genuine windows are flagged at 10 dB, 39% at 5 dB.
+- With enough flagged windows in a row, the HOLD rule (voice ≥ 75 and 3 of 5 flagged) fires.
+- Babble does the opposite: every spoof window falls below the cut-off. Background chatter can mask a clone, which is an attack to defend against later.
+
+**Decision rules replayed on the same windows** (`tools/eval_rules.py`): 56 genuine and 56 spoof calls.
+
+| Rule | Genuine calls falsely held | Spoof calls held | Spoof calls stopped |
+|---|---|---|---|
+| Shipped | 9 | 44 | 46 |
+| Quality-aware persistence (degraded audio needs 4 of 5) | 9 | 44 | 46 |
+| Confirmed HOLD (2 consecutive windows) | 8 | 44 | 46 |
+| Median-of-3 smoothing | 11 | 44 | 46 |
+| **Persistence + confirmation** | **5** | **44** | **46** |
+| Degraded audio caps voice-only at VERIFY | 1 | **24** (rejected) | 46 |
+
+**Split check:** rule chosen on the dev-split recordings only (false HOLDs 4 → 2), then checked on the held-out recordings: false HOLDs 5 → 3 of 28, spoof HOLDs 21/28 unchanged, spoofs stopped 22/28 unchanged.
+
+**Scenario Lab, real models:**
+- Noisy genuine call: shipped rule HOLD; robust rule VERIFY.
+- Clean and noisy ElevenLabs clone: HOLD under both rules.
+
+**Decision:**
+- Built into `RiskEngine` as `risk.hold_rule = "robust"`, opt-in. The default stays `"standard"`.
+- The evidence is a controlled suite with synthetic noise. It needs validation on real noisy calls first.
+- No threshold or window score is changed. The Scenario Lab shows both decisions side by side.
+- A test checks that the built-in rule reproduces the replay exactly: 5 false HOLDs and 44 spoof HOLDs.
+
+---
+
 ## 9. Sources
 
 **Problem statement:**

@@ -1,0 +1,3900 @@
+[
+ {
+  "set": "scam_eval.json",
+  "about": "Hand-written development set (26 Nov 2026): short call transcripts as Whisper would write them, labelled scam / benign by the team. It checks the scam-language rules; it is NOT an independent benchmark and is small, so treat the numbers as a sanity check. A call is flagged when its scam score reaches 0.5 (the server's scam_at = 50).",
+  "n_scam": 12,
+  "n_benign": 12,
+  "flag_at": 0.5,
+  "engines": {
+   "original keywords": {
+    "tp": 12,
+    "fp": 7,
+    "fn": 0,
+    "tn": 5,
+    "precision": 0.632,
+    "recall": 1.0,
+    "f1": 0.774,
+    "accuracy": 0.708,
+    "rows": [
+     {
+      "id": "s01",
+      "label": "scam",
+      "kind": "fake bank KYC",
+      "score": 0.792,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s02",
+      "label": "scam",
+      "kind": "digital arrest",
+      "score": 0.73,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s03",
+      "label": "scam",
+      "kind": "family emergency",
+      "score": 0.708,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s04",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.805,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s05",
+      "label": "scam",
+      "kind": "remote access",
+      "score": 0.904,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s06",
+      "label": "scam",
+      "kind": "lottery fee",
+      "score": 0.685,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s07",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.844,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s08",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.844,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s09",
+      "label": "scam",
+      "kind": "protective lead-in, then OTP",
+      "score": 0.82,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s10",
+      "label": "scam",
+      "kind": "customs parcel",
+      "score": 0.64,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s11",
+      "label": "scam",
+      "kind": "digital arrest",
+      "score": 0.73,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s12",
+      "label": "scam",
+      "kind": "relative in trouble",
+      "score": 0.708,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.68,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "friends, rent",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "family news",
+      "score": 0.35,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "work",
+      "score": 0.25,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "genuine bill reminder",
+      "score": 0.52,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.7,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b09",
+      "label": "benign",
+      "kind": "chat",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b10",
+      "label": "benign",
+      "kind": "traffic challan",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b11",
+      "label": "benign",
+      "kind": "own OTP",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b12",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.68,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "keywords + Hinglish": {
+    "tp": 12,
+    "fp": 7,
+    "fn": 0,
+    "tn": 5,
+    "precision": 0.632,
+    "recall": 1.0,
+    "f1": 0.774,
+    "accuracy": 0.708,
+    "rows": [
+     {
+      "id": "s01",
+      "label": "scam",
+      "kind": "fake bank KYC",
+      "score": 0.792,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s02",
+      "label": "scam",
+      "kind": "digital arrest",
+      "score": 0.73,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s03",
+      "label": "scam",
+      "kind": "family emergency",
+      "score": 0.708,
+      "flagged": true,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s04",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.805,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s05",
+      "label": "scam",
+      "kind": "remote access",
+      "score": 0.904,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script",
+       "Remote-access takeover"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s06",
+      "label": "scam",
+      "kind": "lottery fee",
+      "score": 0.685,
+      "flagged": true,
+      "patterns": [
+       "Prize / refund script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s07",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.844,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s08",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.844,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s09",
+      "label": "scam",
+      "kind": "protective lead-in, then OTP",
+      "score": 0.82,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s10",
+      "label": "scam",
+      "kind": "customs parcel",
+      "score": 0.64,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s11",
+      "label": "scam",
+      "kind": "digital arrest",
+      "score": 0.73,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s12",
+      "label": "scam",
+      "kind": "relative in trouble",
+      "score": 0.708,
+      "flagged": true,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.68,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "friends, rent",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "family news",
+      "score": 0.35,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "work",
+      "score": 0.25,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "genuine bill reminder",
+      "score": 0.52,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.7,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b09",
+      "label": "benign",
+      "kind": "chat",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b10",
+      "label": "benign",
+      "kind": "traffic challan",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b11",
+      "label": "benign",
+      "kind": "own OTP",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b12",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.68,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     }
+    ]
+   },
+   "keywords + Hinglish + context": {
+    "tp": 12,
+    "fp": 2,
+    "fn": 0,
+    "tn": 10,
+    "precision": 0.857,
+    "recall": 1.0,
+    "f1": 0.923,
+    "accuracy": 0.917,
+    "rows": [
+     {
+      "id": "s01",
+      "label": "scam",
+      "kind": "fake bank KYC",
+      "score": 0.792,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s02",
+      "label": "scam",
+      "kind": "digital arrest",
+      "score": 0.73,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s03",
+      "label": "scam",
+      "kind": "family emergency",
+      "score": 0.708,
+      "flagged": true,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s04",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.805,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s05",
+      "label": "scam",
+      "kind": "remote access",
+      "score": 0.904,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script",
+       "Remote-access takeover"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s06",
+      "label": "scam",
+      "kind": "lottery fee",
+      "score": 0.685,
+      "flagged": true,
+      "patterns": [
+       "Prize / refund script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s07",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.844,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s08",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.844,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s09",
+      "label": "scam",
+      "kind": "protective lead-in, then OTP",
+      "score": 0.82,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s10",
+      "label": "scam",
+      "kind": "customs parcel",
+      "score": 0.64,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s11",
+      "label": "scam",
+      "kind": "digital arrest",
+      "score": 0.73,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s12",
+      "label": "scam",
+      "kind": "relative in trouble",
+      "score": 0.708,
+      "flagged": true,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.2,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "otp"
+      ]
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.2,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "otp",
+       "kisi ko mat bata"
+      ]
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "ओटीपी"
+      ]
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "friends, rent",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "family news",
+      "score": 0.35,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "work",
+      "score": 0.25,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "genuine bill reminder",
+      "score": 0.52,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "ఓటీపీ",
+       "ఎవరికీ చెప్ప"
+      ]
+     },
+     {
+      "id": "b09",
+      "label": "benign",
+      "kind": "chat",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b10",
+      "label": "benign",
+      "kind": "traffic challan",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b11",
+      "label": "benign",
+      "kind": "own OTP",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b12",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.2,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "n-gram intent classifier (experiment)": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 12,
+    "tn": 12,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "accuracy": 0.5,
+    "rows": [
+     {
+      "id": "s01",
+      "label": "scam",
+      "kind": "fake bank KYC",
+      "score": 0.496,
+      "flagged": false,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s02",
+      "label": "scam",
+      "kind": "digital arrest",
+      "score": 0.494,
+      "flagged": false,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s03",
+      "label": "scam",
+      "kind": "family emergency",
+      "score": 0.492,
+      "flagged": false,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s04",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.496,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s05",
+      "label": "scam",
+      "kind": "remote access",
+      "score": 0.492,
+      "flagged": false,
+      "patterns": [
+       "Fake bank / KYC script",
+       "Remote-access takeover"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s06",
+      "label": "scam",
+      "kind": "lottery fee",
+      "score": 0.496,
+      "flagged": false,
+      "patterns": [
+       "Prize / refund script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s07",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.494,
+      "flagged": false,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s08",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.492,
+      "flagged": false,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s09",
+      "label": "scam",
+      "kind": "protective lead-in, then OTP",
+      "score": 0.489,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s10",
+      "label": "scam",
+      "kind": "customs parcel",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s11",
+      "label": "scam",
+      "kind": "digital arrest",
+      "score": 0.495,
+      "flagged": false,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s12",
+      "label": "scam",
+      "kind": "relative in trouble",
+      "score": 0.495,
+      "flagged": false,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "otp"
+      ]
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "otp",
+       "kisi ko mat bata"
+      ]
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "ओटीपी"
+      ]
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "friends, rent",
+      "score": 0.489,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "family news",
+      "score": 0.488,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "work",
+      "score": 0.489,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "genuine bill reminder",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.49,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "ఓటీపీ",
+       "ఎవరికీ చెప్ప"
+      ]
+     },
+     {
+      "id": "b09",
+      "label": "benign",
+      "kind": "chat",
+      "score": 0.486,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b10",
+      "label": "benign",
+      "kind": "traffic challan",
+      "score": 0.488,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b11",
+      "label": "benign",
+      "kind": "own OTP",
+      "score": 0.482,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b12",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "intent frames (shadow)": {
+    "tp": 11,
+    "fp": 1,
+    "fn": 1,
+    "tn": 11,
+    "precision": 0.917,
+    "recall": 0.917,
+    "f1": 0.917,
+    "accuracy": 0.917,
+    "rows": [
+     {
+      "id": "s01",
+      "label": "scam",
+      "kind": "fake bank KYC",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s02",
+      "label": "scam",
+      "kind": "digital arrest",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s03",
+      "label": "scam",
+      "kind": "family emergency",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s04",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s05",
+      "label": "scam",
+      "kind": "remote access",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script",
+       "Remote-access takeover"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s06",
+      "label": "scam",
+      "kind": "lottery fee",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [
+       "Prize / refund script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s07",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s08",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s09",
+      "label": "scam",
+      "kind": "protective lead-in, then OTP",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s10",
+      "label": "scam",
+      "kind": "customs parcel",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s11",
+      "label": "scam",
+      "kind": "digital arrest",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s12",
+      "label": "scam",
+      "kind": "relative in trouble",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "otp"
+      ]
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "otp",
+       "kisi ko mat bata"
+      ]
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "ओटीपी"
+      ]
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "friends, rent",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "family news",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "work",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "genuine bill reminder",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "ఓటీపీ",
+       "ఎవరికీ చెప్ప"
+      ]
+     },
+     {
+      "id": "b09",
+      "label": "benign",
+      "kind": "chat",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b10",
+      "label": "benign",
+      "kind": "traffic challan",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b11",
+      "label": "benign",
+      "kind": "own OTP",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b12",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "rules OR frames (hybrid, not enabled)": {
+    "tp": 12,
+    "fp": 2,
+    "fn": 0,
+    "tn": 10,
+    "precision": 0.857,
+    "recall": 1.0,
+    "f1": 0.923,
+    "accuracy": 0.917,
+    "rows": [
+     {
+      "id": "s01",
+      "label": "scam",
+      "kind": "fake bank KYC",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s02",
+      "label": "scam",
+      "kind": "digital arrest",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s03",
+      "label": "scam",
+      "kind": "family emergency",
+      "score": 0.708,
+      "flagged": true,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s04",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.805,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s05",
+      "label": "scam",
+      "kind": "remote access",
+      "score": 0.904,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script",
+       "Remote-access takeover"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s06",
+      "label": "scam",
+      "kind": "lottery fee",
+      "score": 0.685,
+      "flagged": true,
+      "patterns": [
+       "Prize / refund script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s07",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.844,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s08",
+      "label": "scam",
+      "kind": "fake bank OTP",
+      "score": 0.844,
+      "flagged": true,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s09",
+      "label": "scam",
+      "kind": "protective lead-in, then OTP",
+      "score": 0.82,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "s10",
+      "label": "scam",
+      "kind": "customs parcel",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s11",
+      "label": "scam",
+      "kind": "digital arrest",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "s12",
+      "label": "scam",
+      "kind": "relative in trouble",
+      "score": 0.708,
+      "flagged": true,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.2,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "otp"
+      ]
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.2,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "otp",
+       "kisi ko mat bata"
+      ]
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "ओटीपी"
+      ]
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "friends, rent",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "family news",
+      "score": 0.35,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "work",
+      "score": 0.25,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "genuine bill reminder",
+      "score": 0.52,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "ఓటీపీ",
+       "ఎవరికీ చెప్ప"
+      ]
+     },
+     {
+      "id": "b09",
+      "label": "benign",
+      "kind": "chat",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b10",
+      "label": "benign",
+      "kind": "traffic challan",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b11",
+      "label": "benign",
+      "kind": "own OTP",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b12",
+      "label": "benign",
+      "kind": "bank fraud warning",
+      "score": 0.2,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   }
+  }
+ },
+ {
+  "set": "scam_eval_heldout.json",
+  "about": "Held-out call set (27 Nov 2026), written as new conversations AFTER the keyword rules and the classifier's training set, and never used to tune either. Indirect scams and hard negatives (genuine delivery OTPs, genuine bank and police calls, genuine family money requests). Team-written: an honest second check, not an independent benchmark. A call is flagged at score >= 0.5.",
+  "n_scam": 12,
+  "n_benign": 12,
+  "flag_at": 0.5,
+  "engines": {
+   "original keywords": {
+    "tp": 2,
+    "fp": 4,
+    "fn": 10,
+    "tn": 8,
+    "precision": 0.333,
+    "recall": 0.167,
+    "f1": 0.222,
+    "accuracy": 0.417,
+    "rows": [
+     {
+      "id": "h01",
+      "label": "scam",
+      "kind": "electricity disconnection",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h02",
+      "label": "scam",
+      "kind": "job advance fee",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h03",
+      "label": "scam",
+      "kind": "investment",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h04",
+      "label": "scam",
+      "kind": "wrong refund",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h05",
+      "label": "scam",
+      "kind": "fake bank, indirect",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h06",
+      "label": "scam",
+      "kind": "video-call digital arrest",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h07",
+      "label": "scam",
+      "kind": "relative, Hinglish",
+      "score": 0.708,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h08",
+      "label": "scam",
+      "kind": "loan approval fee",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h09",
+      "label": "scam",
+      "kind": "SIM swap",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h10",
+      "label": "scam",
+      "kind": "QR to receive",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h11",
+      "label": "scam",
+      "kind": "Hindi, KYC",
+      "score": 0.35,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h12",
+      "label": "scam",
+      "kind": "remote support",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "genuine delivery OTP",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "genuine bank alert",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "genuine family money request",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "genuine police",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "customer care, payment",
+      "score": 0.52,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "friend, urgency",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "Hinglish, own OTP",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "doctor",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b09",
+      "label": "benign",
+      "kind": "bank KYC reminder, genuine",
+      "score": 0.48,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b10",
+      "label": "benign",
+      "kind": "Hindi, family",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b11",
+      "label": "benign",
+      "kind": "news about scams",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b12",
+      "label": "benign",
+      "kind": "landlord",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "keywords + Hinglish": {
+    "tp": 2,
+    "fp": 4,
+    "fn": 10,
+    "tn": 8,
+    "precision": 0.333,
+    "recall": 0.167,
+    "f1": 0.222,
+    "accuracy": 0.417,
+    "rows": [
+     {
+      "id": "h01",
+      "label": "scam",
+      "kind": "electricity disconnection",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h02",
+      "label": "scam",
+      "kind": "job advance fee",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h03",
+      "label": "scam",
+      "kind": "investment",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h04",
+      "label": "scam",
+      "kind": "wrong refund",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h05",
+      "label": "scam",
+      "kind": "fake bank, indirect",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h06",
+      "label": "scam",
+      "kind": "video-call digital arrest",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h07",
+      "label": "scam",
+      "kind": "relative, Hinglish",
+      "score": 0.708,
+      "flagged": true,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "h08",
+      "label": "scam",
+      "kind": "loan approval fee",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h09",
+      "label": "scam",
+      "kind": "SIM swap",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h10",
+      "label": "scam",
+      "kind": "QR to receive",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h11",
+      "label": "scam",
+      "kind": "Hindi, KYC",
+      "score": 0.35,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h12",
+      "label": "scam",
+      "kind": "remote support",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "genuine delivery OTP",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "genuine bank alert",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "genuine family money request",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "genuine police",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "customer care, payment",
+      "score": 0.52,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "friend, urgency",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "Hinglish, own OTP",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "doctor",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b09",
+      "label": "benign",
+      "kind": "bank KYC reminder, genuine",
+      "score": 0.48,
+      "flagged": false,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b10",
+      "label": "benign",
+      "kind": "Hindi, family",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b11",
+      "label": "benign",
+      "kind": "news about scams",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b12",
+      "label": "benign",
+      "kind": "landlord",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "keywords + Hinglish + context": {
+    "tp": 2,
+    "fp": 3,
+    "fn": 10,
+    "tn": 9,
+    "precision": 0.4,
+    "recall": 0.167,
+    "f1": 0.235,
+    "accuracy": 0.458,
+    "rows": [
+     {
+      "id": "h01",
+      "label": "scam",
+      "kind": "electricity disconnection",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h02",
+      "label": "scam",
+      "kind": "job advance fee",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h03",
+      "label": "scam",
+      "kind": "investment",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h04",
+      "label": "scam",
+      "kind": "wrong refund",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h05",
+      "label": "scam",
+      "kind": "fake bank, indirect",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h06",
+      "label": "scam",
+      "kind": "video-call digital arrest",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h07",
+      "label": "scam",
+      "kind": "relative, Hinglish",
+      "score": 0.708,
+      "flagged": true,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "h08",
+      "label": "scam",
+      "kind": "loan approval fee",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h09",
+      "label": "scam",
+      "kind": "SIM swap",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h10",
+      "label": "scam",
+      "kind": "QR to receive",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h11",
+      "label": "scam",
+      "kind": "Hindi, KYC",
+      "score": 0.35,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h12",
+      "label": "scam",
+      "kind": "remote support",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "genuine delivery OTP",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "genuine bank alert",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "otp"
+      ]
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "genuine family money request",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "genuine police",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "customer care, payment",
+      "score": 0.52,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "friend, urgency",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "Hinglish, own OTP",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "doctor",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b09",
+      "label": "benign",
+      "kind": "bank KYC reminder, genuine",
+      "score": 0.48,
+      "flagged": false,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b10",
+      "label": "benign",
+      "kind": "Hindi, family",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b11",
+      "label": "benign",
+      "kind": "news about scams",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b12",
+      "label": "benign",
+      "kind": "landlord",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "n-gram intent classifier (experiment)": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 12,
+    "tn": 12,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "accuracy": 0.5,
+    "rows": [
+     {
+      "id": "h01",
+      "label": "scam",
+      "kind": "electricity disconnection",
+      "score": 0.493,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h02",
+      "label": "scam",
+      "kind": "job advance fee",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h03",
+      "label": "scam",
+      "kind": "investment",
+      "score": 0.49,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h04",
+      "label": "scam",
+      "kind": "wrong refund",
+      "score": 0.496,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h05",
+      "label": "scam",
+      "kind": "fake bank, indirect",
+      "score": 0.493,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h06",
+      "label": "scam",
+      "kind": "video-call digital arrest",
+      "score": 0.493,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h07",
+      "label": "scam",
+      "kind": "relative, Hinglish",
+      "score": 0.493,
+      "flagged": false,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "h08",
+      "label": "scam",
+      "kind": "loan approval fee",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h09",
+      "label": "scam",
+      "kind": "SIM swap",
+      "score": 0.492,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h10",
+      "label": "scam",
+      "kind": "QR to receive",
+      "score": 0.497,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h11",
+      "label": "scam",
+      "kind": "Hindi, KYC",
+      "score": 0.494,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h12",
+      "label": "scam",
+      "kind": "remote support",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "genuine delivery OTP",
+      "score": 0.489,
+      "flagged": false,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "genuine bank alert",
+      "score": 0.493,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "otp"
+      ]
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "genuine family money request",
+      "score": 0.489,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "genuine police",
+      "score": 0.492,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "customer care, payment",
+      "score": 0.492,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "friend, urgency",
+      "score": 0.489,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "Hinglish, own OTP",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "doctor",
+      "score": 0.488,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b09",
+      "label": "benign",
+      "kind": "bank KYC reminder, genuine",
+      "score": 0.489,
+      "flagged": false,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b10",
+      "label": "benign",
+      "kind": "Hindi, family",
+      "score": 0.493,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b11",
+      "label": "benign",
+      "kind": "news about scams",
+      "score": 0.488,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b12",
+      "label": "benign",
+      "kind": "landlord",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "intent frames (shadow)": {
+    "tp": 10,
+    "fp": 1,
+    "fn": 2,
+    "tn": 11,
+    "precision": 0.909,
+    "recall": 0.833,
+    "f1": 0.87,
+    "accuracy": 0.875,
+    "rows": [
+     {
+      "id": "h01",
+      "label": "scam",
+      "kind": "electricity disconnection",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h02",
+      "label": "scam",
+      "kind": "job advance fee",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h03",
+      "label": "scam",
+      "kind": "investment",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h04",
+      "label": "scam",
+      "kind": "wrong refund",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h05",
+      "label": "scam",
+      "kind": "fake bank, indirect",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h06",
+      "label": "scam",
+      "kind": "video-call digital arrest",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h07",
+      "label": "scam",
+      "kind": "relative, Hinglish",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "h08",
+      "label": "scam",
+      "kind": "loan approval fee",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h09",
+      "label": "scam",
+      "kind": "SIM swap",
+      "score": 0.95,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h10",
+      "label": "scam",
+      "kind": "QR to receive",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h11",
+      "label": "scam",
+      "kind": "Hindi, KYC",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h12",
+      "label": "scam",
+      "kind": "remote support",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "genuine delivery OTP",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "genuine bank alert",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "otp"
+      ]
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "genuine family money request",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "genuine police",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "customer care, payment",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "friend, urgency",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "Hinglish, own OTP",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "doctor",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b09",
+      "label": "benign",
+      "kind": "bank KYC reminder, genuine",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b10",
+      "label": "benign",
+      "kind": "Hindi, family",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b11",
+      "label": "benign",
+      "kind": "news about scams",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b12",
+      "label": "benign",
+      "kind": "landlord",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "rules OR frames (hybrid, not enabled)": {
+    "tp": 10,
+    "fp": 3,
+    "fn": 2,
+    "tn": 9,
+    "precision": 0.769,
+    "recall": 0.833,
+    "f1": 0.8,
+    "accuracy": 0.792,
+    "rows": [
+     {
+      "id": "h01",
+      "label": "scam",
+      "kind": "electricity disconnection",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h02",
+      "label": "scam",
+      "kind": "job advance fee",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h03",
+      "label": "scam",
+      "kind": "investment",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h04",
+      "label": "scam",
+      "kind": "wrong refund",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h05",
+      "label": "scam",
+      "kind": "fake bank, indirect",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h06",
+      "label": "scam",
+      "kind": "video-call digital arrest",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h07",
+      "label": "scam",
+      "kind": "relative, Hinglish",
+      "score": 0.708,
+      "flagged": true,
+      "patterns": [
+       "Family-emergency script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "h08",
+      "label": "scam",
+      "kind": "loan approval fee",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h09",
+      "label": "scam",
+      "kind": "SIM swap",
+      "score": 0.95,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h10",
+      "label": "scam",
+      "kind": "QR to receive",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h11",
+      "label": "scam",
+      "kind": "Hindi, KYC",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "h12",
+      "label": "scam",
+      "kind": "remote support",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "genuine delivery OTP",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "genuine bank alert",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": [
+       "otp"
+      ]
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "genuine family money request",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "genuine police",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "customer care, payment",
+      "score": 0.52,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "friend, urgency",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "Hinglish, own OTP",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "doctor",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b09",
+      "label": "benign",
+      "kind": "bank KYC reminder, genuine",
+      "score": 0.48,
+      "flagged": false,
+      "patterns": [
+       "Fake bank / KYC script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "b10",
+      "label": "benign",
+      "kind": "Hindi, family",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b11",
+      "label": "benign",
+      "kind": "news about scams",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b12",
+      "label": "benign",
+      "kind": "landlord",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   }
+  }
+ },
+ {
+  "set": "scam_eval_blind.json",
+  "about": "Blind call set (27 Nov 2026), written BEFORE the intent-frame layer was coded and evaluated once, with no tuning afterwards. Team-written, small; it complements scam_eval.json (rules were designed on it) and scam_eval_heldout.json (its errors were seen before the frame layer was designed).",
+  "n_scam": 8,
+  "n_benign": 8,
+  "flag_at": 0.5,
+  "engines": {
+   "original keywords": {
+    "tp": 2,
+    "fp": 1,
+    "fn": 6,
+    "tn": 7,
+    "precision": 0.667,
+    "recall": 0.25,
+    "f1": 0.364,
+    "accuracy": 0.562,
+    "rows": [
+     {
+      "id": "x01",
+      "label": "scam",
+      "kind": "gas connection",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x02",
+      "label": "scam",
+      "kind": "tax refund",
+      "score": 0.64,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x03",
+      "label": "scam",
+      "kind": "insurance bonus",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x04",
+      "label": "scam",
+      "kind": "army buyer",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x05",
+      "label": "scam",
+      "kind": "Hinglish courier",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x06",
+      "label": "scam",
+      "kind": "fake senior",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x07",
+      "label": "scam",
+      "kind": "Hindi, son in custody",
+      "score": 0.25,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x08",
+      "label": "scam",
+      "kind": "account upgrade",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "genuine bank callback",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "school fees",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "friend, money",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "Hinglish delivery",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "bank warning, Hindi",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "office",
+      "score": 0.25,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "telecom genuine",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "relative visiting",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "keywords + Hinglish": {
+    "tp": 2,
+    "fp": 1,
+    "fn": 6,
+    "tn": 7,
+    "precision": 0.667,
+    "recall": 0.25,
+    "f1": 0.364,
+    "accuracy": 0.562,
+    "rows": [
+     {
+      "id": "x01",
+      "label": "scam",
+      "kind": "gas connection",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x02",
+      "label": "scam",
+      "kind": "tax refund",
+      "score": 0.64,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "x03",
+      "label": "scam",
+      "kind": "insurance bonus",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x04",
+      "label": "scam",
+      "kind": "army buyer",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x05",
+      "label": "scam",
+      "kind": "Hinglish courier",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x06",
+      "label": "scam",
+      "kind": "fake senior",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x07",
+      "label": "scam",
+      "kind": "Hindi, son in custody",
+      "score": 0.25,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x08",
+      "label": "scam",
+      "kind": "account upgrade",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "genuine bank callback",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "school fees",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "friend, money",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "Hinglish delivery",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "bank warning, Hindi",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "office",
+      "score": 0.25,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "telecom genuine",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "relative visiting",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "keywords + Hinglish + context": {
+    "tp": 2,
+    "fp": 1,
+    "fn": 6,
+    "tn": 7,
+    "precision": 0.667,
+    "recall": 0.25,
+    "f1": 0.364,
+    "accuracy": 0.562,
+    "rows": [
+     {
+      "id": "x01",
+      "label": "scam",
+      "kind": "gas connection",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x02",
+      "label": "scam",
+      "kind": "tax refund",
+      "score": 0.64,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "x03",
+      "label": "scam",
+      "kind": "insurance bonus",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x04",
+      "label": "scam",
+      "kind": "army buyer",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x05",
+      "label": "scam",
+      "kind": "Hinglish courier",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x06",
+      "label": "scam",
+      "kind": "fake senior",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x07",
+      "label": "scam",
+      "kind": "Hindi, son in custody",
+      "score": 0.25,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x08",
+      "label": "scam",
+      "kind": "account upgrade",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "genuine bank callback",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "school fees",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "friend, money",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "Hinglish delivery",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "bank warning, Hindi",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "office",
+      "score": 0.25,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "telecom genuine",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "relative visiting",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "n-gram intent classifier (experiment)": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 8,
+    "tn": 8,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "accuracy": 0.5,
+    "rows": [
+     {
+      "id": "x01",
+      "label": "scam",
+      "kind": "gas connection",
+      "score": 0.494,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x02",
+      "label": "scam",
+      "kind": "tax refund",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "x03",
+      "label": "scam",
+      "kind": "insurance bonus",
+      "score": 0.49,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x04",
+      "label": "scam",
+      "kind": "army buyer",
+      "score": 0.498,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x05",
+      "label": "scam",
+      "kind": "Hinglish courier",
+      "score": 0.494,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x06",
+      "label": "scam",
+      "kind": "fake senior",
+      "score": 0.492,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x07",
+      "label": "scam",
+      "kind": "Hindi, son in custody",
+      "score": 0.493,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x08",
+      "label": "scam",
+      "kind": "account upgrade",
+      "score": 0.497,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "genuine bank callback",
+      "score": 0.49,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "school fees",
+      "score": 0.486,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "friend, money",
+      "score": 0.489,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "Hinglish delivery",
+      "score": 0.493,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "bank warning, Hindi",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "office",
+      "score": 0.486,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "telecom genuine",
+      "score": 0.491,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "relative visiting",
+      "score": 0.49,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "intent frames (shadow)": {
+    "tp": 8,
+    "fp": 1,
+    "fn": 0,
+    "tn": 7,
+    "precision": 0.889,
+    "recall": 1.0,
+    "f1": 0.941,
+    "accuracy": 0.938,
+    "rows": [
+     {
+      "id": "x01",
+      "label": "scam",
+      "kind": "gas connection",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x02",
+      "label": "scam",
+      "kind": "tax refund",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "x03",
+      "label": "scam",
+      "kind": "insurance bonus",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x04",
+      "label": "scam",
+      "kind": "army buyer",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x05",
+      "label": "scam",
+      "kind": "Hinglish courier",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x06",
+      "label": "scam",
+      "kind": "fake senior",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x07",
+      "label": "scam",
+      "kind": "Hindi, son in custody",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x08",
+      "label": "scam",
+      "kind": "account upgrade",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "genuine bank callback",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "school fees",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "friend, money",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "Hinglish delivery",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "bank warning, Hindi",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "office",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "telecom genuine",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "relative visiting",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   },
+   "rules OR frames (hybrid, not enabled)": {
+    "tp": 8,
+    "fp": 1,
+    "fn": 0,
+    "tn": 7,
+    "precision": 0.889,
+    "recall": 1.0,
+    "f1": 0.941,
+    "accuracy": 0.938,
+    "rows": [
+     {
+      "id": "x01",
+      "label": "scam",
+      "kind": "gas connection",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x02",
+      "label": "scam",
+      "kind": "tax refund",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [
+       "Digital-arrest script"
+      ],
+      "suppressed": []
+     },
+     {
+      "id": "x03",
+      "label": "scam",
+      "kind": "insurance bonus",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x04",
+      "label": "scam",
+      "kind": "army buyer",
+      "score": 0.76,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x05",
+      "label": "scam",
+      "kind": "Hinglish courier",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x06",
+      "label": "scam",
+      "kind": "fake senior",
+      "score": 0.65,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x07",
+      "label": "scam",
+      "kind": "Hindi, son in custody",
+      "score": 0.8,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "x08",
+      "label": "scam",
+      "kind": "account upgrade",
+      "score": 0.5,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b01",
+      "label": "benign",
+      "kind": "genuine bank callback",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b02",
+      "label": "benign",
+      "kind": "school fees",
+      "score": 0.4,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b03",
+      "label": "benign",
+      "kind": "friend, money",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b04",
+      "label": "benign",
+      "kind": "Hinglish delivery",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b05",
+      "label": "benign",
+      "kind": "bank warning, Hindi",
+      "score": 0.6,
+      "flagged": true,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b06",
+      "label": "benign",
+      "kind": "office",
+      "score": 0.25,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b07",
+      "label": "benign",
+      "kind": "telecom genuine",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     },
+     {
+      "id": "b08",
+      "label": "benign",
+      "kind": "relative visiting",
+      "score": 0.0,
+      "flagged": false,
+      "patterns": [],
+      "suppressed": []
+     }
+    ]
+   }
+  }
+ }
+]

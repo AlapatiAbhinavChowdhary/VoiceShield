@@ -1,0 +1,21 @@
+{
+  "about": "Blind call set (27 Nov 2026), written BEFORE the intent-frame layer was coded and evaluated once, with no tuning afterwards. Team-written, small; it complements scam_eval.json (rules were designed on it) and scam_eval_heldout.json (its errors were seen before the frame layer was designed).",
+  "calls": [
+    {"id": "x01", "label": "scam", "kind": "gas connection", "utterances": ["Namaste, this is the gas agency.", "Your gas connection will be stopped from tomorrow because of a pending penalty.", "Pay two hundred rupees on this number now to keep it active."]},
+    {"id": "x02", "label": "scam", "kind": "tax refund", "utterances": ["You are eligible for an income tax refund of eighteen thousand rupees.", "Tell me the code that comes on your phone so we can credit it."]},
+    {"id": "x03", "label": "scam", "kind": "insurance bonus", "utterances": ["Your insurance policy has a maturity bonus waiting.", "First deposit the GST amount of four thousand so the bonus can be released."]},
+    {"id": "x04", "label": "scam", "kind": "army buyer", "utterances": ["I am an army officer, I want to rent your flat.", "Our payment system first sends a test amount, so scan this code and enter your PIN."]},
+    {"id": "x05", "label": "scam", "kind": "Hinglish courier", "utterances": ["Aapka courier customs mein ruka hua hai.", "Release ke liye abhi teen hazaar rupaye bhejne honge, warna case ban jayega."]},
+    {"id": "x06", "label": "scam", "kind": "fake senior", "utterances": ["This is your manager, I am in a meeting and cannot talk.", "Buy five gift cards right away and send me the codes, it is confidential."]},
+    {"id": "x07", "label": "scam", "kind": "Hindi, son in custody", "utterances": ["आपका बेटा हमारी हिरासत में है।", "उसे छुड़ाना है तो अभी पचास हज़ार भेजिए, किसी को मत बताइए।"]},
+    {"id": "x08", "label": "scam", "kind": "account upgrade", "utterances": ["Your savings account is being upgraded to a premium account.", "Please confirm by reading out the verification number we just sent."]},
+    {"id": "b01", "label": "benign", "kind": "genuine bank callback", "utterances": ["Hello, you requested a callback about your home loan.", "The interest rate is eight point five percent.", "You can visit the branch with your documents any day this week."]},
+    {"id": "b02", "label": "benign", "kind": "school fees", "utterances": ["This is a reminder from the school office.", "The second term fees are due by the fifteenth, you can pay online on the school website."]},
+    {"id": "b03", "label": "benign", "kind": "friend, money", "utterances": ["Can you lend me two thousand till next week?", "I will return it on Monday when I get paid."]},
+    {"id": "b04", "label": "benign", "kind": "Hinglish delivery", "utterances": ["Sir main Zomato se bol raha hoon, aapka order gate pe hai.", "Neeche aa jaiye please."]},
+    {"id": "b05", "label": "benign", "kind": "bank warning, Hindi", "utterances": ["यह आपके बैंक की ओर से सूचना है।", "कोई भी आपसे ओटीपी या पिन माँगे तो उसे न बताएँ।"]},
+    {"id": "b06", "label": "benign", "kind": "office", "utterances": ["Please send me the report before the client call.", "It is urgent but take care of the numbers."]},
+    {"id": "b07", "label": "benign", "kind": "telecom genuine", "utterances": ["Your prepaid plan expires in three days.", "You can recharge from the app or any shop."]},
+    {"id": "b08", "label": "benign", "kind": "relative visiting", "utterances": ["Mama, we reached the station.", "Can you send the car to pick us up?"]}
+  ]
+}

@@ -54,32 +54,65 @@ def original_engine():
     return mod
 
 
-def evaluate() -> dict:
-    data = json.loads(DATA.read_text(encoding="utf-8"))
+class _IntentEngine:
+    """Adapter: the shadow intent classifier scored like an engine (call score = conversation-level probability)."""
+    model = None
+
+    def __init__(self, hybrid=False):
+        from server.intent import CallIntent, IntentModel
+        if _IntentEngine.model is None:
+            _IntentEngine.model = IntentModel()
+        self.ci, self.hybrid, self.rules = CallIntent(_IntentEngine.model), hybrid, scam.CallScam(context=True)
+
+    def add(self, text):
+        p = self.ci.add(text)["call_p"]
+        r = self.rules.add(text)
+        return {**r, "score": max(p, r["score"]) if self.hybrid else p}
+
+
+def evaluate(path: Path = DATA) -> dict:
+    data = json.loads(path.read_text(encoding="utf-8"))
     calls = data["calls"]
-    out = {"about": data["about"], "n_scam": sum(c["label"] == "scam" for c in calls),
+    out = {"set": path.name, "about": data["about"], "n_scam": sum(c["label"] == "scam" for c in calls),
            "n_benign": sum(c["label"] == "benign" for c in calls), "flag_at": FLAG_AT, "engines": {}}
     base = original_engine()
     if base is not None:
         out["engines"]["original keywords"] = run(calls, base.CallScam)
     out["engines"]["keywords + Hinglish"] = run(calls, lambda: scam.CallScam(context=False))
     out["engines"]["keywords + Hinglish + context"] = run(calls, lambda: scam.CallScam(context=True))
+    out["engines"]["n-gram intent classifier (experiment)"] = run(calls, lambda: _IntentEngine(False))
+    out["engines"]["intent frames (shadow)"] = run(calls, lambda: _FrameEngine(False))
+    out["engines"]["rules OR frames (hybrid, not enabled)"] = run(calls, lambda: _FrameEngine(True))
     return out
+
+
+class _FrameEngine:
+    def __init__(self, hybrid=False):
+        from server.frames import CallFrames
+        self.f, self.hybrid, self.rules = CallFrames(), hybrid, scam.CallScam(context=True)
+
+    def add(self, text):
+        fs = self.f.add(text)["score"]
+        r = self.rules.add(text)
+        return {**r, "score": max(fs, r["score"]) if self.hybrid else fs}
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
-    res = evaluate()
+    sets = [evaluate(DATA), evaluate(ROOT / "tests" / "data" / "scam_eval_heldout.json"),
+            evaluate(ROOT / "tests" / "data" / "scam_eval_blind.json")]
     if a.json:
-        print(json.dumps(res, ensure_ascii=False, indent=1))
+        print(json.dumps(sets, ensure_ascii=False, indent=1))
         sys.exit(0)
-    print(f"{res['n_scam']} scam and {res['n_benign']} benign calls; flagged = scam score >= {FLAG_AT}\n")
-    print(f"{'engine':34s} {'TP':>3} {'FP':>3} {'FN':>3} {'TN':>3} {'prec':>6} {'recall':>6} {'F1':>6}")
-    for name, r in res["engines"].items():
-        print(f"{name:34s} {r['tp']:3d} {r['fp']:3d} {r['fn']:3d} {r['tn']:3d} {r['precision']:6.2f} {r['recall']:6.2f} {r['f1']:6.2f}")
-    print("\nerrors of the context engine:")
-    for r in res["engines"]["keywords + Hinglish + context"]["rows"]:
-        if r["flagged"] != (r["label"] == "scam"):
-            print(f"  {r['id']} {r['label']:6s} score {r['score']:.2f}  {r['kind']}")
+    (ROOT / "eval").mkdir(exist_ok=True)
+    (ROOT / "eval" / "scam_report.json").write_text(json.dumps(sets, ensure_ascii=False, indent=1), encoding="utf-8")
+    for res in sets:
+        print(f"\n== {res['set']}: {res['n_scam']} scam and {res['n_benign']} benign calls; flagged = score >= {FLAG_AT}")
+        print(f"{'engine':40s} {'TP':>3} {'FP':>3} {'FN':>3} {'TN':>3} {'prec':>6} {'recall':>6} {'F1':>6}")
+        for name, r in res["engines"].items():
+            print(f"{name:40s} {r['tp']:3d} {r['fp']:3d} {r['fn']:3d} {r['tn']:3d} {r['precision']:6.2f} {r['recall']:6.2f} {r['f1']:6.2f}")
+        for eng in ("keywords + Hinglish + context", "intent frames (shadow)", "rules OR frames (hybrid, not enabled)"):
+            errs = [f"{r['id']}({r['score']:.2f})" for r in res["engines"][eng]["rows"] if r["flagged"] != (r["label"] == "scam")]
+            print(f"  errors, {eng}: {' '.join(errs) or 'none'}")

@@ -1,0 +1,29 @@
+{
+  "about": "Held-out call set (27 Nov 2026), written as new conversations AFTER the keyword rules and the classifier's training set, and never used to tune either. Indirect scams and hard negatives (genuine delivery OTPs, genuine bank and police calls, genuine family money requests). Team-written: an honest second check, not an independent benchmark. A call is flagged at score >= 0.5.",
+  "calls": [
+    {"id": "h01", "label": "scam", "kind": "electricity disconnection", "utterances": ["Hello, this is the electricity board.", "Your last bill was not updated in our system.", "Your power will be disconnected at nine tonight unless you pay now on the number I send you."]},
+    {"id": "h02", "label": "scam", "kind": "job advance fee", "utterances": ["Congratulations, your profile is shortlisted for the data entry job.", "To confirm the joining, pay the two thousand rupee registration charge today."]},
+    {"id": "h03", "label": "scam", "kind": "investment", "utterances": ["Sir, our trading group gives thirty percent returns every month.", "Just deposit fifty thousand in the app and you can withdraw the profit tomorrow."]},
+    {"id": "h04", "label": "scam", "kind": "wrong refund", "utterances": ["Madam, by mistake five thousand rupees went to your account.", "Kindly send it back on this UPI number, my boss will scold me."]},
+    {"id": "h05", "label": "scam", "kind": "fake bank, indirect", "utterances": ["Good morning, I am from the card verification desk.", "We see a suspicious transaction of twenty thousand rupees.", "To cancel it, read the code you will receive in a moment."]},
+    {"id": "h06", "label": "scam", "kind": "video-call digital arrest", "utterances": ["This is the narcotics bureau, your Aadhaar was used to send a package.", "Stay on the video call and do not speak to anyone.", "You must transfer your savings for verification, it will be returned."]},
+    {"id": "h07", "label": "scam", "kind": "relative, Hinglish", "utterances": ["Bhaiya main Rahul ka dost bol raha hoon.", "Rahul ka accident ho gaya hai, hospital mein deposit chahiye.", "Abhi turant paise bhej do, main baad mein sab bata dunga."]},
+    {"id": "h08", "label": "scam", "kind": "loan approval fee", "utterances": ["Your personal loan of two lakh rupees is approved.", "Only the insurance fee of three thousand rupees has to be paid before disbursal."]},
+    {"id": "h09", "label": "scam", "kind": "SIM swap", "utterances": ["I am calling from your mobile network.", "Your SIM will stop working today because of the 5G upgrade.", "Please send the code you get by SMS to complete the upgrade."]},
+    {"id": "h10", "label": "scam", "kind": "QR to receive", "utterances": ["I want to buy the sofa you listed online.", "I will pay you now, just scan this QR code and enter your PIN to receive the money."]},
+    {"id": "h11", "label": "scam", "kind": "Hindi, KYC", "utterances": ["नमस्ते, मैं बैंक के केवाईसी विभाग से बोल रहा हूँ।", "आज केवाईसी नहीं हुआ तो आपका खाता बंद हो जाएगा।", "आपके फोन पर जो कोड आया है वह बता दीजिए।"]},
+    {"id": "h12", "label": "scam", "kind": "remote support", "utterances": ["Sir, your phone has a virus that is stealing your bank data.", "Install the support app I tell you, I will clean it remotely."]},
+    {"id": "b01", "label": "benign", "kind": "genuine delivery OTP", "utterances": ["Hello, I am the delivery executive from the courier.", "I am outside your building with the parcel.", "Please tell me the delivery OTP so I can mark it delivered."]},
+    {"id": "b02", "label": "benign", "kind": "genuine bank alert", "utterances": ["This is your bank's fraud monitoring team.", "We blocked a transaction of twenty thousand rupees on your card.", "If it was not you, no action is needed; we will never ask for your OTP or PIN."]},
+    {"id": "b03", "label": "benign", "kind": "genuine family money request", "utterances": ["Hi papa, the college fees are due on Friday.", "Can you transfer the money by Thursday?", "I will send you the receipt."]},
+    {"id": "b04", "label": "benign", "kind": "genuine police", "utterances": ["This is the local police station.", "We found your stolen bicycle.", "Please come to the station with your ID to collect it."]},
+    {"id": "b05", "label": "benign", "kind": "customer care, payment", "utterances": ["Thank you for calling customer care.", "Your payment of two thousand rupees failed, the money will be refunded in five days.", "Is there anything else I can help with?"]},
+    {"id": "b06", "label": "benign", "kind": "friend, urgency", "utterances": ["Hurry up, the movie starts in ten minutes.", "I already paid for both tickets, you can pay me later."]},
+    {"id": "b07", "label": "benign", "kind": "Hinglish, own OTP", "utterances": ["Yaar mera OTP nahi aa raha.", "Network ka problem hai shayad, thodi der baad try karta hoon."]},
+    {"id": "b08", "label": "benign", "kind": "doctor", "utterances": ["The doctor says your mother is recovering well.", "Please bring the insurance card when you visit."]},
+    {"id": "b09", "label": "benign", "kind": "bank KYC reminder, genuine", "utterances": ["This is a reminder from your bank that your KYC is due next month.", "You can update it in the app or at any branch; we never ask for documents on a call."]},
+    {"id": "b10", "label": "benign", "kind": "Hindi, family", "utterances": ["बेटा, मैंने तुम्हारे खाते में फीस के पैसे भेज दिए हैं।", "रसीद मिल जाए तो बता देना।"]},
+    {"id": "b11", "label": "benign", "kind": "news about scams", "utterances": ["Did you see the news about the digital arrest scam?", "They said police never arrest anyone over a video call and never ask for money."]},
+    {"id": "b12", "label": "benign", "kind": "landlord", "utterances": ["The rent for this month is due on the first.", "Please transfer it to the same account as last time."]}
+  ]
+}

@@ -1,0 +1,7611 @@
+{
+ "built": "2026-11-26 10:39",
+ "detector_mode": "step8c",
+ "threshold": -1.912,
+ "recordings": [
+  {
+   "id": "genuine_call_1",
+   "label": "genuine",
+   "kind": "demo caller (test split)"
+  },
+  {
+   "id": "genuine_call_2",
+   "label": "genuine",
+   "kind": "demo caller (test split)"
+  },
+  {
+   "id": "laptop_mic_enhancements_OFF_1",
+   "label": "genuine",
+   "kind": "raw laptop mic (local)"
+  },
+  {
+   "id": "laptop_mic_enhancements_OFF_2",
+   "label": "genuine",
+   "kind": "raw laptop mic (local)"
+  },
+  {
+   "id": "cloned_call_elevenlabs",
+   "label": "spoof",
+   "kind": "ElevenLabs clone"
+  },
+  {
+   "id": "cloned_call_kokoro",
+   "label": "spoof",
+   "kind": "Kokoro clone"
+  },
+  {
+   "id": "scam_call_tts",
+   "label": "spoof",
+   "kind": "Windows TTS scam call"
+  },
+  {
+   "id": "step9_clone_of_enrolled_user",
+   "label": "spoof",
+   "kind": "kNN-VC clone of a member (local)"
+  },
+  {
+   "id": "dev_yt_0001",
+   "label": "genuine",
+   "kind": "dev-split speaker"
+  },
+  {
+   "id": "dev_yt_0003",
+   "label": "genuine",
+   "kind": "dev-split speaker"
+  },
+  {
+   "id": "dev_yt_0007",
+   "label": "genuine",
+   "kind": "dev-split speaker"
+  },
+  {
+   "id": "dev_yt_0013",
+   "label": "genuine",
+   "kind": "dev-split speaker"
+  },
+  {
+   "id": "hume_hu_0001",
+   "label": "spoof",
+   "kind": "Hume dev-split fake"
+  },
+  {
+   "id": "hume_hu_0002",
+   "label": "spoof",
+   "kind": "Hume dev-split fake"
+  },
+  {
+   "id": "hume_hu_0003",
+   "label": "spoof",
+   "kind": "Hume dev-split fake"
+  },
+  {
+   "id": "hume_hu_0004",
+   "label": "spoof",
+   "kind": "Hume dev-split fake"
+  }
+ ],
+ "conditions": [
+  "clean",
+  "white20",
+  "white10",
+  "white5",
+  "babble10",
+  "phone",
+  "phone_white15"
+ ],
+ "window_level": {
+  "clean": {
+   "eer": 2.33,
+   "auc": 0.9973,
+   "points": [
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.9733,
+     0.0
+    ],
+    [
+     0.9466,
+     0.0
+    ],
+    [
+     0.9198,
+     0.0
+    ],
+    [
+     0.8931,
+     0.0
+    ],
+    [
+     0.8664,
+     0.0
+    ],
+    [
+     0.8397,
+     0.0
+    ],
+    [
+     0.813,
+     0.0
+    ],
+    [
+     0.7863,
+     0.0
+    ],
+    [
+     0.7595,
+     0.0
+    ],
+    [
+     0.7328,
+     0.0
+    ],
+    [
+     0.7061,
+     0.0
+    ],
+    [
+     0.6718,
+     0.0
+    ],
+    [
+     0.645,
+     0.0
+    ],
+    [
+     0.6183,
+     0.0
+    ],
+    [
+     0.5916,
+     0.0
+    ],
+    [
+     0.5649,
+     0.0
+    ],
+    [
+     0.5382,
+     0.0
+    ],
+    [
+     0.5076,
+     0.0
+    ],
+    [
+     0.4809,
+     0.0
+    ],
+    [
+     0.4542,
+     0.0
+    ],
+    [
+     0.4275,
+     0.0
+    ],
+    [
+     0.4008,
+     0.0
+    ],
+    [
+     0.374,
+     0.0
+    ],
+    [
+     0.3473,
+     0.0
+    ],
+    [
+     0.3206,
+     0.0
+    ],
+    [
+     0.2939,
+     0.0
+    ],
+    [
+     0.2672,
+     0.0
+    ],
+    [
+     0.2405,
+     0.0
+    ],
+    [
+     0.2137,
+     0.0
+    ],
+    [
+     0.1908,
+     0.0047
+    ],
+    [
+     0.1641,
+     0.0047
+    ],
+    [
+     0.1412,
+     0.0095
+    ],
+    [
+     0.1145,
+     0.0095
+    ],
+    [
+     0.0878,
+     0.0095
+    ],
+    [
+     0.0611,
+     0.0095
+    ],
+    [
+     0.0344,
+     0.0095
+    ],
+    [
+     0.0191,
+     0.0237
+    ],
+    [
+     0.0076,
+     0.0427
+    ],
+    [
+     0.0076,
+     0.0758
+    ],
+    [
+     0.0038,
+     0.1043
+    ],
+    [
+     0.0,
+     0.1327
+    ],
+    [
+     0.0,
+     0.1659
+    ],
+    [
+     0.0,
+     0.1991
+    ],
+    [
+     0.0,
+     0.2322
+    ],
+    [
+     0.0,
+     0.2654
+    ],
+    [
+     0.0,
+     0.2986
+    ],
+    [
+     0.0,
+     0.3318
+    ],
+    [
+     0.0,
+     0.3649
+    ],
+    [
+     0.0,
+     0.3981
+    ],
+    [
+     0.0,
+     0.4313
+    ],
+    [
+     0.0,
+     0.4645
+    ],
+    [
+     0.0,
+     0.4976
+    ],
+    [
+     0.0,
+     0.5308
+    ],
+    [
+     0.0,
+     0.564
+    ],
+    [
+     0.0,
+     0.5972
+    ],
+    [
+     0.0,
+     0.6303
+    ],
+    [
+     0.0,
+     0.6635
+    ],
+    [
+     0.0,
+     0.6967
+    ],
+    [
+     0.0,
+     0.7346
+    ],
+    [
+     0.0,
+     0.7678
+    ],
+    [
+     0.0,
+     0.8009
+    ],
+    [
+     0.0,
+     0.8341
+    ],
+    [
+     0.0,
+     0.8673
+    ],
+    [
+     0.0,
+     0.9005
+    ],
+    [
+     0.0,
+     0.9336
+    ],
+    [
+     0.0,
+     0.9668
+    ]
+   ],
+   "n_genuine": 262,
+   "n_spoof": 211,
+   "far_at_threshold": 2.29,
+   "frr_at_threshold": 2.37,
+   "quality": {
+    "good": 413,
+    "fair": 59,
+    "poor": 1
+   }
+  },
+  "white20": {
+   "eer": 5.7,
+   "auc": 0.9836,
+   "points": [
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.9732,
+     0.0
+    ],
+    [
+     0.9464,
+     0.0
+    ],
+    [
+     0.9195,
+     0.0
+    ],
+    [
+     0.8927,
+     0.0
+    ],
+    [
+     0.8659,
+     0.0
+    ],
+    [
+     0.8391,
+     0.0
+    ],
+    [
+     0.8123,
+     0.0
+    ],
+    [
+     0.7854,
+     0.0
+    ],
+    [
+     0.7586,
+     0.0
+    ],
+    [
+     0.7318,
+     0.0
+    ],
+    [
+     0.705,
+     0.0
+    ],
+    [
+     0.6782,
+     0.0
+    ],
+    [
+     0.6513,
+     0.0
+    ],
+    [
+     0.6245,
+     0.0
+    ],
+    [
+     0.5977,
+     0.0
+    ],
+    [
+     0.5709,
+     0.0
+    ],
+    [
+     0.5441,
+     0.0
+    ],
+    [
+     0.5172,
+     0.0
+    ],
+    [
+     0.4904,
+     0.0
+    ],
+    [
+     0.4636,
+     0.0
+    ],
+    [
+     0.4368,
+     0.0
+    ],
+    [
+     0.41,
+     0.0
+    ],
+    [
+     0.387,
+     0.0047
+    ],
+    [
+     0.3602,
+     0.0047
+    ],
+    [
+     0.3372,
+     0.0094
+    ],
+    [
+     0.3103,
+     0.0094
+    ],
+    [
+     0.2797,
+     0.0094
+    ],
+    [
+     0.2529,
+     0.0094
+    ],
+    [
+     0.2261,
+     0.0094
+    ],
+    [
+     0.2069,
+     0.0189
+    ],
+    [
+     0.1839,
+     0.0236
+    ],
+    [
+     0.1571,
+     0.0236
+    ],
+    [
+     0.1341,
+     0.0283
+    ],
+    [
+     0.1188,
+     0.0425
+    ],
+    [
+     0.1034,
+     0.0566
+    ],
+    [
+     0.0766,
+     0.0566
+    ],
+    [
+     0.0575,
+     0.066
+    ],
+    [
+     0.0498,
+     0.0896
+    ],
+    [
+     0.0345,
+     0.1038
+    ],
+    [
+     0.0268,
+     0.1274
+    ],
+    [
+     0.023,
+     0.1557
+    ],
+    [
+     0.0153,
+     0.1792
+    ],
+    [
+     0.0153,
+     0.2123
+    ],
+    [
+     0.0153,
+     0.25
+    ],
+    [
+     0.0115,
+     0.2783
+    ],
+    [
+     0.0038,
+     0.3019
+    ],
+    [
+     0.0,
+     0.3349
+    ],
+    [
+     0.0,
+     0.3679
+    ],
+    [
+     0.0,
+     0.4009
+    ],
+    [
+     0.0,
+     0.434
+    ],
+    [
+     0.0,
+     0.467
+    ],
+    [
+     0.0,
+     0.5
+    ],
+    [
+     0.0,
+     0.533
+    ],
+    [
+     0.0,
+     0.566
+    ],
+    [
+     0.0,
+     0.5991
+    ],
+    [
+     0.0,
+     0.6321
+    ],
+    [
+     0.0,
+     0.6651
+    ],
+    [
+     0.0,
+     0.6981
+    ],
+    [
+     0.0,
+     0.7311
+    ],
+    [
+     0.0,
+     0.7642
+    ],
+    [
+     0.0,
+     0.7972
+    ],
+    [
+     0.0,
+     0.8302
+    ],
+    [
+     0.0,
+     0.8632
+    ],
+    [
+     0.0,
+     0.8962
+    ],
+    [
+     0.0,
+     0.9292
+    ],
+    [
+     0.0,
+     0.9623
+    ],
+    [
+     0.0,
+     0.9953
+    ]
+   ],
+   "n_genuine": 261,
+   "n_spoof": 212,
+   "far_at_threshold": 12.26,
+   "frr_at_threshold": 3.77,
+   "quality": {
+    "good": 384,
+    "fair": 88,
+    "poor": 1
+   }
+  },
+  "white10": {
+   "eer": 21.48,
+   "auc": 0.8857,
+   "points": [
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.9732,
+     0.0
+    ],
+    [
+     0.9464,
+     0.0
+    ],
+    [
+     0.9157,
+     0.0
+    ],
+    [
+     0.8889,
+     0.0
+    ],
+    [
+     0.8621,
+     0.0
+    ],
+    [
+     0.8352,
+     0.0
+    ],
+    [
+     0.8084,
+     0.0
+    ],
+    [
+     0.7816,
+     0.0
+    ],
+    [
+     0.7548,
+     0.0
+    ],
+    [
+     0.728,
+     0.0
+    ],
+    [
+     0.7011,
+     0.0
+    ],
+    [
+     0.6743,
+     0.0
+    ],
+    [
+     0.6513,
+     0.0047
+    ],
+    [
+     0.6245,
+     0.0047
+    ],
+    [
+     0.6054,
+     0.014
+    ],
+    [
+     0.5824,
+     0.0187
+    ],
+    [
+     0.5594,
+     0.0234
+    ],
+    [
+     0.5364,
+     0.028
+    ],
+    [
+     0.5096,
+     0.028
+    ],
+    [
+     0.4866,
+     0.0327
+    ],
+    [
+     0.4598,
+     0.0374
+    ],
+    [
+     0.4368,
+     0.0514
+    ],
+    [
+     0.4138,
+     0.0561
+    ],
+    [
+     0.3946,
+     0.0654
+    ],
+    [
+     0.3716,
+     0.0701
+    ],
+    [
+     0.3563,
+     0.0888
+    ],
+    [
+     0.3448,
+     0.1075
+    ],
+    [
+     0.318,
+     0.1121
+    ],
+    [
+     0.295,
+     0.1215
+    ],
+    [
+     0.2874,
+     0.1449
+    ],
+    [
+     0.2759,
+     0.1636
+    ],
+    [
+     0.2644,
+     0.1822
+    ],
+    [
+     0.2414,
+     0.1869
+    ],
+    [
+     0.2299,
+     0.2056
+    ],
+    [
+     0.2146,
+     0.2196
+    ],
+    [
+     0.1992,
+     0.2336
+    ],
+    [
+     0.1839,
+     0.2523
+    ],
+    [
+     0.1648,
+     0.2617
+    ],
+    [
+     0.1533,
+     0.285
+    ],
+    [
+     0.1341,
+     0.2944
+    ],
+    [
+     0.1188,
+     0.3131
+    ],
+    [
+     0.1111,
+     0.3411
+    ],
+    [
+     0.0958,
+     0.3551
+    ],
+    [
+     0.0843,
+     0.3738
+    ],
+    [
+     0.0728,
+     0.3972
+    ],
+    [
+     0.0651,
+     0.4252
+    ],
+    [
+     0.0536,
+     0.4439
+    ],
+    [
+     0.046,
+     0.472
+    ],
+    [
+     0.046,
+     0.5093
+    ],
+    [
+     0.0421,
+     0.5374
+    ],
+    [
+     0.0345,
+     0.5607
+    ],
+    [
+     0.0307,
+     0.5888
+    ],
+    [
+     0.023,
+     0.6121
+    ],
+    [
+     0.0192,
+     0.6402
+    ],
+    [
+     0.0192,
+     0.6729
+    ],
+    [
+     0.0153,
+     0.7009
+    ],
+    [
+     0.0115,
+     0.729
+    ],
+    [
+     0.0077,
+     0.757
+    ],
+    [
+     0.0038,
+     0.785
+    ],
+    [
+     0.0,
+     0.8131
+    ],
+    [
+     0.0,
+     0.8458
+    ],
+    [
+     0.0,
+     0.8785
+    ],
+    [
+     0.0,
+     0.9112
+    ],
+    [
+     0.0,
+     0.9439
+    ],
+    [
+     0.0,
+     0.9766
+    ]
+   ],
+   "n_genuine": 261,
+   "n_spoof": 214,
+   "far_at_threshold": 21.07,
+   "frr_at_threshold": 21.96,
+   "quality": {
+    "good": 0,
+    "fair": 459,
+    "poor": 16
+   }
+  },
+  "white5": {
+   "eer": 34.53,
+   "auc": 0.7317,
+   "points": [
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.9732,
+     0.0
+    ],
+    [
+     0.9464,
+     0.0
+    ],
+    [
+     0.9195,
+     0.0
+    ],
+    [
+     0.8927,
+     0.0
+    ],
+    [
+     0.8659,
+     0.0
+    ],
+    [
+     0.8467,
+     0.0093
+    ],
+    [
+     0.8199,
+     0.0093
+    ],
+    [
+     0.7931,
+     0.0093
+    ],
+    [
+     0.7663,
+     0.0093
+    ],
+    [
+     0.7471,
+     0.0187
+    ],
+    [
+     0.7203,
+     0.0187
+    ],
+    [
+     0.6935,
+     0.0234
+    ],
+    [
+     0.6743,
+     0.0327
+    ],
+    [
+     0.6628,
+     0.0514
+    ],
+    [
+     0.659,
+     0.0794
+    ],
+    [
+     0.6398,
+     0.0888
+    ],
+    [
+     0.6245,
+     0.1028
+    ],
+    [
+     0.6092,
+     0.1215
+    ],
+    [
+     0.5862,
+     0.1262
+    ],
+    [
+     0.567,
+     0.1355
+    ],
+    [
+     0.5441,
+     0.1402
+    ],
+    [
+     0.5249,
+     0.1495
+    ],
+    [
+     0.5057,
+     0.1589
+    ],
+    [
+     0.4904,
+     0.1822
+    ],
+    [
+     0.4789,
+     0.2009
+    ],
+    [
+     0.4674,
+     0.2196
+    ],
+    [
+     0.4521,
+     0.2336
+    ],
+    [
+     0.4368,
+     0.2477
+    ],
+    [
+     0.4215,
+     0.2617
+    ],
+    [
+     0.4023,
+     0.271
+    ],
+    [
+     0.387,
+     0.2897
+    ],
+    [
+     0.3793,
+     0.3131
+    ],
+    [
+     0.3602,
+     0.3224
+    ],
+    [
+     0.3487,
+     0.3411
+    ],
+    [
+     0.3372,
+     0.3598
+    ],
+    [
+     0.3333,
+     0.3879
+    ],
+    [
+     0.318,
+     0.4019
+    ],
+    [
+     0.3103,
+     0.4252
+    ],
+    [
+     0.295,
+     0.4393
+    ],
+    [
+     0.2759,
+     0.4533
+    ],
+    [
+     0.2682,
+     0.4766
+    ],
+    [
+     0.2529,
+     0.4907
+    ],
+    [
+     0.2337,
+     0.5
+    ],
+    [
+     0.2222,
+     0.5187
+    ],
+    [
+     0.2107,
+     0.5374
+    ],
+    [
+     0.2031,
+     0.5654
+    ],
+    [
+     0.1839,
+     0.5748
+    ],
+    [
+     0.1648,
+     0.5841
+    ],
+    [
+     0.1533,
+     0.6028
+    ],
+    [
+     0.1379,
+     0.6168
+    ],
+    [
+     0.1188,
+     0.6262
+    ],
+    [
+     0.1149,
+     0.6589
+    ],
+    [
+     0.1034,
+     0.6776
+    ],
+    [
+     0.0958,
+     0.7009
+    ],
+    [
+     0.0843,
+     0.7196
+    ],
+    [
+     0.069,
+     0.7336
+    ],
+    [
+     0.0498,
+     0.7477
+    ],
+    [
+     0.046,
+     0.7757
+    ],
+    [
+     0.0345,
+     0.7944
+    ],
+    [
+     0.023,
+     0.8131
+    ],
+    [
+     0.0115,
+     0.8318
+    ],
+    [
+     0.0077,
+     0.8598
+    ],
+    [
+     0.0038,
+     0.8879
+    ],
+    [
+     0.0,
+     0.9159
+    ],
+    [
+     0.0,
+     0.9486
+    ],
+    [
+     0.0,
+     0.9813
+    ]
+   ],
+   "n_genuine": 261,
+   "n_spoof": 214,
+   "far_at_threshold": 39.46,
+   "frr_at_threshold": 28.97,
+   "quality": {
+    "good": 0,
+    "fair": 6,
+    "poor": 469
+   }
+  },
+  "babble10": {
+   "eer": 39.85,
+   "auc": 0.6192,
+   "points": [
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.9708,
+     0.0
+    ],
+    [
+     0.9416,
+     0.0
+    ],
+    [
+     0.9124,
+     0.0
+    ],
+    [
+     0.8978,
+     0.0179
+    ],
+    [
+     0.8796,
+     0.0314
+    ],
+    [
+     0.854,
+     0.0359
+    ],
+    [
+     0.8358,
+     0.0493
+    ],
+    [
+     0.8175,
+     0.0628
+    ],
+    [
+     0.7883,
+     0.0673
+    ],
+    [
+     0.7628,
+     0.0717
+    ],
+    [
+     0.7482,
+     0.0897
+    ],
+    [
+     0.7299,
+     0.1031
+    ],
+    [
+     0.6971,
+     0.1031
+    ],
+    [
+     0.6788,
+     0.1166
+    ],
+    [
+     0.6642,
+     0.1345
+    ],
+    [
+     0.6496,
+     0.1525
+    ],
+    [
+     0.6314,
+     0.1659
+    ],
+    [
+     0.6131,
+     0.1794
+    ],
+    [
+     0.5876,
+     0.1883
+    ],
+    [
+     0.5839,
+     0.2197
+    ],
+    [
+     0.5803,
+     0.2511
+    ],
+    [
+     0.5511,
+     0.2601
+    ],
+    [
+     0.5365,
+     0.278
+    ],
+    [
+     0.5255,
+     0.3004
+    ],
+    [
+     0.5036,
+     0.3139
+    ],
+    [
+     0.4854,
+     0.3318
+    ],
+    [
+     0.4708,
+     0.3498
+    ],
+    [
+     0.4562,
+     0.3677
+    ],
+    [
+     0.4343,
+     0.3812
+    ],
+    [
+     0.4124,
+     0.3901
+    ],
+    [
+     0.3942,
+     0.4036
+    ],
+    [
+     0.3832,
+     0.426
+    ],
+    [
+     0.365,
+     0.4439
+    ],
+    [
+     0.3577,
+     0.4709
+    ],
+    [
+     0.3431,
+     0.4888
+    ],
+    [
+     0.3248,
+     0.5022
+    ],
+    [
+     0.3029,
+     0.5112
+    ],
+    [
+     0.2956,
+     0.5381
+    ],
+    [
+     0.2847,
+     0.565
+    ],
+    [
+     0.2737,
+     0.5874
+    ],
+    [
+     0.2664,
+     0.6143
+    ],
+    [
+     0.2518,
+     0.6323
+    ],
+    [
+     0.2409,
+     0.6547
+    ],
+    [
+     0.2226,
+     0.6726
+    ],
+    [
+     0.2044,
+     0.6951
+    ],
+    [
+     0.2007,
+     0.7265
+    ],
+    [
+     0.1898,
+     0.7489
+    ],
+    [
+     0.1752,
+     0.7668
+    ],
+    [
+     0.1679,
+     0.7937
+    ],
+    [
+     0.1533,
+     0.8117
+    ],
+    [
+     0.1423,
+     0.8341
+    ],
+    [
+     0.1314,
+     0.8565
+    ],
+    [
+     0.1277,
+     0.8879
+    ],
+    [
+     0.1168,
+     0.9103
+    ],
+    [
+     0.0985,
+     0.9327
+    ],
+    [
+     0.0949,
+     0.9641
+    ],
+    [
+     0.073,
+     0.9731
+    ],
+    [
+     0.0547,
+     0.9865
+    ],
+    [
+     0.0255,
+     0.9865
+    ],
+    [
+     0.0073,
+     1.0
+    ]
+   ],
+   "n_genuine": 274,
+   "n_spoof": 223,
+   "far_at_threshold": 0.0,
+   "frr_at_threshold": 100.0,
+   "quality": {
+    "good": 12,
+    "fair": 457,
+    "poor": 28
+   }
+  },
+  "phone": {
+   "eer": 3.4,
+   "auc": 0.9963,
+   "points": [
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.9729,
+     0.0
+    ],
+    [
+     0.9457,
+     0.0
+    ],
+    [
+     0.9186,
+     0.0
+    ],
+    [
+     0.8915,
+     0.0
+    ],
+    [
+     0.8643,
+     0.0
+    ],
+    [
+     0.8333,
+     0.0
+    ],
+    [
+     0.8062,
+     0.0
+    ],
+    [
+     0.7791,
+     0.0
+    ],
+    [
+     0.7519,
+     0.0
+    ],
+    [
+     0.7248,
+     0.0
+    ],
+    [
+     0.6977,
+     0.0
+    ],
+    [
+     0.6705,
+     0.0
+    ],
+    [
+     0.6434,
+     0.0
+    ],
+    [
+     0.6163,
+     0.0
+    ],
+    [
+     0.5891,
+     0.0
+    ],
+    [
+     0.562,
+     0.0
+    ],
+    [
+     0.531,
+     0.0
+    ],
+    [
+     0.5039,
+     0.0
+    ],
+    [
+     0.4767,
+     0.0
+    ],
+    [
+     0.4457,
+     0.0
+    ],
+    [
+     0.4186,
+     0.0
+    ],
+    [
+     0.3915,
+     0.0
+    ],
+    [
+     0.3643,
+     0.0
+    ],
+    [
+     0.3372,
+     0.0
+    ],
+    [
+     0.3101,
+     0.0
+    ],
+    [
+     0.2829,
+     0.0
+    ],
+    [
+     0.2519,
+     0.0
+    ],
+    [
+     0.2248,
+     0.0
+    ],
+    [
+     0.2016,
+     0.0047
+    ],
+    [
+     0.1783,
+     0.0095
+    ],
+    [
+     0.1512,
+     0.0095
+    ],
+    [
+     0.124,
+     0.0095
+    ],
+    [
+     0.1008,
+     0.0142
+    ],
+    [
+     0.0775,
+     0.0237
+    ],
+    [
+     0.0543,
+     0.0284
+    ],
+    [
+     0.031,
+     0.0332
+    ],
+    [
+     0.0116,
+     0.0427
+    ],
+    [
+     0.0,
+     0.0616
+    ],
+    [
+     0.0,
+     0.0948
+    ],
+    [
+     0.0,
+     0.128
+    ],
+    [
+     0.0,
+     0.1611
+    ],
+    [
+     0.0,
+     0.1943
+    ],
+    [
+     0.0,
+     0.2275
+    ],
+    [
+     0.0,
+     0.2607
+    ],
+    [
+     0.0,
+     0.2938
+    ],
+    [
+     0.0,
+     0.327
+    ],
+    [
+     0.0,
+     0.3602
+    ],
+    [
+     0.0,
+     0.3934
+    ],
+    [
+     0.0,
+     0.4265
+    ],
+    [
+     0.0,
+     0.4597
+    ],
+    [
+     0.0,
+     0.4929
+    ],
+    [
+     0.0,
+     0.5261
+    ],
+    [
+     0.0,
+     0.5592
+    ],
+    [
+     0.0,
+     0.5924
+    ],
+    [
+     0.0,
+     0.6256
+    ],
+    [
+     0.0,
+     0.6588
+    ],
+    [
+     0.0,
+     0.6919
+    ],
+    [
+     0.0,
+     0.7251
+    ],
+    [
+     0.0,
+     0.7583
+    ],
+    [
+     0.0,
+     0.7915
+    ],
+    [
+     0.0,
+     0.8246
+    ],
+    [
+     0.0,
+     0.8578
+    ],
+    [
+     0.0,
+     0.891
+    ],
+    [
+     0.0,
+     0.9242
+    ],
+    [
+     0.0,
+     0.9573
+    ],
+    [
+     0.0,
+     0.9905
+    ]
+   ],
+   "n_genuine": 258,
+   "n_spoof": 211,
+   "far_at_threshold": 10.08,
+   "frr_at_threshold": 1.42,
+   "quality": {
+    "good": 430,
+    "fair": 39,
+    "poor": 0
+   }
+  },
+  "phone_white15": {
+   "eer": 14.65,
+   "auc": 0.9372,
+   "points": [
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.9731,
+     0.0
+    ],
+    [
+     0.9462,
+     0.0
+    ],
+    [
+     0.9192,
+     0.0
+    ],
+    [
+     0.8923,
+     0.0
+    ],
+    [
+     0.8654,
+     0.0
+    ],
+    [
+     0.8385,
+     0.0
+    ],
+    [
+     0.8115,
+     0.0
+    ],
+    [
+     0.7846,
+     0.0
+    ],
+    [
+     0.7577,
+     0.0
+    ],
+    [
+     0.7308,
+     0.0
+    ],
+    [
+     0.7038,
+     0.0
+    ],
+    [
+     0.6769,
+     0.0
+    ],
+    [
+     0.65,
+     0.0
+    ],
+    [
+     0.6231,
+     0.0
+    ],
+    [
+     0.5962,
+     0.0
+    ],
+    [
+     0.5692,
+     0.0
+    ],
+    [
+     0.5423,
+     0.0
+    ],
+    [
+     0.5154,
+     0.0
+    ],
+    [
+     0.4885,
+     0.0
+    ],
+    [
+     0.4577,
+     0.0
+    ],
+    [
+     0.4385,
+     0.0095
+    ],
+    [
+     0.4154,
+     0.0142
+    ],
+    [
+     0.3885,
+     0.0142
+    ],
+    [
+     0.3692,
+     0.0237
+    ],
+    [
+     0.35,
+     0.0332
+    ],
+    [
+     0.3269,
+     0.0427
+    ],
+    [
+     0.3,
+     0.0427
+    ],
+    [
+     0.2769,
+     0.0474
+    ],
+    [
+     0.2577,
+     0.0569
+    ],
+    [
+     0.2385,
+     0.0711
+    ],
+    [
+     0.2154,
+     0.0806
+    ],
+    [
+     0.1962,
+     0.09
+    ],
+    [
+     0.1808,
+     0.1043
+    ],
+    [
+     0.1654,
+     0.1185
+    ],
+    [
+     0.15,
+     0.1327
+    ],
+    [
+     0.1385,
+     0.1517
+    ],
+    [
+     0.1231,
+     0.1659
+    ],
+    [
+     0.1038,
+     0.1754
+    ],
+    [
+     0.0885,
+     0.1896
+    ],
+    [
+     0.0769,
+     0.2133
+    ],
+    [
+     0.0654,
+     0.2322
+    ],
+    [
+     0.0615,
+     0.2654
+    ],
+    [
+     0.0577,
+     0.2938
+    ],
+    [
+     0.05,
+     0.3318
+    ],
+    [
+     0.05,
+     0.3649
+    ],
+    [
+     0.0462,
+     0.3981
+    ],
+    [
+     0.0423,
+     0.4265
+    ],
+    [
+     0.0423,
+     0.4597
+    ],
+    [
+     0.0346,
+     0.4834
+    ],
+    [
+     0.0308,
+     0.5118
+    ],
+    [
+     0.0231,
+     0.5355
+    ],
+    [
+     0.0231,
+     0.5735
+    ],
+    [
+     0.0154,
+     0.5972
+    ],
+    [
+     0.0115,
+     0.6303
+    ],
+    [
+     0.0077,
+     0.6588
+    ],
+    [
+     0.0077,
+     0.6919
+    ],
+    [
+     0.0038,
+     0.7204
+    ],
+    [
+     0.0038,
+     0.7536
+    ],
+    [
+     0.0,
+     0.782
+    ],
+    [
+     0.0,
+     0.8152
+    ],
+    [
+     0.0,
+     0.8483
+    ],
+    [
+     0.0,
+     0.8815
+    ],
+    [
+     0.0,
+     0.9147
+    ],
+    [
+     0.0,
+     0.9479
+    ],
+    [
+     0.0,
+     0.981
+    ]
+   ],
+   "n_genuine": 260,
+   "n_spoof": 211,
+   "far_at_threshold": 12.69,
+   "frr_at_threshold": 16.59,
+   "quality": {
+    "good": 59,
+    "fair": 412,
+    "poor": 0
+   }
+  }
+ },
+ "rules": [
+  {
+   "name": "baseline",
+   "note": "shipped rule: HOLD when voice risk >= 75 and 3 of the last 5 windows are flagged",
+   "genuine_calls": 56,
+   "false_hold": 9,
+   "false_alert": 29,
+   "spoof_calls": 56,
+   "spoof_hold": 44,
+   "spoof_stopped": 46,
+   "median_time_to_hold_s": 28.5,
+   "calls": [
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 34.02,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 34.02,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 34.62,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 34.62,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 29.18,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 45.47,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 45.47,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 42.02,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 42.02,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.03
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    }
+   ]
+  },
+  {
+   "name": "quality-aware persistence",
+   "note": "degraded audio: HOLD needs 4 of 5 flagged windows (else 3 of 5)",
+   "genuine_calls": 56,
+   "false_hold": 9,
+   "false_alert": 29,
+   "spoof_calls": 56,
+   "spoof_hold": 44,
+   "spoof_stopped": 46,
+   "median_time_to_hold_s": 28.5,
+   "calls": [
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 34.02,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 34.02,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 34.62,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 34.62,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 29.18,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 45.47,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 45.47,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 42.02,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 42.02,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.03
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    }
+   ]
+  },
+  {
+   "name": "confirmed HOLD",
+   "note": "voice HOLD condition must hold on two consecutive windows",
+   "genuine_calls": 56,
+   "false_hold": 8,
+   "false_alert": 29,
+   "spoof_calls": 56,
+   "spoof_hold": 44,
+   "spoof_stopped": 46,
+   "median_time_to_hold_s": 28.5,
+   "calls": [
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 34.02,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 34.62,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 34.62,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 29.18,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 45.47,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 45.47,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 42.02,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 42.02,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.03
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    }
+   ]
+  },
+  {
+   "name": "median-of-3 smoothing",
+   "note": "each window uses the median score of itself and the 2 before it",
+   "genuine_calls": 56,
+   "false_hold": 11,
+   "false_alert": 26,
+   "spoof_calls": 56,
+   "spoof_hold": 44,
+   "spoof_stopped": 46,
+   "median_time_to_hold_s": 28.5,
+   "calls": [
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 34.02,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 34.02,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 34.62,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 34.62,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 29.18,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 45.47,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 45.47,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 45.47,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 42.02,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 42.02,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 42.02,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    }
+   ]
+  },
+  {
+   "name": "persistence + confirmation",
+   "note": "both of the above",
+   "genuine_calls": 56,
+   "false_hold": 5,
+   "false_alert": 29,
+   "spoof_calls": 56,
+   "spoof_hold": 44,
+   "spoof_stopped": 46,
+   "median_time_to_hold_s": 28.5,
+   "calls": [
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 34.02,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 34.62,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 29.18,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 45.47,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 45.47,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.03
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    }
+   ]
+  },
+  {
+   "name": "degraded audio caps voice-only at VERIFY",
+   "note": "noisy audio: voice alone gives VERIFY (OTP / call-back), not HOLD",
+   "genuine_calls": 56,
+   "false_hold": 1,
+   "false_alert": 29,
+   "spoof_calls": 56,
+   "spoof_hold": 24,
+   "spoof_stopped": 46,
+   "median_time_to_hold_s": 25.8,
+   "calls": [
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_1",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.02
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "genuine_call_2",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 34.62
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_1",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 27.78
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "laptop_mic_enhancements_OFF_2",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 29.18
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 15.74,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_elevenlabs",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 15.74
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 17.95,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "cloned_call_kokoro",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 17.95
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 23.1,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "scam_call_tts",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 23.1
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 23.07,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "step9_clone_of_enrolled_user",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 23.07
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0001",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.0
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 45.47,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0003",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.47
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0007",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 42.02
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "clean",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white20",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.03
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "phone",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "dev_yt_0013",
+     "label": "genuine",
+     "cond": "phone_white15",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 43.39,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0001",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 43.39
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 45.76,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0002",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 45.76
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 28.54,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0003",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 28.54
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "clean",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white20",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white10",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "white5",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "babble10",
+     "verdict": "PASS",
+     "first_hold": null,
+     "first_alert": null
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "phone",
+     "verdict": "HOLD",
+     "first_hold": 44.38,
+     "first_alert": 44.38
+    },
+    {
+     "rec": "hume_hu_0004",
+     "label": "spoof",
+     "cond": "phone_white15",
+     "verdict": "VERIFY",
+     "first_hold": null,
+     "first_alert": 44.38
+    }
+   ]
+  }
+ ],
+ "split": [
+  {
+   "name": "baseline",
+   "dev": {
+    "genuine": 28,
+    "false_hold": 4,
+    "spoof": 28,
+    "spoof_hold": 23,
+    "spoof_stopped": 24
+   },
+   "heldout": {
+    "genuine": 28,
+    "false_hold": 5,
+    "spoof": 28,
+    "spoof_hold": 21,
+    "spoof_stopped": 22
+   }
+  },
+  {
+   "name": "quality-aware persistence",
+   "dev": {
+    "genuine": 28,
+    "false_hold": 4,
+    "spoof": 28,
+    "spoof_hold": 23,
+    "spoof_stopped": 24
+   },
+   "heldout": {
+    "genuine": 28,
+    "false_hold": 5,
+    "spoof": 28,
+    "spoof_hold": 21,
+    "spoof_stopped": 22
+   }
+  },
+  {
+   "name": "confirmed HOLD",
+   "dev": {
+    "genuine": 28,
+    "false_hold": 4,
+    "spoof": 28,
+    "spoof_hold": 23,
+    "spoof_stopped": 24
+   },
+   "heldout": {
+    "genuine": 28,
+    "false_hold": 4,
+    "spoof": 28,
+    "spoof_hold": 21,
+    "spoof_stopped": 22
+   }
+  },
+  {
+   "name": "median-of-3 smoothing",
+   "dev": {
+    "genuine": 28,
+    "false_hold": 6,
+    "spoof": 28,
+    "spoof_hold": 23,
+    "spoof_stopped": 24
+   },
+   "heldout": {
+    "genuine": 28,
+    "false_hold": 5,
+    "spoof": 28,
+    "spoof_hold": 21,
+    "spoof_stopped": 22
+   }
+  },
+  {
+   "name": "persistence + confirmation",
+   "dev": {
+    "genuine": 28,
+    "false_hold": 2,
+    "spoof": 28,
+    "spoof_hold": 23,
+    "spoof_stopped": 24
+   },
+   "heldout": {
+    "genuine": 28,
+    "false_hold": 3,
+    "spoof": 28,
+    "spoof_hold": 21,
+    "spoof_stopped": 22
+   }
+  },
+  {
+   "name": "degraded audio caps voice-only at VERIFY",
+   "dev": {
+    "genuine": 28,
+    "false_hold": 1,
+    "spoof": 28,
+    "spoof_hold": 12,
+    "spoof_stopped": 24
+   },
+   "heldout": {
+    "genuine": 28,
+    "false_hold": 0,
+    "spoof": 28,
+    "spoof_hold": 12,
+    "spoof_stopped": 22
+   }
+  }
+ ]
+}
