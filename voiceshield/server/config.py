@@ -28,6 +28,10 @@ class RiskConfig:
     hold_n: int = 5
     identity_at: float = 50       # voice-mismatch probability (0-100) that counts as "not the claimed person"
     scam_at: float = 50           # scam-language score (0-100) that counts as a scam script
+    # "standard" (shipped) or "robust" (opt-in): in noisy audio a voice-only HOLD needs one more flagged window and
+    # two consecutive windows. Robustness suite, held-out recordings: false HOLDs 5 -> 3 of 28 genuine calls, spoof
+    # HOLDs unchanged 21/28 (tools/eval_rules.py). Opt-in until validated on real noisy calls.
+    hold_rule: str = "standard"
 
 
 @dataclass
@@ -78,6 +82,9 @@ class Config:
     # false alarms 7 -> 2 of 12 benign calls, recall unchanged 12/12). false = the original keyword behaviour.
     scam_context: bool = True
     evidence_key_file: str = "data/evidence_key.json"   # Ed25519 signing key, created on first use (git-ignored)
+    # scam-intent frames (server/frames.py): "shadow" = computed and shown, never used in a decision; "off" = not run.
+    # Blind set: frames F1 0.94 vs rules 0.36 (tools/eval_scam.py), kept in shadow until validated on real calls.
+    scam_semantic: str = "shadow"
 
     def path(self, p: str) -> Path:
         p = Path(p)
@@ -105,6 +112,8 @@ def load_config(path: str | os.PathLike | None = None) -> Config:
             raise ValueError(f"Unknown settings in {path} -> {name}: {sorted(bad)}")
         sections[name] = cls(**sub)
     cfg = Config(**raw, **sections)
+    if cfg.scam_semantic not in ("shadow", "off"):
+        raise ValueError(f'{path}: scam_semantic must be "shadow" or "off", not {cfg.scam_semantic!r}')
     if cfg.detector_mode not in ("original", "step8c"):
         raise ValueError(f'{path}: detector_mode must be "original" or "step8c", not {cfg.detector_mode!r}')
     return cfg

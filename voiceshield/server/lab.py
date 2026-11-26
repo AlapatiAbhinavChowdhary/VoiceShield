@@ -8,6 +8,7 @@ Every scenario states what is real and what is simulated:
 Results never touch the audit log, and the server refuses lab runs while a live call is being analysed.
 """
 import time
+from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
@@ -17,6 +18,7 @@ from .config import ROOT, SR
 from .offline import analyse, load_audio
 from .quality import audio_quality
 from .risk import LEVELS, RiskEngine
+from .frames import CallFrames
 from .scam import CallScam
 
 SAMPLES = ROOT / "samples"
@@ -91,9 +93,11 @@ def run(s: dict, detector, vad, cfg, threshold: float, transcriber=None) -> dict
     t0 = time.perf_counter()
     if s["mode"] == "transcript":
         risk, scam = RiskEngine(cfg.risk, threshold), CallScam(context=cfg.scam_context)
+        frames = CallFrames()
         timeline, transcript, first = [], [], {}
         for i, u in enumerate(s["utterances"]):
             t = 3.0 * (i + 1)
+            intent = frames.add(u)                                  # shadow: reported, not used in the decision
             r = scam.add(u)
             risk.set_scam(r["score"], r["tactics"])
             st = risk.state()
@@ -104,6 +108,7 @@ def run(s: dict, detector, vad, cfg, threshold: float, transcriber=None) -> dict
         verdict, st = LEVELS[risk.verdict], risk.state()
         out = {"verdict": verdict, "max_risk": round(risk.max_risk, 1), "signals": st["signals"], "reasons": st["reasons"],
                "timeline": timeline, "transcript": transcript, "patterns": r["patterns"], "quality": None,
+               "intent_shadow": intent,
                "first_verify_s": first.get("VERIFY", first.get("HOLD")), "first_hold_s": first.get("HOLD"), "windows": 0}
     else:
         x = load_audio(SAMPLES / s["file"])
@@ -117,6 +122,12 @@ def run(s: dict, detector, vad, cfg, threshold: float, transcriber=None) -> dict
         W = a["windows"]
         qs = [audio_quality(w) for w in a.get("audio_windows", [])]
         labels = [q["label"] for q in qs]
+        # side-by-side: what the opt-in robust HOLD rule (Step 13) would decide on the very same windows
+        alt = RiskEngine(replace(cfg.risk, hold_rule="robust"), threshold)
+        for w, lab_ in zip(W, labels):
+            alt.update(w["llr"], None, lab_)
+            alt.state()
+        robust_verdict = LEVELS[alt.verdict]
         # explain the decision at the moment it was reached, not the state at the end of the call
         st = next((w for w in W if w["level"] == a["verdict"]), W[-1]) if W else \
             {"signals": {"voice": 0, "identity": None, "scam": 0}, "reasons": []}
@@ -131,7 +142,8 @@ def run(s: dict, detector, vad, cfg, threshold: float, transcriber=None) -> dict
                            "median_snr_db": float(np.median([q["snr_db"] for q in qs])) if qs else None},
                "flagged": sum(w["window_score"] >= 0.5 for w in W),
                "median_llr": round(float(np.median([w["llr"] for w in W])), 2) if W else None,
-               "first_verify_s": a["first_alert_s"], "first_hold_s": a["first_hold_s"], "audio_s": round(a["audio_s"], 1)}
+               "first_verify_s": a["first_alert_s"], "first_hold_s": a["first_hold_s"], "audio_s": round(a["audio_s"], 1),
+               "robust_rule_verdict": robust_verdict}
     out["correct"] = (out["verdict"] == "PASS") if s["truth"] == "genuine" else (out["verdict"] in ("VERIFY", "HOLD"))
     out["payment"] = PAYMENT[out["verdict"]]
     out["threshold"] = round(threshold, 3)

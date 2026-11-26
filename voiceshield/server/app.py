@@ -48,8 +48,9 @@ from .config import ROOT, SR, Config, load_config
 from .models import VadModel, load_detector
 from .offline import make_processor
 from .quality import audio_quality, confidence
-from . import lab
+from . import evalcenter, lab
 from .evidence import EvidenceSigner
+from .frames import CallFrames
 from .evidence import check as evidence_check
 from .risk import LEVELS, RiskEngine
 from .scam import CallScam
@@ -193,6 +194,28 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
         lab_cache[sid] = res
         return res
 
+    @app.get("/api/eval")
+    def eval_center():
+        """Measured results only, each with its evidence class (see server/evalcenter.py)."""
+        _, prof = S["profiles"].get("default")
+        lab_done = [v for v in lab_cache.values()]
+        return {"step8c": evalcenter.step8c_table(), "robustness": evalcenter.robustness(), "scam": evalcenter.scam(),
+                "latency": evalcenter.live_latency(S["audit"]),
+                "lab": {"class": "controlled", "run": len(lab_done), "total": len(lab.SCENARIOS),
+                        "correct": sum(bool(v.get("correct")) for v in lab_done)},
+                "config": {"detector": getattr(S["detector"], "provider", "?"), "detector_mode": getattr(S["detector"], "mode", "original"),
+                           "default_threshold": round(float(prof["llr_threshold"]), 3), "risk": asdict(cfg.risk),
+                           "window_s": cfg.window_seconds, "hop_s": cfg.hop_seconds, "scam_context": cfg.scam_context,
+                           "scam_semantic": cfg.scam_semantic, "speaker_cutoff": cfg.speaker.threshold,
+                           "asr": f"Whisper {S['asr'].size}" if S["asr"] else None}}
+
+    @app.post("/api/lab/reset")
+    def lab_reset():
+        """Clear every lab result (demo reset)."""
+        n = len(lab_cache)
+        lab_cache.clear()
+        return {"cleared": n}
+
     @app.get("/api/samples")
     def samples():
         meta = ROOT / "samples" / "samples.json"
@@ -228,6 +251,7 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
             body["signature"] = signer().sign(c["id"], body["generated_at"], body["sha256"])
         except Exception as e:                                # a signing failure must not block the evidence file
             log.warning("evidence signing failed: %s", e)
+            body["signature_status"] = "unavailable: the signing key could not be loaded (file kept, not replaced)"
         return JSONResponse(body, headers={"Content-Disposition":
                                            f'attachment; filename="voiceshield-session-{call_id}-evidence.json"'})
 
@@ -374,6 +398,7 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
         risk = RiskEngine(cfg.risk, threshold)
         voice = CallVoice(enrolled, cfg.speaker.threshold, cfg.speaker.scale) if S["speaker"] and mode == "monitor" else None
         scam = CallScam(context=cfg.scam_context)
+        frames = CallFrames() if cfg.scam_semantic == "shadow" else None     # shadow: shown, never decides
         seen_patterns: set = set()
         proc = make_processor(S["vad"], cfg)
         resample = StreamResampler(sr_in) if sr_in != SR else None
@@ -457,7 +482,7 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
                     audit.window(call_id, **base)
                     await send({"type": "calib_window", "n": len(collected), **base, **extra})
                     continue
-                ws_score = risk.update(r["llr"], cut)
+                ws_score = risk.update(r["llr"], cut, q["label"])
                 spk = voice.add(emb) if (voice is not None and emb is not None) else None
                 if spk is not None:
                     risk.set_identity(spk["mismatch"])
@@ -490,7 +515,7 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
                 st = await decide(t1)
                 await send({"type": "transcript", "t0": round(t0, 2), "t1": round(t1, 2), **r,
                             "hits": s["hits"], "scam_score": s["score"], "patterns": s["patterns"],
-                            "suppressed": s["suppressed"], **st})
+                            "suppressed": s["suppressed"], "intent": frames.add(r["text"]) if frames else None, **st})
 
         tasks = [asyncio.create_task(scorer())]
         use_asr = S["asr"] is not None and mode == "monitor"

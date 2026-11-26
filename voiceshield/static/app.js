@@ -19,7 +19,7 @@ const AN = { buffer: null, name: "", t0: 0, raf: 0, dur: 0, spec: null, samples:
 const VIEWS = {
   live: ["/#/live", "Command center"], analysis: ["/#/analysis", "Voice analysis"], history: ["/#/history", "Detection history"],
   call: ["/#/history", "Investigation"], analytics: ["/#/analytics", "Analytics"], incidents: ["/#/incidents", "Incidents"],
-  settings: ["/#/settings", "Settings & enrolment"], lab: ["/#/lab", "Scenario lab"],
+  settings: ["/#/settings", "Settings & enrolment"], lab: ["/#/lab", "Scenario lab"], eval: ["/#/eval", "Evaluation center"],
 };
 const fmtClock = (s) => { s = Math.max(0, s || 0); const m = Math.floor(s / 60); return `${m}:${(s - m * 60).toFixed(1).padStart(4, "0")}`; };
 const fmtDate = (ts) => { const d = new Date(ts * 1000); return `${d.toLocaleDateString(undefined, { day: "2-digit", month: "short" })} · ${d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}`; };
@@ -43,7 +43,7 @@ async function init() {
     LV.chart.thresholds(S.cfg.risk.verify_at, S.cfg.risk.hold_at);
     fillProfiles(S.cfg.profiles);
   } catch (e) { VSUI.toast("crit", "Server not reachable", "Start it with  python run.py"); }
-  bindLive(); bindAnalysis(); bindHistory(); bindSettings();
+  bindLive(); bindCommand(); bindAnalysis(); bindHistory(); bindSettings();
   $("iAll").checked = store.get("vs-sec-all") === "1";
   $("iAll").onchange = () => { store.set("vs-sec-all", $("iAll").checked ? "1" : "0"); INC.seen = null; refreshIncidents(); };
   $("anAll").checked = store.get("vs-an-all") !== "0";
@@ -78,6 +78,7 @@ function route() {
   if (name === "incidents") { refreshIncidents(); INC.timer = setInterval(refreshIncidents, 2000); }
   if (name === "settings") renderSettings();
   if (name === "lab") loadLab();
+  if (name === "eval") loadEval();
 }
 
 // ====================================================================== shared lists
@@ -221,7 +222,7 @@ function highlight(text, hits) {
   return html;
 }
 function addEvent(cls, ic, title, detail, t) {
-  $("eventsEmpty").classList.add("hidden");
+  $("eventsEmpty").classList.add("hidden"); countUp("evCount");
   const li = document.createElement("li");
   li.className = cls;
   li.innerHTML = `${I(ic)}<div><b>${esc(title)}</b>${detail ? ` · ${esc(detail)}` : ""}<time>${t === undefined ? "" : fmt(t, 1) + " s into the session"}</time></div>`;
@@ -234,6 +235,9 @@ function resetSession(mode) {
   $("log").querySelector("tbody").innerHTML = ""; $("logEmpty").classList.remove("hidden");
   $("action").className = "alert hidden";
   $("events").innerHTML = ""; $("eventsEmpty").classList.remove("hidden");
+  $("evCount").textContent = ""; $("trCount").textContent = "";
+  $("response").querySelectorAll(".at").forEach((e) => { e.textContent = ""; });
+  if (mode === "monitor") railTime("PASS", 0);
   $("clock").textContent = "0.0 s"; $("speechS").textContent = "0.0 s"; $("speechDot").className = "speech-dot";
   $("mProb").textContent = "–"; $("mWin").textContent = "–"; $("lat").textContent = "–";
   const special = { calibrate: ["Calibrating", "Learning this line"], enroll: ["Enrolling", "Recording a voiceprint"] }[mode];
@@ -478,12 +482,14 @@ function onMessage(m) {
       const chips = (m.hits || []).map((h) => `<span class="tag crit">${esc(h.label)}</span>`).join("");
       const calm = (m.suppressed || []).length ? `<div class="xs muted" style="margin-top:4px">${I("shield-check", "xs")} Not counted: protective advice ` +
         `(“${esc(m.suppressed[0].phrase)}” said as a warning, not a request)</div>` : "";
-      d.innerHTML = `<span class="ts">${fmt(m.t0, 0)}s</span><div><div class="bubble">${highlight(m.text, m.hits)}</div>` + (chips ? `<div class="tactics">${chips}</div>` : "") + calm + `</div>`;
+      const it = m.intent && m.intent.score >= 0.5 ? `<div class="xs shadow-note" title="Shadow mode: shown for evaluation, never used in the decision">` +
+        `${I("flask", "xs")} Intent frame (shadow) ${fmt(m.intent.score, 2)} · ${esc((m.intent.requests || []).slice(-1)[0] || "")} · pretext: ${esc((m.intent.pretexts || []).join(", "))}</div>` : "";
+      d.innerHTML = `<span class="ts">${fmt(m.t0, 0)}s</span><div><div class="bubble">${highlight(m.text, m.hits)}</div>` + (chips ? `<div class="tactics">${chips}</div>` : "") + calm + it + `</div>`;
       for (const p of m.patterns || []) {                 // a named fraud script, once per session
         if (S.tactics.has("pattern:" + p)) continue;
         S.tactics.add("pattern:" + p); addEvent("crit", "shield-alert", "Fraud script recognised", p, m.t1);
       }
-      $("transcript").appendChild(d);
+      $("transcript").appendChild(d); countUp("trCount");
       $("transcript").scrollTop = $("transcript").scrollHeight;
       for (const h of m.hits || []) {                     // each tactic once per session in the feed
         if (S.tactics.has(h.label)) continue;
@@ -511,9 +517,13 @@ function onMessage(m) {
       addEvent(hold ? "crit" : "warn", hold ? "octagon" : "alert", hold ? "HOLD · transactions held" : "VERIFY · out-of-band check", capital((m.reasons || []).join("; ")), m.t);
       VSUI.toast(hold ? "crit" : "warn", hold ? `HOLD at ${fmt(m.t, 1)} s` : `VERIFY at ${fmt(m.t, 1)} s`, capital((m.reasons || [])[0] || ""));
       if (S.origin === "analysis") AN.first[m.level] = AN.first[m.level] ?? m.t;
+      if (hold) railTime("VERIFY", m.t);                  // a direct HOLD passes through VERIFY at the same moment
+      railTime(m.level, m.t);
       break;
     }
     case "summary":
+      if (m.call_id) S.lastCallId = m.call_id;
+      if (GUIDE.pending && S.origin === "live") { GUIDE.results[GUIDE.pending] = m.verdict; GUIDE.pending = null; setTimeout(renderGuide, 50); }
       setVerdict(m.verdict, { risk: m.max_risk, verdict: m.verdict, reasons: m.verdict === "PASS" ? [] : m.reasons, state: `Finished · ${LEVEL_WORD[m.verdict] || m.verdict}` });
       if (m.signals) setSignals(m.signals);
       renderResponse(m.verdict);
@@ -997,6 +1007,159 @@ async function renderSettings() {
     row("Stored", "scores, decisions, scam-tactic names and prevention events only");
 }
 
+// ====================================================================== command center: record tabs, rail, present, guide
+function bindCommand() {
+  document.querySelectorAll(".record-card .tab").forEach((t) => t.onclick = () => {
+    document.querySelectorAll(".record-card .tab").forEach((x) => { x.classList.toggle("on", x === t); x.setAttribute("aria-selected", x === t); });
+    document.querySelectorAll(".record-card [data-pane]").forEach((p) => { p.hidden = p.dataset.pane !== t.dataset.tab; });
+  });
+  if (store.get("vs-how-hidden") === "1") $("howStrip").hidden = true;
+  $("howClose").onclick = () => { $("howStrip").hidden = true; store.set("vs-how-hidden", "1"); };
+  $("presentBtn").onclick = togglePresent;
+  document.addEventListener("fullscreenchange", () => { if (!document.fullscreenElement) document.body.classList.remove("present"); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && document.body.classList.contains("present")) togglePresent(); });
+  $("guideBtn").onclick = () => GUIDE.open ? closeGuide() : openGuide();
+}
+function railTime(level, t) {
+  const el = $("response").querySelector(`.act[data-l="${level}"] .at`);
+  if (el && !el.textContent) el.textContent = t === null ? "" : `at ${fmt(t, 1)} s`;
+}
+function countUp(id) { const el = $(id); el.textContent = String((Number(el.textContent) || 0) + 1); }
+function togglePresent() {
+  const on = !document.body.classList.contains("present");
+  document.body.classList.toggle("present", on);
+  $("presentBtn").innerHTML = `${I("maximize", "sm")}${on ? "Leave presentation" : "Present"}`;
+  try { if (on && !document.fullscreenElement) document.documentElement.requestFullscreen?.(); else if (!on && document.fullscreenElement) document.exitFullscreen?.(); } catch (e) { /* fullscreen is optional */ }
+  requestAnimationFrame(() => { LV.wave.draw(); LV.lane.draw(); LV.chart.draw(); });
+}
+
+// guided demo: the first minute for a judge, every step runs the real pipeline on a bundled recording
+const GUIDE = { open: false, el: null, steps: [
+  { id: "genuine", file: "genuine_call_1.flac", expect: ["PASS"], title: "A real customer calls",
+    watch: "The risk stays low and the rail stays on Monitor: payments are allowed." },
+  { id: "clone", file: "cloned_call_elevenlabs.flac", expect: ["HOLD"], title: "An AI clone calls",
+    watch: "Window scores turn amber, then red; the rail moves to Verify, then Hold." },
+  { id: "scam", file: "scam_call_tts.wav", expect: ["HOLD"], title: "A synthetic 'bank officer' asks for the OTP",
+    watch: "The transcript highlights the scam tactics and the fraud script is named." },
+  { id: "evidence", link: "report", title: "Investigate and verify the evidence",
+    watch: "Open the last session: prediction, evidence and actions, a printable report and a signed evidence file." },
+  { id: "lab", link: "#/lab", title: "Scenario Lab: noise, phone lines, human fraudsters",
+    watch: "11 controlled scenarios with expected vs actual outcomes, including a known failure." },
+  { id: "call", link: "call", title: "The two-screen call with payment blocking",
+    watch: "Open the Customer phone and the Caller side by side; inject a clone and request ₹49,999." },
+], results: {}, pending: null };
+function openGuide() {
+  GUIDE.open = true;
+  if (!GUIDE.el) { GUIDE.el = document.createElement("aside"); GUIDE.el.className = "guide"; GUIDE.el.setAttribute("aria-label", "Guided demo"); document.body.appendChild(GUIDE.el); }
+  renderGuide(); requestAnimationFrame(() => GUIDE.el.classList.add("open"));
+}
+function closeGuide() { GUIDE.open = false; GUIDE.el?.classList.remove("open"); }
+function renderGuide() {
+  if (!GUIDE.el) return;
+  GUIDE.el.innerHTML = `<div class="guide-head"><div><div class="eyebrow">${I("flag", "xs")}Guided demo</div><h3>VoiceShield in six steps</h3>` +
+    `<p class="small muted">Steps 1-3 stream bundled real recordings through the real models, exactly like a live call.</p></div>` +
+    `<button class="iconbtn" type="button" data-close aria-label="Close the guide">${I("x", "sm")}</button></div><ol class="guide-steps">` +
+    GUIDE.steps.map((s, i) => {
+      const r = GUIDE.results[s.id], ok = r && s.expect ? s.expect.includes(r) : null, busy = GUIDE.pending === s.id && S.running;
+      return `<li class="${r ? (ok ? "done" : "miss") : ""}"><span class="gn">${r ? I(ok ? "check" : "x", "xs") : i + 1}</span><div><b>${esc(s.title)}</b>` +
+        `<p>${esc(s.watch)}</p>${s.expect ? `<p class="xs muted">Expected ${s.expect.join(" or ")}${r ? ` · got <b>${esc(r)}</b>` : ""}</p>` : ""}` +
+        `<button class="btn sm${i === 0 && !r ? " primary" : ""}" type="button" data-step="${s.id}" ${busy || (s.file && S.running) ? "disabled" : ""}>` +
+        `${I(s.file ? "play" : "external", "sm")}${busy ? "Playing…" : s.file ? (r ? "Play again" : "Play") : "Open"}</button></div></li>`;
+    }).join("") + `</ol><p class="xs muted guide-foot">Simulated conditions appear only in the Scenario Lab and are labelled there.</p>`;
+  VSUI.hydrate(GUIDE.el);
+  GUIDE.el.querySelector("[data-close]").onclick = closeGuide;
+  GUIDE.el.querySelectorAll("[data-step]").forEach((b) => b.onclick = () => runGuideStep(b.dataset.step));
+}
+function runGuideStep(id) {
+  const s = GUIDE.steps.find((x) => x.id === id);
+  if (s.file) {
+    const smp = (SAMPLES || []).find((x) => x.file === s.file);
+    if (!smp) { VSUI.toast("warn", "Recording missing", `${s.file} is not in samples/`); return; }
+    location.hash = "#/live";
+    if (smp.profile && S.cfg && S.cfg.profiles[smp.profile]) $("profile").value = smp.profile;
+    GUIDE.pending = id;
+    start({ kind: "url", url: "/samples/" + encodeURIComponent(smp.file), label: smp.file, origin: "live" });
+    setTimeout(renderGuide, 300);
+  } else if (s.link === "report") {
+    if (S.lastCallId) location.hash = `#/call/${S.lastCallId}`; else VSUI.toast("warn", "No session yet", "Play step 1, 2 or 3 first.");
+  } else if (s.link === "call") {
+    window.open("/customer", "_blank", "noopener"); window.open("/caller", "_blank", "noopener");
+  } else location.hash = s.link;
+}
+
+// ====================================================================== evaluation center (measured results only)
+const EVC = { heldout: "Held-out test", "heldout-seen": "Held-out (errors seen)", blind: "Blind", controlled: "Controlled", dev: "Development", live: "Live" };
+const evBadge = (c) => `<span class="evc ${esc(String(c).split("-")[0])}">${esc(EVC[c] || c)}</span>`;
+const COND = { clean: "Clean", white20: "White noise 20 dB", white10: "White noise 10 dB", white5: "White noise 5 dB",
+  babble10: "Babble 10 dB", phone: "Phone line (G.711)", phone_white15: "Phone + noise 15 dB" };
+const COND_COL = ["--cyan", "--series-2", "--chart-warn", "--chart-crit", "--chart-good", "--indigo", "--muted"];
+function curveSvg(series, kind) {
+  // kind "roc": x = false alarms (0-1), y = detection (0-1); kind "det": probit axes, x = false alarms, y = misses
+  const W = 360, H = 260, pl = 42, pr = 10, pt = 10, pb = 34, iw = W - pl - pr, ih = H - pt - pb;
+  const lim = 3.09, sx = (v) => kind === "roc" ? pl + v * iw : pl + (v + lim) / (2 * lim) * iw;
+  const sy = (v) => kind === "roc" ? pt + (1 - v) * ih : pt + (1 - (v + lim) / (2 * lim)) * ih;
+  const ticks = kind === "roc" ? [0, .25, .5, .75, 1].map((v) => [v, `${v * 100}%`]) : [[-2.326, "1%"], [-1.645, "5%"], [-1.282, "10%"], [0, "50%"], [1.282, "90%"]];
+  const grid = ticks.map(([v, l]) => `<line x1="${sx(v)}" x2="${sx(v)}" y1="${pt}" y2="${pt + ih}" class="g"/><line x1="${pl}" x2="${pl + iw}" y1="${sy(v)}" y2="${sy(v)}" class="g"/>` +
+    `<text x="${sx(v)}" y="${H - 18}" text-anchor="middle">${l}</text><text x="${pl - 6}" y="${sy(v) + 4}" text-anchor="end">${l}</text>`).join("");
+  const diag = kind === "roc" ? `<line x1="${sx(0)}" y1="${sy(0)}" x2="${sx(1)}" y2="${sy(1)}" class="d"/>` : `<line x1="${sx(-lim)}" y1="${sy(lim)}" x2="${sx(lim)}" y2="${sy(-lim)}" class="d"/>`;
+  const lines = series.map((s, i) => {
+    // DET: drop points clipped at 0.1% / 99.9% (zero false alarms or misses), they only draw spikes along the edges
+    const pts = kind === "roc" ? s.points.map(([far, frr]) => [far, 1 - frr]) : s.det.filter((p) => Math.abs(p[0]) < 3.08 && Math.abs(p[1]) < 3.08);
+    const d = pts.filter((p) => p.every((x) => x !== null)).sort((a, b) => a[0] - b[0]).map((p, j) => `${j ? "L" : "M"}${sx(p[0]).toFixed(1)},${sy(p[1]).toFixed(1)}`).join("");
+    return `<path d="${d}" fill="none" stroke="${VSUI.css(COND_COL[i % COND_COL.length])}" stroke-width="1.8"><title>${esc(s.label)}: EER ${fmt(s.eer, 1)}%</title></path>`;
+  }).join("");
+  const xl = kind === "roc" ? "False alarms on genuine windows" : "False alarms (probit)", yl = kind === "roc" ? "Spoof windows detected" : "Missed spoofs (probit)";
+  return `<svg class="ev-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${kind.toUpperCase()} curves per condition">${grid}${diag}${lines}` +
+    `<text x="${pl + iw / 2}" y="${H - 3}" text-anchor="middle" class="ax">${xl}</text><text transform="translate(11 ${pt + ih / 2}) rotate(-90)" text-anchor="middle" class="ax">${yl}</text></svg>`;
+}
+async function loadEval() {
+  if (!EVAL_BOUND) { EVAL_BOUND = true; $("evRefresh").onclick = loadEval; }
+  let e;
+  try { e = await api("/api/eval"); } catch (err) { $("evBody").innerHTML = `<div class="empty">${I("alert")}<b>Not available</b>${esc(err.message)}</div>`; return; }
+  const kpi = (ic, cls, label, big, sub, klass) => `<div class="kpi"><span class="ki ${cls}">${I(ic, "lg")}</span><div><div class="label">${label} ${evBadge(klass)}</div><div class="big">${big}</div><div class="sub">${sub}</div></div></div>`;
+  const s8 = e.step8c ? e.step8c.rows.filter((r) => r.original && r.fused) : [];
+  const mean = (k) => s8.length ? s8.reduce((a, r) => a + r[k].eer, 0) / s8.length : null;
+  const blind = (e.scam || []).find((s) => s.class === "blind");
+  const rb = e.robustness, clean = rb && rb.window_level.clean;
+  $("evKpis").innerHTML =
+    kpi("cpu", "brand", "Voice detector, mean EER", s8.length ? `${fmt(mean("fused"), 1)}<small>% (was ${fmt(mean("original"), 1)}%)</small>` : "–", `Step 8c over ${s8.length} test sets`, "heldout") +
+    kpi("activity", "", "Robustness suite, clean EER", clean && clean.eer !== null ? `${fmt(clean.eer, 1)}<small>%</small>` : "–", clean ? `${clean.n_genuine} genuine / ${clean.n_spoof} spoof windows` : "suite not built yet", "controlled") +
+    kpi("message", "", "Scam language, blind F1", blind ? `${fmt(blind.engines["intent frames (shadow)"].f1, 2)}<small>frames · rules ${fmt(blind.engines["keywords + Hinglish + context"].f1, 2)}</small>` : "–", blind ? `${blind.n_scam} scam / ${blind.n_benign} benign calls` : "run tools/eval_scam.py", "blind") +
+    kpi("clock", "", "Detector latency, median", e.latency.median_ms ? `${fmt(e.latency.median_ms, 0)}<small>ms · p95 ${fmt(e.latency.p95_ms, 0)}</small>` : "–", `${e.latency.windows} windows on this laptop`, "live");
+  let html = "";
+  if (s8.length) html += `<section class="card"><div class="card-head"><span class="headicon brand">${I("cpu")}</span><div><h3>Synthetic-voice detector on held-out test sets ${evBadge("heldout")}</h3>` +
+    `<div class="sub">Frozen AntiDeepfake wav2vec 2.0 Large vs + Step 8c back-end (fused). Source: ${esc(e.step8c.source)}</div></div></div><div class="card-body"><div class="table-wrap"><table class="table"><thead><tr><th>Test set</th><th class="r">Original EER</th><th class="r">Step 8c EER</th><th class="r">Change</th><th class="r">Step 8c AUC</th><th class="r">False alarms</th><th class="r">Misses</th></tr></thead><tbody>` +
+    s8.map((r) => { const d = r.fused.eer - r.original.eer; return `<tr><td>${esc(r.set)}</td><td class="r">${fmt(r.original.eer, 1)}%</td><td class="r ink">${fmt(r.fused.eer, 1)}%</td><td class="r ${d < -0.5 ? "good-ink" : d > 0.5 ? "crit-ink" : ""}">${d > 0 ? "+" : ""}${fmt(d, 1)}</td><td class="r">${fmt(r.fused.auc, 3)}</td><td class="r">${fmt(r.fused.far, 1)}%</td><td class="r">${fmt(r.fused.frr, 1)}%</td></tr>`; }).join("") +
+    `</tbody></table></div><p class="xs muted">False alarms / misses: at the single pooled development threshold, before the automatic line profile.</p></div></section>`;
+  if (rb) {
+    const conds = rb.conditions.filter((c) => rb.window_level[c] && rb.window_level[c].eer !== null);
+    const series = conds.map((c) => ({ label: COND[c] || c, ...rb.window_level[c] }));
+    html += `<section class="card"><div class="card-head"><span class="headicon">${I("activity")}</span><div><h3>Robustness suite: noise, babble and phone lines ${evBadge("controlled")}</h3>` +
+      `<div class="sub">${rb.recordings.filter((r) => r.label === "genuine").length} genuine and ${rb.recordings.filter((r) => r.label === "spoof").length} spoofed recordings × ${rb.conditions.length} conditions, scored by the live pipeline (${esc(rb.detector_mode)}, threshold ${fmt(rb.threshold)}). Built ${esc(rb.built)}.</div></div></div>` +
+      `<div class="card-body"><div class="ev-charts"><figure>${curveSvg(series, "roc")}<figcaption>ROC per condition</figcaption></figure><figure>${curveSvg(series, "det")}<figcaption>DET per condition (lower-left is better)</figcaption></figure>` +
+      `<div class="ev-legend">${series.map((s, i) => `<span><i style="background:${VSUI.css(COND_COL[i % COND_COL.length])}"></i>${esc(s.label)}</span>`).join("")}</div></div>` +
+      `<div class="table-wrap"><table class="table"><thead><tr><th>Condition</th><th class="r">Windows (genuine / spoof)</th><th class="r">EER</th><th class="r">AUC</th><th class="r">Genuine flagged at threshold</th><th class="r">Spoof missed at threshold</th><th>Audio quality (good / fair / poor)</th></tr></thead><tbody>` +
+      conds.map((c) => { const v = rb.window_level[c]; return `<tr><td>${esc(COND[c] || c)}</td><td class="r">${v.n_genuine} / ${v.n_spoof}</td><td class="r ink">${fmt(v.eer, 1)}%</td><td class="r">${fmt(v.auc, 3)}</td><td class="r ${v.far_at_threshold > 10 ? "crit-ink" : ""}">${fmt(v.far_at_threshold, 1)}%</td><td class="r">${fmt(v.frr_at_threshold, 1)}%</td><td>${v.quality.good} / ${v.quality.fair} / ${v.quality.poor}</td></tr>`; }).join("") +
+      `</tbody></table></div>` +
+      `<h4 class="ev-h">False-positive study: decision rules replayed on the same windows</h4><div class="table-wrap"><table class="table"><thead><tr><th>Rule</th><th>What changes</th><th class="r">Genuine calls falsely held</th><th class="r">Genuine calls alerted</th><th class="r">Spoof calls held</th><th class="r">Spoof calls stopped</th><th class="r">Median time to HOLD</th></tr></thead><tbody>` +
+      rb.rules.map((r, i) => `<tr${i === 0 ? ' class="base"' : ""}><td><b>${esc(r.name)}</b>${i === 0 ? ' <span class="tag">shipped</span>' : ' <span class="tag">experiment</span>'}</td><td class="small">${esc(r.note)}</td><td class="r ink">${r.false_hold} / ${r.genuine_calls}</td><td class="r">${r.false_alert} / ${r.genuine_calls}</td><td class="r">${r.spoof_hold} / ${r.spoof_calls}</td><td class="r">${r.spoof_stopped} / ${r.spoof_calls}</td><td class="r">${r.median_time_to_hold_s ?? "–"} s</td></tr>`).join("") +
+      `</tbody></table></div></div></section>`;
+  }
+  if (e.scam) html += `<section class="card"><div class="card-head"><span class="headicon">${I("message")}</span><div><h3>Scam-language detection</h3><div class="sub">Call-level: flagged when the score reaches 0.5. Team-written sets; the classes say how independent each one is.</div></div></div><div class="card-body ev-scam">` +
+    e.scam.map((s) => `<div><div class="ev-set">${evBadge(s.class)} <b>${esc(s.set)}</b> <span class="muted small">${s.n_scam} scam · ${s.n_benign} benign</span></div><div class="table-wrap"><table class="table"><thead><tr><th>Engine</th><th class="r">TP</th><th class="r">FP</th><th class="r">FN</th><th class="r">TN</th><th class="r">Precision</th><th class="r">Recall</th><th class="r">F1</th></tr></thead><tbody>` +
+      Object.entries(s.engines).map(([k, v]) => `<tr${k.includes("context") ? ' class="base"' : ""}><td>${esc(k)}${k.includes("context") ? ' <span class="tag">shipped</span>' : k.includes("shadow") ? ' <span class="tag">shadow</span>' : ""}</td><td class="r">${v.tp}</td><td class="r">${v.fp}</td><td class="r">${v.fn}</td><td class="r">${v.tn}</td><td class="r">${fmt(v.precision, 2)}</td><td class="r">${fmt(v.recall, 2)}</td><td class="r ink">${fmt(v.f1, 2)}</td></tr>`).join("") +
+      `</tbody></table></div></div>`).join("") + `</div></section>`;
+  const c = e.config;
+  html += `<section class="card"><div class="card-head"><span class="headicon">${I("sliders")}</span><div><h3>Model and configuration in use</h3><div class="sub">What produced the live decisions on this server</div></div></div><div class="card-body ev-config">` +
+    [["Detector", `${esc(c.detector)} · ${esc(c.detector_mode)}`], ["Default cut-off", fmt(c.default_threshold)], ["Windows", `${c.window_s} s, every ${c.hop_s} s of speech`],
+     ["VERIFY / HOLD", `voice ≥ ${c.risk.verify_at} / ≥ ${c.risk.hold_at} with ${c.risk.hold_k} of ${c.risk.hold_n} windows`], ["Voiceprint cut-off", fmt(c.speaker_cutoff)],
+     ["Scam rules", `keywords${c.scam_context ? " + context layer" : ""}; intent frames ${esc(c.scam_semantic)}`], ["Speech-to-text", esc(c.asr || "off")],
+     ["Scenario lab", `${e.lab.correct} of ${e.lab.run} correct (${e.lab.run} of ${e.lab.total} run since start)`], ["Live sessions", `${e.latency.calls} monitored`]]
+      .map(([k, v]) => `<div class="stat-line"><span>${k}</span><b>${v}</b></div>`).join("") + `</div></section>`;
+  $("evBody").innerHTML = html || `<div class="empty">${I("gauge")}<b>No results yet</b>Run tools/eval_robustness.py --build and tools/eval_scam.py.</div>`;
+}
+let EVAL_BOUND = false;
+
 // ====================================================================== scenario lab
 const LAB = { list: [], running: new Set(), bound: false };
 const MODE_TAG = { real: ["audio-lines", "Real recording"], simulated: ["sliders", "Simulated condition"], transcript: ["message", "Scripted transcript"] };
@@ -1037,6 +1200,10 @@ function labCard(s) {
       `<div class="lab-sig"><span>Voice <b>${sig.voice == null ? "–" : fmt(sig.voice, 0)}</b></span><span>Identity <b>${sig.identity == null ? "not claimed" : fmt(sig.identity, 0)}</b></span><span>Scam language <b>${fmt(sig.scam, 0)}</b></span></div>` +
       (r.reasons && r.reasons.length ? `<p class="small">${esc(capital(r.reasons.join("; ")))}.</p>` : `<p class="small muted">No signal reached an alert level.</p>`) +
       ((r.patterns || []).length ? `<p class="small">${I("shield-alert", "xs")} Fraud script: <b>${esc(r.patterns.join(", "))}</b></p>` : "") +
+      (r.robust_rule_verdict ? `<p class="xs shadow-note">${I("flask", "xs")} Opt-in robust HOLD rule on the same windows: <b>${esc(r.robust_rule_verdict)}</b>` +
+        `${r.robust_rule_verdict !== r.verdict ? " (differs from the shipped rule)" : " (same)"}</p>` : "") +
+      (r.intent_shadow ? `<p class="xs shadow-note">${I("flask", "xs")} Intent frames (shadow, not in the decision): <b>${fmt(r.intent_shadow.score, 2)}</b>` +
+        `${(r.intent_shadow.pretexts || []).length ? ` · pretext ${esc(r.intent_shadow.pretexts.join(", "))}` : ""}</p>` : "") +
       (r.windows ? `<p class="xs muted">${r.flagged} of ${r.windows} windows above the cut-off ${fmt(r.threshold)} · median score ${fmt(r.median_llr)} · audio ${q ? `${q.good} good / ${q.fair} fair / ${q.poor} poor` : "–"}${q && q.median_snr_db != null ? `, SNR ≈ ${fmt(q.median_snr_db, 0)} dB` : ""}</p>` : "") +
       ((r.transcript || []).length ? `<ul class="lab-tr">${r.transcript.map((u) => `<li><time>${fmt(u.t, 0)}s</time>${esc(u.text)}${(u.tactics || []).length ? ` <span class="tag crit">${esc(u.tactics[0])}</span>` : ""}${(u.suppressed || []).length ? ` <span class="tag good">protective advice, not counted</span>` : ""}</li>`).join("")}</ul>` : "") +
       `<p class="xs muted">${esc(s.inference)} · computed in ${fmt(r.elapsed_s, 1)} s</p></details>`;

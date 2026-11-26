@@ -6,8 +6,8 @@
 <meta name="color-scheme" content="dark">
 <title>VoiceShield · Command center</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%2322d3ee'/%3E%3Cpath d='M7 12.5h1.6l1.4-3 2 5.5 1.5-3.5H17' fill='none' stroke='%2304131a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="/static/ui.css?v=2611w">
-<script src="/static/shell.js?v=2611w"></script>
+<link rel="stylesheet" href="/static/ui.css?v=2711e">
+<script src="/static/shell.js?v=2711e"></script>
 </head>
 <body>
 <header id="topbar"></header>
@@ -21,6 +21,18 @@
       <h1 id="h-live">Command center</h1>
       <p>VoiceShield listens to the caller, scores every 4 seconds of speech for AI-generated voice, checks the voiceprint and the words, and decides every second.</p>
     </div>
+    <div class="btn-row">
+      <button class="btn" id="guideBtn" type="button"><i data-i="flag" class="sm"></i>Guided demo</button>
+      <button class="btn" id="presentBtn" type="button" title="Presentation view: larger, distraction-free (Esc to leave)"><i data-i="maximize" class="sm"></i>Present</button>
+    </div>
+  </div>
+
+  <div class="how" id="howStrip" aria-label="How VoiceShield decides">
+    <div class="how-step"><span class="how-n">A</span><div><b>Is the voice synthetic?</b><span>wav2vec 2.0 deepfake detector + Step 8c back-end, every 4 s window</span></div></div>
+    <div class="how-step"><span class="how-n">B</span><div><b>Is it the claimed person?</b><span>Voiceprint compared with the enrolled customer</span></div></div>
+    <div class="how-step"><span class="how-n">C</span><div><b>Are the words a scam?</b><span>Speech-to-text + scam tactics in English, Hindi, Telugu</span></div></div>
+    <div class="how-out"><i data-i="arrow-right" class="sm"></i><div><b>One decision</b><span><em class="lv PASS">PASS</em> pay · <em class="lv VERIFY">VERIFY</em> OTP / call-back · <em class="lv HOLD">HOLD</em> block</span></div></div>
+    <button class="iconbtn how-x" id="howClose" type="button" aria-label="Hide this explanation"><i data-i="x" class="sm"></i></button>
   </div>
 
   <div class="controlbar" role="group" aria-label="Session settings">
@@ -53,6 +65,11 @@
           <div><div class="label">Windows flagged</div><div class="val" id="mWin">–</div><div class="hint">of the last 5 analysed</div></div>
           <div><div class="label">Session</div><div class="val" id="clock">0.0 s</div><div class="hint"><span id="speechS">0.0 s</span> of speech analysed</div></div>
           <div><div class="label">Detector latency</div><div class="val" id="lat">–</div><div class="hint">per 4 s window, this laptop</div></div>
+        </div>
+        <div class="rail response" id="response" style="grid-column:1/-1" aria-label="System response by level">
+          <div class="act" data-l="PASS"><i data-i="shield-check"></i><div><b>Monitor</b><p>Payments allowed. Keep listening.</p></div><time class="at"></time></div>
+          <div class="act" data-l="VERIFY"><i data-i="alert"></i><div><b>Verify out of band</b><p>OTP to the registered phone or call-back on the official number.</p></div><time class="at"></time></div>
+          <div class="act" data-l="HOLD"><i data-i="octagon"></i><div><b>Hold &amp; alert security</b><p>Payment requests on this call are blocked automatically.</p></div><time class="at"></time></div>
         </div>
       </section>
 
@@ -100,6 +117,7 @@
     </div>
 
     <div class="stack">
+      <div class="section-label sig-label">Detector contributions <span class="muted">· combined into the risk</span></div>
       <div class="grid-3" style="grid-template-columns:1fr;gap:10px">
         <div class="meter"><div class="meter-head"><i data-i="wave" class="sm"></i>AI-generated voice<span id="sigVoiceV" class="v">–</span></div>
           <div class="meter-track"><div id="sigVoice" class="meter-fill"></div></div><div class="meter-sub">Detector, averaged over recent windows</div></div>
@@ -109,25 +127,18 @@
           <div class="meter-track"><div id="sigScam" class="meter-fill"></div></div><div class="meter-sub">OTP, threats, urgency… (en / hi / te)</div></div>
       </div>
 
-      <section class="card">
-        <div class="card-head"><span class="headicon"><i data-i="shield"></i></span><div><h3>System response</h3><div class="sub">What VoiceShield does at each level</div></div></div>
-        <div class="card-body response" id="response">
-          <div class="act" data-l="PASS"><i data-i="shield-check"></i><div><b>Monitor</b><p>Payments allowed. Keep listening.</p></div></div>
-          <div class="act" data-l="VERIFY"><i data-i="alert"></i><div><b>Verify out of band</b><p>OTP to the registered phone or call back on the official number.</p></div></div>
-          <div class="act" data-l="HOLD"><i data-i="octagon"></i><div><b>Hold transactions, alert security</b><p>Payment requests on this call are blocked automatically.</p></div></div>
+      <section class="card record-card">
+        <div class="card-head"><span class="headicon"><i data-i="clock"></i></span>
+          <div><h3>Call record</h3><div id="asrInfo" class="sub">Scam phrases highlighted</div></div></div>
+        <div class="tabs" role="tablist" aria-label="Call record">
+          <button class="tab on" role="tab" aria-selected="true" data-tab="events" type="button">Events <span class="count" id="evCount"></span></button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="transcript" type="button">Transcript <span class="count" id="trCount"></span></button>
         </div>
-      </section>
-
-      <section class="card">
-        <div class="card-head"><span class="headicon"><i data-i="clock"></i></span><div><h3>Detection events</h3><div class="sub">Alerts, scam tactics and actions in this session</div></div></div>
-        <div class="card-body" style="padding-top:6px"><ul id="events" class="feed"></ul>
-          <div id="eventsEmpty" class="empty" style="padding:18px 8px"><i data-i="shield-check"></i>No events yet.</div></div>
-      </section>
-
-      <section class="card">
-        <div class="card-head"><span class="headicon"><i data-i="message"></i></span>
-          <div><h3>Live transcript</h3><div id="asrInfo" class="sub">Scam phrases highlighted</div></div></div>
-        <div class="card-body"><div id="transcript" class="transcript"></div></div>
+        <div class="card-body" style="padding-top:6px">
+          <div data-pane="events"><ul id="events" class="feed"></ul>
+            <div id="eventsEmpty" class="empty" style="padding:18px 8px"><i data-i="shield-check"></i>No events yet.</div></div>
+          <div data-pane="transcript" hidden><div id="transcript" class="transcript"></div></div>
+        </div>
       </section>
 
       <section class="card">
@@ -359,6 +370,27 @@
   </section>
 </section>
 
+<!-- =============================================================== EVALUATION CENTER -->
+<section id="v-eval" class="view hidden" aria-labelledby="h-eval">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow"><i data-i="gauge" class="xs"></i>Research</div>
+      <h1 id="h-eval">Evaluation center</h1>
+      <p>Every number on this page was measured. Each panel says what kind of evidence it is, so a held-out test is never confused with a demo.</p>
+    </div>
+    <button class="btn" id="evRefresh" type="button"><i data-i="refresh" class="sm"></i>Refresh</button>
+  </div>
+  <div class="ev-classes">
+    <span class="evc heldout">Held-out test</span><span class="ev-def">never used to train, calibrate or select</span>
+    <span class="evc blind">Blind</span><span class="ev-def">written before the method, scored once</span>
+    <span class="evc controlled">Controlled</span><span class="ev-def">real recordings, synthetic conditions</span>
+    <span class="evc dev">Development</span><span class="ev-def">used while designing: a sanity check</span>
+    <span class="evc live">Live</span><span class="ev-def">this server's audit log</span>
+  </div>
+  <div class="grid-4" id="evKpis" style="margin-bottom:16px"><div class="skeleton" style="height:96px"></div><div class="skeleton" style="height:96px"></div><div class="skeleton" style="height:96px"></div><div class="skeleton" style="height:96px"></div></div>
+  <div id="evBody" class="ev-body"></div>
+</section>
+
 <!-- =============================================================== SCENARIO LAB -->
 <section id="v-lab" class="view hidden" aria-labelledby="h-lab">
   <div class="page-head">
@@ -421,7 +453,7 @@
 </section>
 </main>
 
-<script src="/static/vs-client.js?v=2611w"></script>
-<script src="/static/app.js?v=2611w"></script>
+<script src="/static/vs-client.js?v=2711e"></script>
+<script src="/static/app.js?v=2711e"></script>
 </body>
 </html>

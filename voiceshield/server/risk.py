@@ -37,6 +37,8 @@ class RiskEngine:
         self.verdict = 0
         self.max_risk = 0.0
         self.windows = 0
+        self._quality: list[str | None] = []   # per-window audio quality (robust hold rule only)
+        self._cond: dict[int, bool] = {}       # robust rule: was the HOLD condition met at window n?
 
     # ---------------------------------------------------------------- signal inputs
     def window_score(self, llr: float, threshold: float | None = None) -> float:
@@ -44,17 +46,32 @@ class RiskEngine:
         return 1.0 / (1.0 + math.exp(-max(-50.0, min(50.0, z))))
 
     # Inputs only record evidence; call state() afterwards (once) to get the decision.
-    def update(self, llr: float, threshold: float | None = None) -> float:
+    def update(self, llr: float, threshold: float | None = None, quality: str | None = None) -> float:
         """New detector window; returns its window score (0-1).
 
         threshold: this window's own cut-off (the "auto" line profile); None = the call's line profile.
+        quality: audio quality label of the window (server/quality.py); only the "robust" hold rule uses it.
         """
         c = self.cfg
         s = self.window_score(llr, threshold)
         self.ema = (1 - c.ema_alpha) * self.ema + c.ema_alpha * s
         self.recent.append(s >= 0.5)
         self.windows += 1
+        self._quality.append(quality)
         return s
+
+    def _voice_hold(self, V: float, k: int) -> bool:
+        """Does the voice evidence alone justify HOLD? "standard": voice >= hold_at with hold_k of hold_n flagged.
+        "robust" (opt-in, Step 13): in degraded audio (most recent windows fair/poor) one more flagged window is
+        needed, and the condition must hold on two consecutive windows. Same threshold, same window scores."""
+        c = self.cfg
+        if getattr(c, "hold_rule", "standard") != "robust":
+            return V >= c.hold_at and k >= c.hold_k
+        last = self._quality[-c.hold_n:]
+        need = c.hold_k + (1 if sum(q in ("fair", "poor") for q in last) * 2 > len(last) else 0)
+        cond = V >= c.hold_at and k >= need
+        self._cond[self.windows] = cond
+        return cond and (self._cond.get(self.windows - 1, False) or self.verdict == 2)
 
     def set_identity(self, mismatch: float | None) -> None:
         """Voiceprint mismatch probability 0-1 (None = no claimed identity)."""
@@ -85,7 +102,7 @@ class RiskEngine:
             reasons.append(f"voice does not match the claimed person ({I:.0f}/100)")
         if scam_now:
             reasons.append("scam language: " + ", ".join(self.scam_tactics))
-        if V >= c.hold_at and k >= c.hold_k:
+        if self._voice_hold(V, k):
             level = 2
         elif scam_now and (self.voice_flag or self.identity_flag):
             level = 2

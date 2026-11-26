@@ -219,6 +219,26 @@ Rules:
 - With genuine and fake recordings, the cut-off is the equal-error-rate point.
 - Never calibrate on the recordings you demo with.
 
+## Demonstrating it (first minute for a judge)
+- **Command center:** a one-line explanation of the three checks and the single decision sits above the controls. Under the verdict, a decision rail shows Monitor → Verify → Hold and when each stage was reached.
+- **Guided demo** (button on the command center): six steps.
+  1. A genuine call.
+  2. An AI clone.
+  3. A synthetic "bank officer" asking for the OTP.
+  4. The investigation and signed evidence.
+  5. The Scenario Lab.
+  6. The two-screen call.
+
+  Steps 1–3 stream bundled real recordings through the real models and tick when the expected verdict arrives.
+- **Present:** full-screen, distraction-free view with larger type. Esc leaves.
+- **Scenario lab:** "Reset results" clears it for the next audience (`POST /api/lab/reset`).
+- **Evaluation center** (`#/eval`, `GET /api/eval`): measured results only, each labelled held-out, blind, controlled, development or live:
+  - the Step 8c test-set table;
+  - robustness-suite ROC and DET curves and the decision-rule study;
+  - scam-language results on the three sets;
+  - live latency;
+  - the configuration in use.
+
 ## Signed evidence
 Every call's investigation page offers **Print report**, **Evidence file** and **Verify a file**.
 
@@ -240,7 +260,13 @@ What it detects:
 - A file whose signed fields were changed, which fails the signature.
 - Older unsigned files still verify by digest and report "intact-unsigned".
 
-Ed25519 is implemented with the standard library (`server/ed25519.py`, checked against RFC 8032 test vector 1). It is not constant-time, which is acceptable for a local demo server.
+Signatures use the audited `cryptography` library (OpenSSL) when it is installed, which `requirements.txt` asks for. Otherwise they fall back to the standard-library RFC 8032 implementation in `server/ed25519.py`:
+- Ed25519 is deterministic, so both give byte-identical signatures.
+- The tests check both against RFC 8032 test vector 1 and against each other.
+
+On Windows the signing key is encrypted at rest with DPAPI, so only the Windows user who runs the server can read it. A plain key from an earlier version is re-saved protected with the same key id, so earlier evidence still verifies. An unreadable key file is never replaced; evidence is then served unsigned with a `signature_status` note.
+
+This shows integrity and origin for a demo. It is not a claim of legal admissibility: that would need key custody, timestamping and audit procedures beyond this prototype.
 
 ## Scenario lab (console → Scenario lab, `#/lab`)
 Eleven repeatable scenarios run through the real decision chain:

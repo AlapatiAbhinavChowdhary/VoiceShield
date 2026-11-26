@@ -8,6 +8,7 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+ROOT_DIR = Path(__file__).resolve().parent.parent
 
 from server.calibration import Profiles, profiles_for, threshold_eer, threshold_from_genuine  # noqa: E402
 from server.config import SR, Config, RiskConfig, load_config                     # noqa: E402
@@ -599,6 +600,15 @@ def test_lab_scenarios_and_runs_stay_out_of_the_audit_log(client):
     assert client.post("/api/lab/run/nope").status_code == 404
 
 
+def test_eval_center_and_lab_reset(client):
+    client.post("/api/lab/run/bank-warning")
+    e = client.get("/api/eval").json()
+    assert e["lab"]["run"] == 1 and e["latency"]["class"] == "live" and e["config"]["scam_semantic"] in ("shadow", "off")
+    assert e["step8c"] is None or e["step8c"]["class"] == "heldout"
+    assert client.post("/api/lab/reset").json()["cleared"] == 1
+    assert client.get("/api/eval").json()["lab"]["run"] == 0
+
+
 def test_lab_audio_effects():
     from server.lab import add_noise, phone_line
     x = (0.3 * np.sin(2 * np.pi * 440 * np.arange(SR) / SR)).astype(np.float32)
@@ -606,6 +616,60 @@ def test_lab_audio_effects():
     assert abs(10 * np.log10(np.mean(x ** 2) / np.mean((n - x) ** 2)) - 10) < 1.0
     y = phone_line(x)
     assert y.shape == x.shape and np.corrcoef(x[1000:-1000], y[1000:-1000])[0, 1] > 0.9
+
+
+def test_robust_hold_rule_matches_the_evaluated_replay():
+    """The opt-in rule inside RiskEngine must reproduce tools/eval_rules.py's 'persistence + confirmation' exactly."""
+    p = ROOT_DIR / "eval" / "robustness_windows.json"
+    if not p.exists():
+        pytest.skip("robustness suite not built")
+    data = json.loads(p.read_text(encoding="utf-8"))
+    thr = -1.912
+    cfg = replace(RiskConfig(), hold_rule="robust")
+    fh = sh = 0
+    for r in data["recordings"]:
+        for c in data["conditions"]:
+            e = RiskEngine(cfg, thr)
+            for w in r["conditions"][c]:
+                e.update(w["llr"], None, w["q"]); e.state()
+            fh += r["label"] == "genuine" and e.verdict == 2
+            sh += r["label"] == "spoof" and e.verdict == 2
+    assert (fh, sh) == (5, 44)                     # report: false HOLD 5/56, spoof HOLD 44/56 (baseline 9 / 44)
+    std = RiskEngine(RiskConfig(), thr)            # the shipped default ignores quality entirely
+    assert std.cfg.hold_rule == "standard"
+
+
+def test_intent_frames_shadow():
+    from server.frames import CallFrames
+    f = CallFrames(); f.add("Good morning, I am from the card verification desk.")
+    assert f.add("To cancel it, read the code you will receive in a moment.")["score"] >= 0.5      # indirect scam
+    g = CallFrames(); g.add("This is your bank.")
+    assert g.add("We will never ask you to share your OTP.")["score"] == 0                        # protective advice
+    h = CallFrames()
+    assert h.add("Please transfer the rent to the same account as last time.")["score"] == 0      # no pretext
+
+
+def test_intent_frames_blind_set_regression():
+    """Blind set (written before the frames): frames keep recall >= 0.75 and beat the rules on F1."""
+    from server.frames import CallFrames
+    data = json.loads((Path(__file__).resolve().parent / "data" / "scam_eval_blind.json").read_text(encoding="utf-8"))["calls"]
+
+    def f1(engine):
+        tp = fp = fn = 0
+        for c in data:
+            e = engine()
+            for u in c["utterances"]:
+                s = e.add(u)["score"]
+            tp += s >= 0.5 and c["label"] == "scam"; fp += s >= 0.5 and c["label"] == "benign"; fn += s < 0.5 and c["label"] == "scam"
+        return 2 * tp / (2 * tp + fp + fn), tp / (tp + fn)
+    (ff1, frec), (rf1, _) = f1(CallFrames), f1(lambda: CallScam(context=True))
+    assert frec >= 0.75 and ff1 > rf1
+
+
+def test_ws_transcript_carries_shadow_intent(client):
+    _, msgs = run_call(client, speech(10, amp=0.1))
+    tr = [m for m in msgs if m["type"] == "transcript"]
+    assert tr and all("intent" in m for m in tr) and any((m["intent"] or {}).get("mode") == "shadow" for m in tr)
 
 
 def test_audio_quality_labels():
@@ -690,6 +754,31 @@ def test_ed25519_rfc8032_vector():
                          "f5f0595bbe24655141438e7a100b")
     assert ed25519.verify(pk, b"", sig) and not ed25519.verify(pk, b"x", sig)
     assert not ed25519.verify(pk, b"", sig[:-1] + bytes([sig[-1] ^ 1]))
+
+
+def test_ed25519_library_and_reference_agree():
+    from server import ed25519
+    sk = bytes(range(32))
+    for msg in (b"", b"voiceshield-evidence/1|52|2026-11-27T00:00:00Z|abc"):
+        assert ed25519.sign(sk, msg) == ed25519._sign_ref(sk, msg)                  # deterministic: identical bytes
+        assert ed25519.public_key(sk) == ed25519._public_key_ref(sk)
+        assert ed25519.verify_ref(ed25519.public_key(sk), msg, ed25519.sign(sk, msg))
+
+
+def test_evidence_key_migrates_without_changing_and_is_never_overwritten(tmp_path):
+    from server.evidence import EvidenceSigner
+    p = tmp_path / "k.json"
+    seed = bytes(range(1, 33))
+    p.write_text(json.dumps({"alg": "Ed25519", "seed_hex": seed.hex(), "created": "old"}), encoding="utf-8")
+    a = EvidenceSigner(p)                                     # a plain key from an earlier version
+    b = EvidenceSigner(p)                                     # reloaded (protected on Windows)
+    assert a.key_id == b.key_id and a.public == b.public
+    if sys.platform == "win32":
+        assert "seed_dpapi" in json.loads(p.read_text(encoding="utf-8")) and "DPAPI" in b.info()["key_protection"]
+    p.write_text("{corrupt", encoding="utf-8")
+    with pytest.raises(Exception):
+        EvidenceSigner(p)
+    assert p.read_text(encoding="utf-8") == "{corrupt"         # never silently replaced
 
 
 def test_signed_evidence_verifies_and_detects_tampering(client):
