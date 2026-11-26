@@ -582,6 +582,31 @@ def test_scam_eval_set_regression():
     assert fp[True] <= 2 and fp[True] < fp[False]
 
 
+def test_lab_scenarios_and_runs_stay_out_of_the_audit_log(client):
+    sc = client.get("/api/lab/scenarios").json()
+    ids = {s["id"] for s in sc}
+    assert {"human-bank-script", "bank-warning"} <= ids and all("inference" in s and "expected" in s for s in sc)
+    before = len(client.get("/api/calls?limit=200").json())
+    r = client.post("/api/lab/run/human-bank-script").json()
+    assert r["verdict"] == "VERIFY" and r["correct"] and "OTP" in r["payment"]
+    assert "Fake bank / KYC script" in r["patterns"]
+    w = client.post("/api/lab/run/bank-warning").json()
+    assert w["verdict"] == "PASS" and w["correct"] and w["transcript"][-1]["suppressed"]
+    a = client.post("/api/lab/run/genuine-call").json()                 # real recording, stub models here
+    assert a["windows"] > 0 and a["quality"]["good"] + a["quality"]["fair"] + a["quality"]["poor"] == a["windows"]
+    assert len(client.get("/api/calls?limit=200").json()) == before      # nothing written to the audit log
+    assert client.post("/api/lab/run/nope").status_code == 404
+
+
+def test_lab_audio_effects():
+    from server.lab import add_noise, phone_line
+    x = (0.3 * np.sin(2 * np.pi * 440 * np.arange(SR) / SR)).astype(np.float32)
+    n = add_noise(x, 10)
+    assert abs(10 * np.log10(np.mean(x ** 2) / np.mean((n - x) ** 2)) - 10) < 1.0
+    y = phone_line(x)
+    assert y.shape == x.shape and np.corrcoef(x[1000:-1000], y[1000:-1000])[0, 1] > 0.9
+
+
 def test_audio_quality_labels():
     from server.quality import audio_quality, confidence
     t = np.arange(4 * SR) / SR

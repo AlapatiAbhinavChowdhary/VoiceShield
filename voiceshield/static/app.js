@@ -19,7 +19,7 @@ const AN = { buffer: null, name: "", t0: 0, raf: 0, dur: 0, spec: null, samples:
 const VIEWS = {
   live: ["/#/live", "Command center"], analysis: ["/#/analysis", "Voice analysis"], history: ["/#/history", "Detection history"],
   call: ["/#/history", "Investigation"], analytics: ["/#/analytics", "Analytics"], incidents: ["/#/incidents", "Incidents"],
-  settings: ["/#/settings", "Settings & enrolment"],
+  settings: ["/#/settings", "Settings & enrolment"], lab: ["/#/lab", "Scenario lab"],
 };
 const fmtClock = (s) => { s = Math.max(0, s || 0); const m = Math.floor(s / 60); return `${m}:${(s - m * 60).toFixed(1).padStart(4, "0")}`; };
 const fmtDate = (ts) => { const d = new Date(ts * 1000); return `${d.toLocaleDateString(undefined, { day: "2-digit", month: "short" })} · ${d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}`; };
@@ -77,6 +77,7 @@ function route() {
   if (name === "analytics") loadAnalytics();
   if (name === "incidents") { refreshIncidents(); INC.timer = setInterval(refreshIncidents, 2000); }
   if (name === "settings") renderSettings();
+  if (name === "lab") loadLab();
 }
 
 // ====================================================================== shared lists
@@ -977,6 +978,86 @@ async function renderSettings() {
     row("HOLD when", `voice score ≥ ${r.hold_at} with ${r.hold_k} of the last ${r.hold_n} windows flagged, or scam language plus a suspicious voice or identity`) +
     row("Speech-to-text", esc(st.asr || "off")) + row("Voiceprints enrolled", (st.voiceprints || []).length) +
     row("Stored", "scores, decisions, scam-tactic names and prevention events only");
+}
+
+// ====================================================================== scenario lab
+const LAB = { list: [], running: new Set(), bound: false };
+const MODE_TAG = { real: ["audio-lines", "Real recording"], simulated: ["sliders", "Simulated condition"], transcript: ["message", "Scripted transcript"] };
+async function loadLab() {
+  if (!LAB.bound) { LAB.bound = true; $("labAll").onclick = runAllLab; }
+  try { LAB.list = await api("/api/lab/scenarios"); } catch (e) {
+    $("labGrid").innerHTML = `<div class="empty">${I("alert")}<b>Lab unavailable</b>The server did not answer: ${esc(e.message)}</div>`; return;
+  }
+  renderLab();
+}
+function labSpark(r) {
+  const T = r.timeline || [], W = 300, H = 72, pad = 4;
+  if (!T.length) return `<div class="lab-spark empty-spark">No analysed speech</div>`;
+  const tmax = Math.max(...T.map((p) => p.t)) || 1, X = (t) => pad + (W - 2 * pad) * t / tmax, Y = (v) => H - pad - (H - 2 * pad) * (v ?? 0) / 100;
+  const path = T.map((p, i) => `${i ? "L" : "M"}${X(p.t).toFixed(1)},${Y(p.risk).toFixed(1)}`).join("");
+  const last = T[T.length - 1], col = { HOLD: "--chart-crit", VERIFY: "--chart-warn", PASS: "--chart-good" }[last.level] || "--cyan";
+  return `<svg class="lab-spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Risk over the call, ending at ${fmt(last.risk, 0)}">` +
+    `<line x1="0" x2="${W}" y1="${Y(75)}" y2="${Y(75)}" stroke="${VSUI.css("--chart-crit")}" stroke-dasharray="3 4" opacity=".6"/>` +
+    `<line x1="0" x2="${W}" y1="${Y(45)}" y2="${Y(45)}" stroke="${VSUI.css("--chart-warn")}" stroke-dasharray="3 4" opacity=".6"/>` +
+    `<path d="${path}" fill="none" stroke="${VSUI.css("--cyan")}" stroke-width="2" vector-effect="non-scaling-stroke"/>` +
+    `<circle cx="${X(last.t)}" cy="${Y(last.risk)}" r="3.5" fill="${VSUI.css(col)}"/></svg>`;
+}
+function labCard(s) {
+  const r = s.result, run = LAB.running.has(s.id), [mi, ml] = MODE_TAG[s.mode] || MODE_TAG.real;
+  const truth = s.truth === "genuine" ? `<span class="lab-truth good">${I("user", "xs")}Genuine call</span>` : `<span class="lab-truth crit">${I("zap", "xs")}Fraud attempt</span>`;
+  let body;
+  if (run) body = `<div class="lab-running"><span class="spinner"></span>Running on the detector…</div>`;
+  else if (!r) body = `<div class="lab-idle">${I("play", "sm")}Not run yet · expected <b>${esc(s.expected)}</b></div>`;
+  else {
+    const sig = r.signals || {}, q = r.quality;
+    const alert = r.first_hold_s != null ? `HOLD at ${fmt(r.first_hold_s, 1)} s` : r.first_verify_s != null ? `VERIFY at ${fmt(r.first_verify_s, 1)} s` : "no alert";
+    body = labSpark(r) +
+      `<div class="lab-out"><div><span class="k">Expected</span><b>${esc(s.expected)}</b></div><div><span class="k">Result</span>${vbadge(r.verdict)}</div>` +
+      `<div class="lab-mark ${r.correct ? "good" : "crit"}">${I(r.correct ? "check" : "x", "sm")}${r.correct ? "Correct" : "Wrong"}</div></div>` +
+      `<div class="stat-line"><span>First alert</span><b>${alert}</b></div>` +
+      `<div class="stat-line"><span>Payment</span><b class="${r.verdict === "HOLD" ? "crit-ink" : r.verdict === "VERIFY" ? "warn-ink" : "good-ink"}">${esc(r.payment)}</b></div>` +
+      `<details class="lab-why"><summary>Why this decision</summary>` +
+      `<div class="lab-sig"><span>Voice <b>${sig.voice == null ? "–" : fmt(sig.voice, 0)}</b></span><span>Identity <b>${sig.identity == null ? "not claimed" : fmt(sig.identity, 0)}</b></span><span>Scam language <b>${fmt(sig.scam, 0)}</b></span></div>` +
+      (r.reasons && r.reasons.length ? `<p class="small">${esc(capital(r.reasons.join("; ")))}.</p>` : `<p class="small muted">No signal reached an alert level.</p>`) +
+      ((r.patterns || []).length ? `<p class="small">${I("shield-alert", "xs")} Fraud script: <b>${esc(r.patterns.join(", "))}</b></p>` : "") +
+      (r.windows ? `<p class="xs muted">${r.flagged} of ${r.windows} windows above the cut-off ${fmt(r.threshold)} · median score ${fmt(r.median_llr)} · audio ${q ? `${q.good} good / ${q.fair} fair / ${q.poor} poor` : "–"}${q && q.median_snr_db != null ? `, SNR ≈ ${fmt(q.median_snr_db, 0)} dB` : ""}</p>` : "") +
+      ((r.transcript || []).length ? `<ul class="lab-tr">${r.transcript.map((u) => `<li><time>${fmt(u.t, 0)}s</time>${esc(u.text)}${(u.tactics || []).length ? ` <span class="tag crit">${esc(u.tactics[0])}</span>` : ""}${(u.suppressed || []).length ? ` <span class="tag good">protective advice, not counted</span>` : ""}</li>`).join("")}</ul>` : "") +
+      `<p class="xs muted">${esc(s.inference)} · computed in ${fmt(r.elapsed_s, 1)} s</p></details>`;
+  }
+  return `<article class="card lab-card ${r ? (r.correct ? "is-good" : "is-bad") : ""}" id="lab-${esc(s.id)}"><div class="card-body">` +
+    `<div class="lab-top"><span class="tag">${I(mi, "xs")}${ml}</span>${truth}</div>` +
+    `<h3>${esc(s.title)}</h3><p class="small muted lab-story">${esc(s.story)}</p>${body}` +
+    `<div class="btn-row"><button class="btn sm" type="button" data-run="${esc(s.id)}" ${run ? "disabled" : ""}>${I(r ? "refresh" : "play", "sm")}${r ? "Run again" : "Run"}</button></div></div></article>`;
+}
+function renderLab() {
+  $("labGrid").innerHTML = LAB.list.map(labCard).join("") || `<div class="empty">${I("flask")}<b>No scenarios</b>The demo recordings are missing from samples/.</div>`;
+  $("labGrid").querySelectorAll("[data-run]").forEach((b) => { b.onclick = () => runLab(b.dataset.run, true); });
+  const done = LAB.list.filter((s) => s.result), fraud = done.filter((s) => s.truth === "fraud"), gen = done.filter((s) => s.truth === "genuine");
+  const kpi = (ic, cls, label, big, sub) => `<div class="kpi"><span class="ki ${cls}">${I(ic, "lg")}</span><div><div class="label">${label}</div><div class="big">${big}</div><div class="sub">${sub}</div></div></div>`;
+  const ok = done.filter((s) => s.result.correct).length;
+  $("labKpis").innerHTML =
+    kpi("flask", "brand", "Scenarios run", `${done.length}<small>of ${LAB.list.length}</small>`, "results kept until the server restarts") +
+    kpi("check", done.length && ok === done.length ? "good" : done.length ? "warn" : "", "Correct outcome", done.length ? `${ok}<small>of ${done.length}</small>` : "–", "PASS for genuine, VERIFY or HOLD for fraud") +
+    kpi("lock", "crit", "Fraud stopped", fraud.length ? `${fraud.filter((s) => s.result.verdict !== "PASS").length}<small>of ${fraud.length}</small>` : "–", "payment held or blocked") +
+    kpi("shield-check", "good", "Genuine calls allowed", gen.length ? `${gen.filter((s) => s.result.verdict === "PASS").length}<small>of ${gen.length}</small>` : "–", "no false alarm on the payment");
+}
+async function runLab(id, fresh = false) {
+  const s = LAB.list.find((x) => x.id === id); if (!s || LAB.running.has(id)) return;
+  LAB.running.add(id); renderLab();
+  try {
+    const r = await fetch(`/api/lab/run/${encodeURIComponent(id)}${fresh ? "?fresh=true" : ""}`, { method: "POST" });
+    const body = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(body.detail || `HTTP ${r.status}`);
+    s.result = body;
+  } catch (e) { VSUI.toast("warn", "Scenario not run", e.message); }
+  finally { LAB.running.delete(id); if (CURRENT === "lab") renderLab(); }
+}
+async function runAllLab() {
+  $("labAll").disabled = true;
+  const todo = LAB.list.filter((s) => !s.result);
+  for (const [i, s] of todo.entries()) { $("labProgress").textContent = `Running ${i + 1} of ${todo.length}…`; await runLab(s.id); }
+  $("labProgress").textContent = todo.length ? "All scenarios run." : "All scenarios already have results. Use Run again on a card.";
+  $("labAll").disabled = false;
 }
 
 init();

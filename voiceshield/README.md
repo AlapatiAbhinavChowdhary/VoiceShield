@@ -219,6 +219,21 @@ Rules:
 - With genuine and fake recordings, the cut-off is the equal-error-rate point.
 - Never calibrate on the recordings you demo with.
 
+## Scenario lab (console → Scenario lab, `#/lab`)
+Eleven repeatable scenarios run through the real decision chain:
+- **Calls:** a genuine call; ElevenLabs and Kokoro clones; a synthetic fake bank officer with real speech-to-text.
+- **Simulated audio conditions:** the genuine caller and a clone with 10 dB background noise; a genuine caller over a simulated phone line.
+- **Scripted transcripts:** human fraudsters (fake bank KYC, Hinglish family emergency, digital arrest) and a bank's genuine fraud warning.
+
+How it works:
+- Each card states what is real and what is simulated, the expected outcome, the risk curve, the first alert, the payment outcome and why.
+- Runs never enter the audit log, and they are refused while a live call is analysed (`/api/lab/scenarios`, `POST /api/lab/run/{id}`).
+
+Result with the real models (26 Nov 2026):
+- 10 of 11 correct.
+- All 7 fraud attempts stopped.
+- 3 of 4 genuine calls allowed. The genuine caller with 10 dB of white noise got a false HOLD at 29.6 s; the lab shows this as a known weakness.
+
 ## Tools
 | Command | What it does |
 |---|---|
@@ -228,6 +243,7 @@ Rules:
 | `python tools/build_demo.py` | rebuilds `samples/` and the `studio` profile from the public dataset: dev split for calibration, test split for the demo calls |
 | `python tools/build_demo.py --profile-only` | only recalibrates `studio` for the current `detector_mode` |
 | `python tools/compare_step8c.py files...` | original detector vs Step 8c on the same speech windows: scores, audio type, CPU time |
+| `python tools/eval_scam.py` | precision / recall / F1 of the scam-language rules on the labelled call set (original vs context layer) |
 | `python tools/preflight.py` | demo-day check of this laptop (models, memory, port, GPU, microphones and enhancements); exit code 1 on a blocker |
 | `python tools/attack_test.py --claim NAME clone.wav` | Step 9: plays a clone of an enrolled person through the full pipeline with that identity claimed |
 | `python -m pytest -q` | runs the tests: fast stub tests always, real-model tests once the models are downloaded |

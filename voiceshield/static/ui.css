@@ -688,3 +688,36 @@ dialog.modal .mf { padding: 16px 20px 18px; display: flex; justify-content: flex
 .lowconf { text-decoration: underline dotted var(--warn-ink); text-underline-offset: 3px; }
 .lowconf .lc { color: var(--warn-ink); margin-left: 3px; font-weight: 700; }
 #qualChip { height: 24px; font-size: 11.5px; }
+
+/* ------------------------------------------------------------------ scenario lab */
+.lab-legend { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+.lab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; align-items: start; }
+.lab-card { overflow: hidden; transition: border-color var(--t) var(--ease), transform var(--t) var(--ease); }
+.lab-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: transparent; }
+.lab-card.is-good::before { background: var(--good); }
+.lab-card.is-bad::before { background: var(--crit); }
+.lab-card h3 { font-size: 15px; margin-top: 10px; }
+.lab-story { margin-top: 4px !important; min-height: 38px; }
+.lab-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.lab-top .tag { margin: 0; }
+.lab-truth { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; letter-spacing: .02em; }
+.lab-truth.good { color: var(--good-ink); } .lab-truth.crit { color: var(--crit-ink); }
+.lab-spark { display: block; width: 100%; height: 72px; border-radius: 8px; background: var(--inset); border: 1px solid var(--line); }
+.empty-spark { display: grid; place-items: center; font-size: 12px; color: var(--muted); }
+.lab-out { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.lab-out .k { display: block; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.lab-mark { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; font-weight: 650; font-size: 13px; }
+.lab-mark.good { color: var(--good-ink); } .lab-mark.crit { color: var(--crit-ink); }
+.lab-idle, .lab-running { display: flex; align-items: center; gap: 8px; height: 72px; padding: 0 14px; border-radius: 8px; border: 1px dashed var(--line-2); color: var(--ink-2); font-size: 13px; }
+.lab-running { border-style: solid; border-color: var(--brand-line); background: var(--brand-soft); }
+.lab-why summary { cursor: pointer; font-size: 12.5px; font-weight: 600; color: var(--ink-2); padding: 4px 0; }
+.lab-why summary:hover { color: var(--ink); }
+.lab-why[open] summary { margin-bottom: 6px; }
+.lab-why > * + * { margin-top: 8px; }
+.lab-sig { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
+.lab-sig b { color: var(--ink); font-variant-numeric: tabular-nums; margin-left: 3px; }
+.lab-tr { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font-size: 12.5px; }
+.lab-tr time { display: inline-block; width: 30px; color: var(--muted); font: 11px var(--mono); }
+.spinner { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--brand-line); border-top-color: var(--cyan); animation: spin .8s linear infinite; flex: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 2.4s; } }

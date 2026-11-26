@@ -30,7 +30,7 @@ def make_processor(vad, cfg: Config) -> StreamProcessor:
 
 def analyse(wav: np.ndarray, detector, vad, cfg: Config, threshold: float | None = None, chunk_s: float = 0.1,
             speaker=None, enrolled: np.ndarray | None = None, transcriber=None, language: str | None = None,
-            auto: bool = False) -> dict:
+            auto: bool = False, scam_context: bool = False, keep_windows: bool = False) -> dict:
     """Feeds the audio in live-sized chunks and runs every check the live server would run.
 
     speaker + enrolled -> voiceprint check; transcriber -> transcript + scam language. Offline, the
@@ -40,9 +40,10 @@ def analyse(wav: np.ndarray, detector, vad, cfg: Config, threshold: float | None
     proc = make_processor(vad, cfg)
     risk = RiskEngine(cfg.risk, threshold)
     voice = CallVoice(enrolled, cfg.speaker.threshold, cfg.speaker.scale) if speaker is not None else None
-    scam = CallScam()
+    scam = CallScam(context=scam_context)
     step = max(1, int(chunk_s * SR))
     windows, transcript, first_hold, first_verify = [], [], None, None
+    audio_windows, patterns = [], []
 
     def note(state):
         nonlocal first_hold, first_verify
@@ -55,6 +56,7 @@ def analyse(wav: np.ndarray, detector, vad, cfg: Config, threshold: float | None
         for u, t0, t1 in utts:
             r = transcriber.transcribe(u, language)
             s = scam.add(r["text"])
+            patterns[:] = s.get("patterns", [])
             risk.set_scam(s["score"], s["tactics"])
             st = risk.state()
             transcript.append({"t0": t0, "t1": t1, **r, "hits": s["hits"], "scam": s["score"], **st})
@@ -62,6 +64,8 @@ def analyse(wav: np.ndarray, detector, vad, cfg: Config, threshold: float | None
 
     for i in range(0, len(wav), step):
         for w in proc.feed(wav[i:i + step]):
+            if keep_windows:
+                audio_windows.append(w)
             r = detector.score(w)
             ws = risk.update(r["llr"], r.get("auto_threshold") if auto else None)
             spk = None
@@ -78,4 +82,4 @@ def analyse(wav: np.ndarray, detector, vad, cfg: Config, threshold: float | None
         utterances(proc.flush())
     return {"windows": windows, "transcript": transcript, "verdict": LEVELS[risk.verdict], "max_risk": risk.max_risk,
             "audio_s": proc.seconds, "speech_s": proc.speech_seconds, "signals": risk.state()["signals"],
-            "first_alert_s": first_verify, "first_hold_s": first_hold}
+            "first_alert_s": first_verify, "first_hold_s": first_hold, "audio_windows": audio_windows, "patterns": patterns}

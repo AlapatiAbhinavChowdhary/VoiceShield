@@ -46,6 +46,7 @@ from .config import ROOT, SR, Config, load_config
 from .models import VadModel, load_detector
 from .offline import make_processor
 from .quality import audio_quality, confidence
+from . import lab
 from .risk import LEVELS, RiskEngine
 from .scam import CallScam
 from .speaker import CallVoice, SpeakerModel, Voiceprints
@@ -160,6 +161,33 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
         return {"ok": True, "detector_mode": getattr(S["detector"], "mode", "original"),
                 "active_streams": S["active"], "max_streams": cfg.max_streams,
                 "uptime_s": round(time.time() - started, 1)}
+
+    # ------------------------------------------------------------------ scenario lab (isolated from live calls)
+    lab_cache: dict = {}
+    lab_lock = asyncio.Lock()
+
+    @app.get("/api/lab/scenarios")
+    def lab_scenarios():
+        return [{**lab.public(s), "result": lab_cache.get(s["id"])} for s in lab.SCENARIOS
+                if s["mode"] == "transcript" or (ROOT / "samples" / s["file"]).exists()]
+
+    @app.post("/api/lab/run/{sid}")
+    async def lab_run(sid: str, fresh: bool = False):
+        s = lab.BY_ID.get(sid)
+        if s is None:
+            raise HTTPException(404, "no such scenario")
+        if s["mode"] != "transcript" and not (ROOT / "samples" / s["file"]).exists():
+            raise HTTPException(404, f"recording {s['file']} is missing from samples/")
+        if S["active"] > 0:
+            raise HTTPException(409, "A live call is being analysed. The lab waits so it cannot slow the call down.")
+        if sid in lab_cache and not fresh:
+            return lab_cache[sid]
+        async with lab_lock:                                       # one lab run at a time, on the detector's thread
+            _, prof = S["profiles"].get("default")
+            res = await asyncio.get_running_loop().run_in_executor(
+                S["pool"], lab.run, s, S["detector"], S["vad"], cfg, float(prof["llr_threshold"]), S["asr"])
+        lab_cache[sid] = res
+        return res
 
     @app.get("/api/samples")
     def samples():

@@ -6,8 +6,8 @@
 <meta name="color-scheme" content="dark">
 <title>VoiceShield · Command center</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%2322d3ee'/%3E%3Cpath d='M7 12.5h1.6l1.4-3 2 5.5 1.5-3.5H17' fill='none' stroke='%2304131a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="/static/ui.css?v=2611u">
-<script src="/static/shell.js?v=2611u"></script>
+<link rel="stylesheet" href="/static/ui.css?v=2611v">
+<script src="/static/shell.js?v=2611v"></script>
 </head>
 <body>
 <header id="topbar"></header>
@@ -356,6 +356,27 @@
   </section>
 </section>
 
+<!-- =============================================================== SCENARIO LAB -->
+<section id="v-lab" class="view hidden" aria-labelledby="h-lab">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow"><i data-i="flask" class="xs"></i>Demonstration</div>
+      <h1 id="h-lab">Scenario lab</h1>
+      <p>Repeatable safe and fraudulent calls through the real decision chain. Every card says what is real and what is simulated.
+        Lab runs never enter the audit log, and they wait while a live call is being analysed.</p>
+    </div>
+    <div class="btn-row"><span class="small muted" id="labProgress"></span>
+      <button class="btn primary" id="labAll" type="button"><i data-i="play" class="sm"></i>Run all scenarios</button></div>
+  </div>
+  <div class="grid-4" id="labKpis" style="margin-bottom:16px"></div>
+  <div class="lab-legend">
+    <span class="tag"><i data-i="audio-lines" class="xs"></i>Real recording · real model</span>
+    <span class="tag"><i data-i="sliders" class="xs"></i>Real recording + simulated condition · real model</span>
+    <span class="tag"><i data-i="message" class="xs"></i>Scripted transcript · real scam and risk engines, no audio</span>
+  </div>
+  <div class="lab-grid" id="labGrid"><div class="skeleton" style="height:260px"></div><div class="skeleton" style="height:260px"></div><div class="skeleton" style="height:260px"></div></div>
+</section>
+
 <!-- =============================================================== SETTINGS -->
 <section id="v-settings" class="view hidden" aria-labelledby="h-settings">
   <div class="page-head">
@@ -397,7 +418,7 @@
 </section>
 </main>
 
-<script src="/static/vs-client.js?v=2611u"></script>
-<script src="/static/app.js?v=2611u"></script>
+<script src="/static/vs-client.js?v=2611v"></script>
+<script src="/static/app.js?v=2611v"></script>
 </body>
 </html>

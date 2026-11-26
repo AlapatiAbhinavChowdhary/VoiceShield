@@ -97,6 +97,7 @@
     ["Call demo"],
     ["/customer", "smartphone", "Customer phone", null, true],
     ["/caller", "phone", "Caller", null, true],
+    ["/#/lab", "flask", "Scenario lab"],
     ["System"],
     ["/#/settings", "settings", "Settings & enrolment"],
   ];
