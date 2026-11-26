@@ -92,7 +92,8 @@ def check_memory() -> None:
     ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(s))
     free = s.ullAvailPhys
     # the detector (1.2 GB file) needs about 2.5 GB while loading, Whisper and the rest about 1 GB more
-    status = OK if free > 4 * 2**30 else WARN if free > 2.5 * 2**30 else FAIL
+    # a warning, never a blocker: Windows usually frees memory when the models load (a blocked viva is worse)
+    status = OK if free > 4 * 2**30 else WARN
     report(status, "free memory", f"{gb(free)} of {gb(s.ullTotalPhys)}"
            + ("" if status == OK else ": close browser tabs, Kaggle and other servers before starting"))
 

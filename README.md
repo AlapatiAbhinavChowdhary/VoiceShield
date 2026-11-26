@@ -238,6 +238,10 @@ We cloned the enrolled team member's **own voice** locally, with consent, from 2
 
 ## 🚀 Quick start
 
+**Already set up? Double-click `START_VOICESHIELD.bat`** in this folder. It checks the laptop, starts the server and opens http://127.0.0.1:8000. Keep its window open; closing it stops VoiceShield.
+
+First-time setup:
+
 ```bash
 cd voiceshield
 py -3.12 -m venv .venv
