@@ -60,7 +60,52 @@ TACTICS: dict[str, tuple[float, str, list[str], list[str]]] = {
         ["बैंक से", "बैंक मैनेजर", "कस्टमर केयर", "आरबीआई", "एसबीआई", "బ్యాంక్ నుంచి", "బ్యాంకు నుంచి", "బ్యాంక్ మేనేజర్", "కస్టమర్ కేర్"]),
 }
 
+# Hinglish phrasings Whisper writes for common scam lines (added 26 Nov 2026; same tactics and weights)
+TACTICS["credentials"][2].extend([r"otp (bata|bol|de)\w* (do|dijiye|dena|dijie)", r"jo otp aaya", r"code (bata|bol)\w*"])
+TACTICS["payment"][2].extend([r"(paise|paisa|amount) (transfer|bhej)\w*", r"(google pay|gpay|phone ?pe|paytm) kar (do|dijiye|dena)"])
+TACTICS["account_threat"][2].extend([r"(account|khata) band ho (jayega|jaega|jaayega)"])
+TACTICS["urgency_secrecy"][2].extend([r"abhi ke abhi", r"(jaldi|turant) (karo|kijiye|kariye)", r"\b(mat|na) batana\b"])
+
 _COMPILED = {k: [re.compile(p, re.IGNORECASE) for p in v[2]] for k, v in TACTICS.items()}
+
+# ---------------------------------------------------------------- context layer (optional, config "scam_context")
+# A genuine bank says "we will never ask for your OTP" or "OTP kisi ko mat batayein". The keyword rules alone count
+# that as "asks for OTP". The context layer drops credential (and secrecy) matches that occur only inside such
+# protective advice, clause by clause, so "we never ask for your PIN, but share the OTP now" still counts.
+_CLAUSE = re.compile(r"[.?!;,।|]|\bbut\b|\blekin\b|\bmagar\b|\bhowever\b")
+_PROTECT = [re.compile(p) for p in (
+    r"\b(never|don'?t|do not|dont|must not|should not|shouldn'?t|won'?t|will not|no one|nobody|not)\s+(\w+\s+){0,3}?"
+    r"(share|tell|give|disclose|reveal|send|ask|asks|asking)\b",
+    r"\b(kisi ko|kisi se|kabhi( bhi)?)\b.{0,25}\b(mat|na|nahi|nahin)\b",
+    r"\b(mat|na|nahi|nahin)\s+(batay\w*|batai\w*|batana|share kar\w*|de\w*)\b.{0,10}$",
+)]
+_PROTECT_INDIC = [("किसी", ("मत", " न ", "नहीं", "न करें")), ("कभी", ("मत", " न ", "नहीं")),
+                  ("చెప్పకండి", ("",)), ("చేయవద్దు", ("",)), ("ఇవ్వకండి", ("",)), ("షేర్ చేయకండి", ("",))]
+_SUPPRESSIBLE = ("credentials", "urgency_secrecy")
+
+# named fraud scripts: explanations only, they never change the score
+PATTERNS = [
+    ("Fake bank / KYC script", "impersonation", ("credentials", "account_threat", "remote_access")),
+    ("Digital-arrest script", "authority_threat", ("payment", "urgency_secrecy", "credentials")),
+    ("Family-emergency script", "family_emergency", ("payment", "urgency_secrecy")),
+    ("Prize / refund script", "reward", ("payment", "credentials")),
+    ("Remote-access takeover", "remote_access", ("credentials", "payment")),
+]
+
+
+def _protective(clause: str) -> bool:
+    if any(rx.search(clause) for rx in _PROTECT):
+        return True
+    return any(a in clause and any(b in clause for b in bs) for a, bs in _PROTECT_INDIC)
+
+
+def _matches(name: str, text: str) -> list[str]:
+    return [m.group(0) for rx in _COMPILED[name] for m in [rx.search(text)] if m] + [s for s in TACTICS[name][3] if s in text]
+
+
+def patterns_for(tactics) -> list[str]:
+    seen = set(tactics)
+    return [label for label, anchor, partners in PATTERNS if anchor in seen and seen & set(partners)]
 
 
 def normalize(text: str) -> str:
@@ -69,13 +114,27 @@ def normalize(text: str) -> str:
     return re.sub(r"\s+", " ", t).strip()
 
 
-def find_tactics(text: str) -> list[dict]:
-    """All tactic matches in one piece of text: [{"tactic", "label", "weight", "phrase"}]."""
+def find_tactics(text: str, context: bool = False, suppressed: list | None = None) -> list[dict]:
+    """All tactic matches in one piece of text: [{"tactic", "label", "weight", "phrase"}].
+
+    context=False is the original keyword engine. context=True additionally drops credential / secrecy matches
+    that occur only inside protective advice; dropped matches are appended to `suppressed` for the explanation.
+    """
     t = normalize(text)
     hits = []
+    kept_text = None
     for name, (weight, label, _, indic) in TACTICS.items():
-        found = [m.group(0) for rx in _COMPILED[name] for m in [rx.search(t)] if m]
-        found += [s for s in indic if s in t]
+        found = _matches(name, t)
+        if found and context and name in _SUPPRESSIBLE:
+            if kept_text is None:
+                parts = [c for c in _CLAUSE.split(t) if c and c.strip()]
+                kept_text = " | ".join(c for c in parts if not (_protective(c) and _matches("credentials", c)))
+            if not _matches(name, kept_text):
+                if suppressed is not None:
+                    suppressed.append({"tactic": name, "label": label, "phrase": found[0],
+                                       "reason": "protective advice (e.g. 'never share your OTP')"})
+                continue
+            found = _matches(name, kept_text)
         if found:
             hits.append({"tactic": name, "label": label, "weight": weight, "phrase": found[0]})
     return hits
@@ -91,17 +150,20 @@ def combine(weights) -> float:
 class CallScam:
     """Scam evidence accumulated over one call."""
 
-    def __init__(self):
+    def __init__(self, context: bool = False):
         self.tactics: dict[str, dict] = {}
+        self.context = context
 
     def add(self, text: str) -> dict:
-        new = []
-        for h in find_tactics(text):
+        new, suppressed = [], []
+        hits = find_tactics(text, self.context, suppressed)
+        for h in hits:
             if h["tactic"] not in self.tactics:
                 self.tactics[h["tactic"]] = h
                 new.append(h)
-        return {"hits": find_tactics(text), "new_tactics": new, "score": self.score,
-                "tactics": [v["label"] for v in self.tactics.values()]}
+        return {"hits": hits, "new_tactics": new, "score": self.score,
+                "tactics": [v["label"] for v in self.tactics.values()],
+                "patterns": patterns_for(self.tactics), "suppressed": suppressed}
 
     @property
     def score(self) -> float:

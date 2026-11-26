@@ -547,6 +547,41 @@ def test_ws_odd_start_fields_and_garbage_text_still_end_the_call(client):
     assert client.get(f"/api/calls/{ready['call_id']}").json()["verdict"] == "PASS"
 
 
+def test_scam_context_ignores_protective_advice_but_not_scams():
+    from server.scam import CallScam, find_tactics
+    legit = "We will never ask for your OTP. Please do not share your OTP with anyone."
+    assert any(h["tactic"] == "credentials" for h in find_tactics(legit))                 # original behaviour kept
+    sup = []
+    assert not any(h["tactic"] == "credentials" for h in find_tactics(legit, context=True, suppressed=sup))
+    assert sup and sup[0]["tactic"] == "credentials"
+    # a protective lead-in does not hide the real request that follows it
+    assert any(h["tactic"] == "credentials" for h in find_tactics(
+        "We never ask for your PIN, but for this refund I need the OTP you received", context=True))
+    assert any(h["tactic"] == "credentials" for h in find_tactics("you dont need to visit just share the otp", context=True))
+    assert not find_tactics("OTP kisi ko mat batayein", context=True)
+    c = CallScam(context=True)
+    c.add("I am calling from SBI customer care"); r = c.add("share the OTP now or your account will be blocked")
+    assert "Fake bank / KYC script" in r["patterns"] and r["score"] >= 0.5
+
+
+def test_scam_eval_set_regression():
+    """Labelled call set: the context engine must keep every scam and stay at or below 2 false alarms."""
+    data = json.loads((Path(__file__).resolve().parent / "data" / "scam_eval.json").read_text(encoding="utf-8"))["calls"]
+    flags = {}
+    for ctx in (False, True):
+        out = []
+        for call in data:
+            e = CallScam(context=ctx)
+            for u in call["utterances"]:
+                r = e.add(u)
+            out.append((call["label"], r["score"] >= 0.5))
+        flags[ctx] = out
+    for ctx in (False, True):
+        assert all(f for lab, f in flags[ctx] if lab == "scam")                    # recall 12/12 both ways
+    fp = {ctx: sum(f for lab, f in flags[ctx] if lab == "benign") for ctx in flags}
+    assert fp[True] <= 2 and fp[True] < fp[False]
+
+
 def test_audio_quality_labels():
     from server.quality import audio_quality, confidence
     t = np.arange(4 * SR) / SR
@@ -560,6 +595,14 @@ def test_audio_quality_labels():
     assert audio_quality(np.zeros(100, np.float32))["label"] == "unknown"
     assert confidence(-1.5, -1.91, "good") == "low" and confidence(-9.0, -1.91, "good") == "normal"
     assert confidence(-9.0, -1.91, "poor") == "low"
+
+
+def test_ws_fraud_script_pattern_is_sent_and_audited(client):
+    ready, msgs = run_call(client, speech(10, amp=0.1))         # stub ASR: loud utterances say a bank/OTP script
+    tr = [m for m in msgs if m["type"] == "transcript" and m["patterns"]]
+    assert tr and "Fake bank / KYC script" in tr[0]["patterns"] and "suppressed" in tr[0]
+    kinds = [e["kind"] for e in client.get(f"/api/calls/{ready['call_id']}").json()["events"]]
+    assert kinds.count("SCAM_PATTERN") == 1
 
 
 def test_ws_score_messages_carry_quality_without_changing_decisions(client):

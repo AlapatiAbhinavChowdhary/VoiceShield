@@ -314,7 +314,8 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
             claimed = None
         risk = RiskEngine(cfg.risk, threshold)
         voice = CallVoice(enrolled, cfg.speaker.threshold, cfg.speaker.scale) if S["speaker"] and mode == "monitor" else None
-        scam = CallScam()
+        scam = CallScam(context=cfg.scam_context)
+        seen_patterns: set = set()
         proc = make_processor(S["vad"], cfg)
         resample = StreamResampler(sr_in) if sr_in != SR else None
         audit: Audit = S["audit"]
@@ -418,10 +419,15 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
                 s = scam.add(r["text"])
                 if s["new_tactics"]:
                     audit.event(call_id, t1, "SCAM", "; ".join(h["label"] for h in s["new_tactics"]))
+                for p in s["patterns"]:                      # named fraud script, logged once per call
+                    if p not in seen_patterns:
+                        seen_patterns.add(p)
+                        audit.event(call_id, t1, "SCAM_PATTERN", p)
                 risk.set_scam(s["score"], s["tactics"])
                 st = await decide(t1)
                 await send({"type": "transcript", "t0": round(t0, 2), "t1": round(t1, 2), **r,
-                            "hits": s["hits"], "scam_score": s["score"], **st})
+                            "hits": s["hits"], "scam_score": s["score"], "patterns": s["patterns"],
+                            "suppressed": s["suppressed"], **st})
 
         tasks = [asyncio.create_task(scorer())]
         use_asr = S["asr"] is not None and mode == "monitor"

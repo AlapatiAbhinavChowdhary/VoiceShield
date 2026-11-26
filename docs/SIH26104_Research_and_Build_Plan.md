@@ -978,6 +978,39 @@ Times are seconds of call audio. Genuine caller 2's risk of 40 comes from the sc
 
 ---
 
+### Step 11: context-aware scam rules (26 Nov 2026)
+
+**Problem:** a genuine bank warning such as "we will never ask for your OTP" matched the keyword rule "asks for OTP" (weight 0.6). On its own that reaches the scam-alert level (0.5).
+
+**Change** (server/scam.py; config `scam_context`, default on; false restores the original behaviour):
+- A context layer drops credential and secrecy matches that occur only inside protective advice, clause by clause. "Never share your OTP", "OTP kisi ko mat batayein", "किसी के साथ साझा न करें" and "ఎవరికీ చెప్పకండి" no longer count. "We never ask for your PIN, but I need the OTP" still counts.
+- Named fraud scripts, used as explanations only:
+  - fake bank / KYC;
+  - digital arrest;
+  - family emergency;
+  - prize / refund;
+  - remote-access takeover.
+- More Hinglish phrasings, with the same tactics and weights.
+- The keyword engine, its weights and the alert level are unchanged.
+
+**Evaluation:** `tools/eval_scam.py` on `tests/data/scam_eval.json`: 24 short call transcripts (12 scam, 12 benign; English, Hinglish, Hindi, Telugu). The set was written by the team, so it is a sanity check, not an independent benchmark.
+
+| Engine | TP | FP | FN | TN | Precision | Recall | F1 |
+|---|---|---|---|---|---|---|---|
+| Original keyword rules | 12 | 7 | 0 | 5 | 0.63 | 1.00 | 0.77 |
+| + Hinglish phrasings | 12 | 7 | 0 | 5 | 0.63 | 1.00 | 0.77 |
+| + context layer | 12 | **2** | 0 | **10** | **0.86** | 1.00 | **0.92** |
+
+**Remaining false alarms:**
+- a genuine card-bill reminder from a bank (bank + payment: 0.52);
+- a person mentioning their own OTP (0.60).
+
+Fixing these needs intent understanding beyond rules; that is future work.
+
+**Live check:** the Windows-TTS scam call through the console still reached HOLD, with "Fraud script recognised: Fake bank / KYC script" in the event feed.
+
+---
+
 ## 9. Sources
 
 **Problem statement:**

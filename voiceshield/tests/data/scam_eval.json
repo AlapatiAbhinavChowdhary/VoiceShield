@@ -1,0 +1,29 @@
+{
+  "about": "Hand-written development set (26 Nov 2026): short call transcripts as Whisper would write them, labelled scam / benign by the team. It checks the scam-language rules; it is NOT an independent benchmark and is small, so treat the numbers as a sanity check. A call is flagged when its scam score reaches 0.5 (the server's scam_at = 50).",
+  "calls": [
+    {"id": "s01", "label": "scam", "lang": "en", "kind": "fake bank KYC", "utterances": ["Hello, I am calling from SBI customer care.", "Your KYC is not updated, your account will be blocked today.", "Please share the OTP you just received."]},
+    {"id": "s02", "label": "scam", "lang": "en", "kind": "digital arrest", "utterances": ["This is the CBI crime branch.", "A parcel in your name has drugs, a case has been registered.", "To avoid arrest you must transfer money for verification immediately.", "Do not tell anyone about this call."]},
+    {"id": "s03", "label": "scam", "lang": "hinglish", "kind": "family emergency", "utterances": ["Papa main accident mein hoon, hospital mein hoon.", "Mujhe turant paise bhej do, Google Pay kar do.", "Mummy ko mat batana."]},
+    {"id": "s04", "label": "scam", "lang": "hinglish", "kind": "fake bank OTP", "utterances": ["Main bank se bol raha hoon.", "Aapka khata band ho jayega.", "Jo OTP aaya hai woh bata dijiye jaldi."]},
+    {"id": "s05", "label": "scam", "lang": "en", "kind": "remote access", "utterances": ["I am from the fraud department of your bank.", "Please install the AnyDesk app so I can secure your account.", "Then enter your UPI PIN when it asks."]},
+    {"id": "s06", "label": "scam", "lang": "en", "kind": "lottery fee", "utterances": ["Congratulations, you have won a lottery of 25 lakh rupees.", "To claim it, pay a processing fee of 5000 rupees by UPI right now."]},
+    {"id": "s07", "label": "scam", "lang": "hi", "kind": "fake bank OTP", "utterances": ["मैं बैंक से बोल रहा हूँ।", "आपका अकाउंट ब्लॉक हो जाएगा।", "ओटीपी बताइए तुरंत।"]},
+    {"id": "s08", "label": "scam", "lang": "te", "kind": "fake bank OTP", "utterances": ["నేను బ్యాంక్ నుంచి మాట్లాడుతున్నాను.", "మీ అకౌంట్ బ్లాక్ అవుతుంది.", "వెంటనే ఓటీపీ చెప్పండి."]},
+    {"id": "s09", "label": "scam", "lang": "en", "kind": "protective lead-in, then OTP", "utterances": ["Sir, we never ask for your PIN, but for this refund I need the OTP you received.", "Please share it right now, it expires in five minutes."]},
+    {"id": "s10", "label": "scam", "lang": "en", "kind": "customs parcel", "utterances": ["Your parcel is held at customs.", "Pay the customs duty now through this link or police will file an FIR."]},
+    {"id": "s11", "label": "scam", "lang": "hinglish", "kind": "digital arrest", "utterances": ["Main police se bol raha hoon, aapke naam pe FIR hai.", "Giraftar hone se bachna hai toh abhi paise transfer karo.", "Phone mat katna."]},
+    {"id": "s12", "label": "scam", "lang": "en", "kind": "relative in trouble", "utterances": ["Mom it's me, I'm in big trouble.", "I need money urgently, please send money to this UPI ID.", "Don't tell dad."]},
+    {"id": "b01", "label": "benign", "lang": "en", "kind": "bank fraud warning", "utterances": ["Hello, this is your bank's customer care.", "We will never ask for your OTP or PIN.", "Please do not share your OTP with anyone, even if they say they are from the bank."]},
+    {"id": "b02", "label": "benign", "lang": "hinglish", "kind": "bank fraud warning", "utterances": ["Main aapke bank ki customer care se bol rahi hoon.", "OTP kisi ko mat batayein, bank kabhi OTP nahi maangta."]},
+    {"id": "b03", "label": "benign", "lang": "hi", "kind": "bank fraud warning", "utterances": ["यह आपके बैंक का संदेश है।", "अपना ओटीपी किसी के साथ साझा न करें।"]},
+    {"id": "b04", "label": "benign", "lang": "en", "kind": "friends, rent", "utterances": ["Hi, did you reach home?", "Yes, I'll transfer the rent tomorrow, no hurry."]},
+    {"id": "b05", "label": "benign", "lang": "en", "kind": "family news", "utterances": ["Grandma is in the hospital, the doctor says she is stable.", "We'll visit on Sunday."]},
+    {"id": "b06", "label": "benign", "lang": "en", "kind": "work", "utterances": ["Can you send the presentation right now?", "The client meeting is urgent."]},
+    {"id": "b07", "label": "benign", "lang": "en", "kind": "genuine bill reminder", "utterances": ["This is a reminder from HDFC bank that your credit card payment is due.", "You can pay through the app at any time."]},
+    {"id": "b08", "label": "benign", "lang": "te", "kind": "bank fraud warning", "utterances": ["మీ ఓటీపీ ఎవరికీ చెప్పకండి."]},
+    {"id": "b09", "label": "benign", "lang": "en", "kind": "chat", "utterances": ["Did you watch the cricket match?", "Let's meet at the cafe."]},
+    {"id": "b10", "label": "benign", "lang": "en", "kind": "traffic challan", "utterances": ["This is the traffic police, your vehicle challan is pending, you can check it on the official website."]},
+    {"id": "b11", "label": "benign", "lang": "en", "kind": "own OTP", "utterances": ["I got an OTP for my own login, I typed it in the app."]},
+    {"id": "b12", "label": "benign", "lang": "en", "kind": "bank fraud warning", "utterances": ["Our fraud team will never call you to ask for your password or CVV.", "Stay safe."]}
+  ]
+}

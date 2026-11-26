@@ -475,7 +475,13 @@ function onMessage(m) {
       const d = document.createElement("div");
       d.className = "utt" + ((m.hits || []).length ? " scam" : "");
       const chips = (m.hits || []).map((h) => `<span class="tag crit">${esc(h.label)}</span>`).join("");
-      d.innerHTML = `<span class="ts">${fmt(m.t0, 0)}s</span><div><div class="bubble">${highlight(m.text, m.hits)}</div>` + (chips ? `<div class="tactics">${chips}</div>` : "") + `</div>`;
+      const calm = (m.suppressed || []).length ? `<div class="xs muted" style="margin-top:4px">${I("shield-check", "xs")} Not counted: protective advice ` +
+        `(“${esc(m.suppressed[0].phrase)}” said as a warning, not a request)</div>` : "";
+      d.innerHTML = `<span class="ts">${fmt(m.t0, 0)}s</span><div><div class="bubble">${highlight(m.text, m.hits)}</div>` + (chips ? `<div class="tactics">${chips}</div>` : "") + calm + `</div>`;
+      for (const p of m.patterns || []) {                 // a named fraud script, once per session
+        if (S.tactics.has("pattern:" + p)) continue;
+        S.tactics.add("pattern:" + p); addEvent("crit", "shield-alert", "Fraud script recognised", p, m.t1);
+      }
       $("transcript").appendChild(d);
       $("transcript").scrollTop = $("transcript").scrollHeight;
       for (const h of m.hits || []) {                     // each tactic once per session in the feed
@@ -783,6 +789,7 @@ async function loadCall(id) {
     if (e.kind === "VERIFY" || e.kind === "HOLD") return [e.kind === "HOLD" ? "crit" : "warn", e.kind === "HOLD" ? "octagon" : "alert",
       `Decision · ${e.kind}`, e.detail.split(". ")[0].replace(/^(VERIFY|HOLD): /, ""), e.t];
     if (e.kind === "SCAM") return ["", "message", "Signal · scam tactic", e.detail, e.t];
+    if (e.kind === "SCAM_PATTERN") return ["crit", "shield-alert", "Signal · fraud script recognised", e.detail, e.t];
     const a = ACTION[e.kind]; if (a) return [a[0] || "brand", a[2], `Action · ${a[1]}`, e.detail, e.t];
     return ["", "info", e.kind, e.detail, e.t];
   });
