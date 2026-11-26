@@ -642,3 +642,7 @@ dialog.modal .mf { padding: 16px 20px 18px; display: flex; justify-content: flex
 .req .steps b { color: #881337; }
 .req .steps ol { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; }
 .req .steps a { color: #9f1239; text-decoration: underline; text-underline-offset: 2px; }
+/* narrow screens: report actions under the title, one KPI per row on phones */
+@container (max-width: 900px) { .call-actions { align-items: flex-start; } }
+@container (max-width: 520px) { .grid-4 { grid-template-columns: minmax(0, 1fr); } }.badge-lg { display: inline-block; transform: scale(1.25); transform-origin: right center; }
+@container (max-width: 900px) { .badge-lg { transform-origin: left center; } }

@@ -493,6 +493,14 @@ function onMessage(m) {
       renderResponse(m.verdict);
       addEvent(m.verdict === "HOLD" ? "crit" : m.verdict === "VERIFY" ? "warn" : "good", LEVEL_ICON[m.verdict] || "check",
         `Session ended · ${m.verdict}`, `max risk ${fmt(m.max_risk, 0)} · ${m.windows} windows · ${fmt(m.speech_s, 1)} s of speech`, m.audio_s);
+      if (m.call_id) {                                   // straight to the full investigation, report and evidence file
+        const a = document.createElement("a");
+        a.href = `#/call/${m.call_id}`; a.className = "btn sm"; a.style.marginTop = "8px";
+        a.innerHTML = `${I("external", "sm")}Open report #${m.call_id}`;
+        $("events").firstElementChild?.querySelector("div")?.appendChild(a);
+        VSUI.toast(m.verdict === "HOLD" ? "crit" : m.verdict === "VERIFY" ? "warn" : "good", `Session ended · ${m.verdict}`,
+          `Report #${m.call_id} is in Detection history, with a printable report and evidence file.`);
+      }
       if (S.origin === "analysis") analysisSummary(m);
       setVerdictPillIdle();
       break;
@@ -718,7 +726,7 @@ async function loadCall(id) {
   $("cEyebrow").innerHTML = `${I("shield-alert", "xs")}Investigation · session #${c.id}`;
   const dur = c.audio_s ? `${fmt(c.audio_s, 1)} s audio, ${fmt(c.speech_s, 1)} s speech` : "duration not recorded";
   $("cSub").textContent = `${c.source} · ${c.started ? fmtDate(c.started) : ""} · ${dur}`;
-  $("cBadge").innerHTML = monitor ? `<span style="transform:scale(1.25);display:inline-block;transform-origin:right">${vbadge(c.verdict)}</span>` : "";
+  $("cBadge").innerHTML = monitor ? `<span class="badge-lg">${vbadge(c.verdict)}</span>` : "";
   const kpi = (ic, cls, label, big, sub) => `<div class="kpi"><span class="ki ${cls}">${I(ic, "lg")}</span><div><div class="label">${label}</div><div class="big">${big}</div>${sub ? `<div class="sub">${sub}</div>` : ""}</div></div>`;
   $("cKpis").innerHTML =
     kpi("gauge", c.verdict === "HOLD" ? "crit" : c.verdict === "VERIFY" ? "warn" : "good", "Highest risk", monitor ? `${fmt(c.max_risk, 0)}<small>/ 100</small>` : "–", "noisy-OR of voice, identity and scam signals") +
@@ -784,7 +792,7 @@ function scoreChart(el, W, cut) {
     s += `<line x1="${pad.l}" x2="${Wd - pad.r}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${pad.l - 6}" y="${Y(v) + 4}" text-anchor="end">${v}</text>`;
   s += `</g>`;
   if (cut !== null && cut !== undefined) s += `<line x1="${pad.l}" x2="${Wd - pad.r}" y1="${Y(cut)}" y2="${Y(cut)}" stroke="${VSUI.css("--warn")}" stroke-dasharray="4 4" opacity=".8"/>` +
-    `<text x="${Wd - pad.r}" y="${Y(cut) - 5}" text-anchor="end" style="fill:${VSUI.css("--warn-ink")}">cut-off ${fmt(cut)}</text>`;
+    `<text x="${pad.l + 4}" y="${Y(cut) + 13}" text-anchor="start" paint-order="stroke" style="fill:${VSUI.css("--warn-ink")};stroke:${VSUI.css("--card")};stroke-width:3px">cut-off ${fmt(cut)}</text>`;
   s += `<polyline fill="none" stroke="${VSUI.css("--series-1")}" stroke-width="2" stroke-linejoin="round" points="${W.map((w) => `${X(w.t)},${Y(w.llr)}`).join(" ")}"/>`;
   for (const w of W) {
     const bad = (w.window_score ?? 0) >= 0.5;
