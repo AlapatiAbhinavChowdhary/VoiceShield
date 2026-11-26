@@ -63,7 +63,10 @@ class VSAnalyzer {
   static async prepare(ctx) {
     if (!ctx) {
       try { ctx = new AudioContext({ sampleRate: 16000 }); } catch (e) { ctx = new AudioContext(); }
-      await ctx.audioWorklet.addModule("/static/capture-worklet.js");
+      try { await ctx.audioWorklet.addModule("/static/capture-worklet.js"); } catch (e) {
+        ctx.close();                                     // not kept: the next attempt starts clean
+        throw new Error("The audio capture module could not be loaded from the server. Is VoiceShield running?");
+      }
     }
     await ctx.resume();
     return ctx;

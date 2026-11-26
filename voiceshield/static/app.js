@@ -283,10 +283,28 @@ function addRow(m, level) {
 async function ensureCtx(resume = true) {
   if (!S.ctx) {
     try { S.ctx = new AudioContext({ sampleRate: 16000 }); } catch (e) { S.ctx = new AudioContext(); }
-    await S.ctx.audioWorklet.addModule("/static/capture-worklet.js");
   }
+  // the capture module is loaded once per audio context; a failed load (e.g. server down) is retried next time
+  // instead of leaving a context without the module, which made every later start fail until a page reload
+  if (!S.worklet) {
+    S.worklet = S.ctx.audioWorklet.addModule("/static/capture-worklet.js").catch((e) => {
+      S.worklet = null;
+      throw new Error("The audio capture module could not be loaded from the server. Is VoiceShield running? (" + (e.message || e) + ")");
+    });
+  }
+  await S.worklet;
   if (resume) await S.ctx.resume();                     // playback needs a click; decoding does not
   return S.ctx;
+}
+
+// a quick reachability check before a session, so a stopped server gives a clear message, not an audio error
+async function serverUp() {
+  try {
+    const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 3000);
+    const r = await fetch("/api/health", { cache: "no-store", signal: ctl.signal });
+    clearTimeout(t);
+    return r.ok;
+  } catch (e) { return false; }
 }
 
 function trackLevel(f) {
@@ -349,6 +367,7 @@ async function start(opts) {
   resetSession(S.mode);
   if (S.origin === "analysis") resetAnalysisResults();
   try {
+    if (!(await serverUp())) throw new Error("The VoiceShield server is not running. Start it with start_demo.bat (or: .venv\\Scripts\\python run.py) and try again.");
     const ctx = await ensureCtx();
     let source;
     S.isMic = opts.kind === "mic";
