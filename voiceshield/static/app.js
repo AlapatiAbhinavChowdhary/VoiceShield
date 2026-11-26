@@ -229,6 +229,7 @@ function addEvent(cls, ic, title, detail, t) {
 
 function resetSession(mode) {
   S.points = []; S.wins = []; S.clock = 0; S.speech = 0; S.calN = 0; S.level = null; S.procSeen = {}; S.lat = []; S.tactics = new Set();
+  S.poorAudio = false; $("qualChip").hidden = true;
   $("log").querySelector("tbody").innerHTML = ""; $("logEmpty").classList.remove("hidden");
   $("action").className = "alert hidden";
   $("events").innerHTML = ""; $("eventsEmpty").classList.remove("hidden");
@@ -245,12 +246,28 @@ function resetSession(mode) {
   $("waveEmpty").classList.add("hidden");
 }
 
+// audio quality of the latest window (informational: it never changes a decision)
+const QWORD = { good: ["good", "Audio good"], fair: ["warn", "Audio fair"], poor: ["crit", "Audio poor"], unknown: ["", "Audio –"] };
+function showQuality(m) {
+  const q = m.quality, [cls, word] = QWORD[q.label] || QWORD.unknown, chip = $("qualChip");
+  chip.className = `tag ${cls}`; chip.hidden = false;
+  chip.textContent = `${word}${q.snr_db === null ? "" : q.snr_db >= 60 ? " · SNR > 60 dB" : ` · SNR ≈ ${fmt(q.snr_db, 0)} dB`}`;
+  chip.title = `Level ${fmt(q.level_dbfs, 1)} dBFS · clipping ${fmt(100 * q.clipping, 2)}% · estimated from this 4 s window` +
+    (m.processing ? ` · processing recognised: ${m.processing}` : "");
+  if (q.label === "poor" && !S.poorAudio) {
+    S.poorAudio = true;
+    addEvent("warn", "alert", "Audio quality poor", `SNR ≈ ${fmt(q.snr_db, 0)} dB, level ${fmt(q.level_dbfs, 0)} dBFS · decisions on this audio are less reliable`, m.t);
+  }
+}
+
 function addRow(m, level) {
   $("logEmpty").classList.add("hidden");
   const tb = $("log").querySelector("tbody"), tr = document.createElement("tr");
   const sim = m.speaker ? fmt(m.speaker.similarity, 2) : "–";
-  const tip = m.llr_original === undefined ? "" : ` title="base detector score ${fmt(m.llr_original)} · cut-off for this window ${fmt(m.window_threshold)}"`;
-  tr.innerHTML = `<td>${fmt(m.t, 1)}</td><td${tip} class="ink">${fmt(m.llr)}</td><td>${fmt(m.p_fake, 4)}</td>` +
+  const low = m.confidence === "low";
+  const tip = ` title="${m.llr_original === undefined ? "" : `base detector score ${fmt(m.llr_original)} · `}cut-off for this window ${fmt(m.window_threshold)}` +
+    `${low ? " · LOW CONFIDENCE: score within 1 of the cut-off or poor audio" : ""}"`;
+  tr.innerHTML = `<td>${fmt(m.t, 1)}</td><td${tip} class="ink${low ? " lowconf" : ""}">${fmt(m.llr)}${low ? '<span class="lc">≈</span>' : ""}</td><td>${fmt(m.p_fake, 4)}</td>` +
     `<td>${m.processing ? esc(m.processing) : "–"}</td><td>${sim}</td><td class="r">${m.risk === undefined ? "–" : fmt(m.risk, 0)}</td>` +
     `<td>${level ? vbadge(level) : '<span class="muted">calibration</span>'}</td><td class="r">${fmt(m.latency_ms, 0)}</td>`;
   tb.prepend(tr);
@@ -440,6 +457,7 @@ function onMessage(m) {
                     cut: m.window_threshold, risk: m.risk, lat: m.latency_ms };
       S.wins.push(win); S.lat.push(m.latency_ms);
       if (m.processing) S.procSeen[m.processing] = (S.procSeen[m.processing] || 0) + 1;
+      if (m.quality) showQuality(m);
       S.points.push({ t: m.t, risk: m.risk, s: 100 * m.window_score, llr: m.llr, level: m.level });
       S.level = m.verdict;
       showState(m);

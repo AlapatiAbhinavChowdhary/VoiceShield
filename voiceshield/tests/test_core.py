@@ -547,6 +547,29 @@ def test_ws_odd_start_fields_and_garbage_text_still_end_the_call(client):
     assert client.get(f"/api/calls/{ready['call_id']}").json()["verdict"] == "PASS"
 
 
+def test_audio_quality_labels():
+    from server.quality import audio_quality, confidence
+    t = np.arange(4 * SR) / SR
+    syll = (np.sin(2 * np.pi * 3 * t) > 0).astype(np.float32)          # speech-like on/off envelope
+    clean = (0.2 * np.sin(2 * np.pi * 220 * t) * syll + 0.001 * rng.standard_normal(t.size)).astype(np.float32)
+    noisy = (0.2 * np.sin(2 * np.pi * 220 * t) * syll + 0.15 * rng.standard_normal(t.size)).astype(np.float32)
+    clipped = np.clip(clean * 20, -1, 1)
+    assert audio_quality(clean)["label"] == "good" and audio_quality(clean)["snr_db"] > 30
+    assert audio_quality(noisy)["label"] == "poor"
+    assert audio_quality(clipped)["label"] == "poor" and audio_quality(clipped)["clipping"] > 0.01
+    assert audio_quality(np.zeros(100, np.float32))["label"] == "unknown"
+    assert confidence(-1.5, -1.91, "good") == "low" and confidence(-9.0, -1.91, "good") == "normal"
+    assert confidence(-9.0, -1.91, "poor") == "low"
+
+
+def test_ws_score_messages_carry_quality_without_changing_decisions(client):
+    _, msgs = run_call(client, np.concatenate([silence(1), speech(8, amp=0.05)]))
+    scores = [m for m in msgs if m["type"] == "score"]
+    assert scores and all(m["quality"]["label"] in ("good", "fair", "poor") and m["confidence"] in ("low", "normal")
+                          for m in scores)
+    assert msgs[-1]["verdict"] == "PASS"                                  # same decision as before the addition
+
+
 def test_health_compression_and_cache_headers(client):
     h = client.get("/api/health").json()
     assert h["ok"] and h["active_streams"] == 0 and h["max_streams"] >= 1

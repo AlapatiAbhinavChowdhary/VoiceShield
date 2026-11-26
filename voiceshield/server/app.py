@@ -45,6 +45,7 @@ from .calibration import profiles_for, threshold_from_genuine
 from .config import ROOT, SR, Config, load_config
 from .models import VadModel, load_detector
 from .offline import make_processor
+from .quality import audio_quality, confidence
 from .risk import LEVELS, RiskEngine
 from .scam import CallScam
 from .speaker import CallVoice, SpeakerModel, Voiceprints
@@ -383,8 +384,10 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
                 base = {"t": round(t, 2), "speech_s": round(speech_s, 2), "llr": r["llr"], "p_fake": r["p_fake"],
                         "latency_ms": round(lat, 1)}
                 cut = r["auto_threshold"] if auto and "auto_threshold" in r else threshold
+                q = audio_quality(w)                               # informational: never changes the decision
                 extra = {"window_threshold": round(cut, 3),       # Step 8c adds the original score and the audio type
-                         **{k: r[k] for k in ("llr_original", "processing") if k in r}}
+                         **{k: r[k] for k in ("llr_original", "processing") if k in r},
+                         "quality": q, "confidence": confidence(r["llr"], cut, q["label"])}
                 if mode == "calibrate":
                     collected.append(r["llr"])
                     audit.window(call_id, **base)

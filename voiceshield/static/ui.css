@@ -684,3 +684,7 @@ dialog.modal .mf { padding: 16px 20px 18px; display: flex; justify-content: flex
 @container (max-width: 900px) { .call-actions { align-items: flex-start; } }
 @container (max-width: 520px) { .grid-4 { grid-template-columns: minmax(0, 1fr); } }.badge-lg { display: inline-block; transform: scale(1.25); transform-origin: right center; }
 @container (max-width: 900px) { .badge-lg { transform-origin: left center; } }
+/* low-confidence window score: within 1 log-odds of the cut-off, or poor audio */
+.lowconf { text-decoration: underline dotted var(--warn-ink); text-underline-offset: 3px; }
+.lowconf .lc { color: var(--warn-ink); margin-left: 3px; font-weight: 700; }
+#qualChip { height: 24px; font-size: 11.5px; }
