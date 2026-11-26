@@ -444,7 +444,12 @@ function renderRequest() {
     cls += " blocked";
     html = head + `<div class="ribbon">${I("lock")}Payment blocked by VoiceShield</div>` +
       `<div class="msg">This call shows signs of a cloned or impersonated voice${r.reasons && r.reasons.length ? ": " + esc(r.reasons.join("; ")) : ""}.</div>` +
-      `<div class="msg"><b>Security team alerted${U.callId ? ` · incident #${U.callId}` : ""}.</b> Do not share any OTP or PIN on this call.</div>`;
+      `<div class="msg"><b>Security team alerted${U.callId ? ` · incident #${U.callId}` : ""}.</b> Do not share any OTP or PIN on this call.</div>` +
+      `<div class="steps"><b>What to do now</b><ol>` +
+      `<li>Hang up. Do not call back any number the caller gave you.</li>` +
+      `<li>Report it: call <b>1930</b> (National Cyber Crime Helpline) or file at <a href="https://cybercrime.gov.in" target="_blank" rel="noopener">cybercrime.gov.in</a>.</li>` +
+      (U.callId ? `<li>Keep the <a href="/api/calls/${U.callId}/evidence" download>evidence file</a> for your complaint (scores and decisions, no audio).</li>` : "") +
+      `</ol></div>`;
   } else if (r.state === "done") {
     cls += " done";
     html = head + `<div class="ribbon">${I("check")}Paid</div>`;
