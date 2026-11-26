@@ -21,6 +21,7 @@ Server -> client: "ready", "vad", "score", "transcript", "action", "calib_window
                   "summary", "calibrated", "enrolled", "error", "warning" (a window failed; the call goes on).
 """
 import asyncio
+import hashlib
 import json
 import logging
 import threading
@@ -31,8 +32,9 @@ from contextlib import asynccontextmanager
 from dataclasses import asdict
 
 import numpy as np
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
+from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -114,6 +116,23 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
             S[k].shutdown(wait=False)
 
     app = FastAPI(title="VoiceShield", lifespan=lifespan)
+    app.add_middleware(GZipMiddleware, minimum_size=1024)           # the console's JS/CSS shrink about 4x
+    started = time.time()
+    S["active"] = 0
+
+    @app.middleware("http")
+    async def headers(request: Request, call_next):
+        resp = await call_next(request)
+        path = request.url.path
+        if path.startswith("/static/") and "v" in request.query_params:
+            resp.headers["Cache-Control"] = "public, max-age=31536000, immutable"   # versioned: cache forever
+        elif path.startswith("/api/") or path.endswith(".html") or "." not in path.rsplit("/", 1)[-1]:
+            resp.headers["Cache-Control"] = "no-store"                # pages and live data always fresh
+        resp.headers.setdefault("X-Content-Type-Options", "nosniff")
+        resp.headers.setdefault("Referrer-Policy", "no-referrer")
+        resp.headers.setdefault("X-Frame-Options", "DENY")
+        return resp
+
     app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
     (ROOT / "samples").mkdir(exist_ok=True)
     app.mount("/samples", StaticFiles(directory=ROOT / "samples"), name="samples")
@@ -132,6 +151,13 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
                 "speaker": bool(S["speaker"]), "voiceprints": S["voiceprints"].names(),
                 "asr": f"Whisper {asr.size} on {asr.device.upper()}" if asr else None}
 
+    @app.get("/api/health")
+    def health():
+        """Liveness for a monitor or the pre-flight check: models loaded, live analyses, uptime."""
+        return {"ok": True, "detector_mode": getattr(S["detector"], "mode", "original"),
+                "active_streams": S["active"], "max_streams": cfg.max_streams,
+                "uptime_s": round(time.time() - started, 1)}
+
     @app.get("/api/samples")
     def samples():
         meta = ROOT / "samples" / "samples.json"
@@ -148,6 +174,23 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
         if c is None:
             raise HTTPException(404, "no such call")
         return c
+
+    @app.get("/api/calls/{call_id}/evidence")
+    def evidence(call_id: int):
+        """Tamper-evident evidence file for a bank or police complaint: the full audit record (scores, decisions,
+        prevention actions; never audio) plus the SHA-256 of its canonical JSON, so any later edit is detectable."""
+        c = S["audit"].call(call_id)
+        if c is None:
+            raise HTTPException(404, "no such call")
+        canon = json.dumps(c, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+        body = {"format": "voiceshield-evidence/1",
+                "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                "server": {"detector_mode": getattr(S["detector"], "mode", "original"),
+                           "detector": getattr(S["detector"], "provider", "?")},
+                "verify": "sha256 of json.dumps(call, sort_keys=True, separators=(',', ':'), ensure_ascii=False)",
+                "sha256": hashlib.sha256(canon.encode("utf-8")).hexdigest(), "call": c}
+        return JSONResponse(body, headers={"Content-Disposition":
+                                           f'attachment; filename="voiceshield-session-{call_id}-evidence.json"'})
 
     @app.get("/api/voiceprints")
     def voiceprints():
@@ -229,6 +272,18 @@ def create_app(cfg: Config | None = None, detector=None, vad=None, speaker="auto
     @app.websocket("/ws/stream")
     async def stream(ws: WebSocket):
         await ws.accept()
+        if S["active"] >= cfg.max_streams:
+            await ws.send_json({"type": "error", "message": f"Server busy: {S['active']} live analyses already "
+                                                            "running. Stop one and try again."})
+            await ws.close(code=1013)
+            return
+        S["active"] += 1
+        try:
+            await analyse_stream(ws)
+        finally:
+            S["active"] -= 1
+
+    async def analyse_stream(ws: WebSocket):
         try:
             start = json.loads(await ws.receive_text())
             assert start.get("type") == "start"

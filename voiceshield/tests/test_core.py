@@ -547,6 +547,49 @@ def test_ws_odd_start_fields_and_garbage_text_still_end_the_call(client):
     assert client.get(f"/api/calls/{ready['call_id']}").json()["verdict"] == "PASS"
 
 
+def test_health_compression_and_cache_headers(client):
+    h = client.get("/api/health").json()
+    assert h["ok"] and h["active_streams"] == 0 and h["max_streams"] >= 1
+    js = client.get("/static/app.js?v=test", headers={"Accept-Encoding": "gzip"})
+    assert js.headers.get("content-encoding") == "gzip" and "immutable" in js.headers["cache-control"]
+    assert client.get("/").headers["cache-control"] == "no-store"
+    assert client.get("/api/status").headers["x-content-type-options"] == "nosniff"
+
+
+def test_evidence_file_is_tamper_evident(client):
+    import hashlib
+    import json as _json
+    ready, _ = run_call(client, speech(6, amp=0.3))
+    r = client.get(f"/api/calls/{ready['call_id']}/evidence")
+    assert r.status_code == 200 and "attachment" in r.headers["content-disposition"]
+    ev = r.json()
+    canon = _json.dumps(ev["call"], sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    assert ev["sha256"] == hashlib.sha256(canon.encode()).hexdigest() and ev["call"]["verdict"] == "HOLD"
+    ev["call"]["verdict"] = "PASS"                                     # any edit changes the digest
+    assert hashlib.sha256(_json.dumps(ev["call"], sort_keys=True, separators=(",", ":"),
+                                      ensure_ascii=False).encode()).hexdigest() != ev["sha256"]
+    assert client.get("/api/calls/999999/evidence").status_code == 404
+
+
+def test_ws_busy_when_too_many_streams(tmp_path):
+    from fastapi.testclient import TestClient
+    from server.app import create_app
+    cfg = replace(Config(), audit_db=str(tmp_path / "audit.db"), profiles_file=str(tmp_path / "profiles.json"),
+                  voiceprints_file=str(tmp_path / "voiceprints.json"), max_streams=1)
+    app = create_app(cfg, detector=StubDetector(), vad=StubVad(), speaker=StubSpeaker(), transcriber=StubTranscriber())
+    with TestClient(app) as c:
+        with c.websocket_connect("/ws/stream") as first:
+            first.send_json({"type": "start", "sample_rate": SR, "source": "test"})
+            assert first.receive_json()["type"] == "ready"
+            with c.websocket_connect("/ws/stream") as second:
+                m = second.receive_json()
+                assert m["type"] == "error" and "busy" in m["message"].lower()
+            first.send_json({"type": "stop"})
+            while first.receive_json()["type"] != "summary":
+                pass
+        assert c.get("/api/health").json()["active_streams"] == 0
+
+
 class FlakyDetector(StubDetector):
     """Fails on every other window, like a transient runtime error."""
     def __init__(self):

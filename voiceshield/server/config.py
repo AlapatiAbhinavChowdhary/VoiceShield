@@ -73,6 +73,7 @@ class Config:
     profiles_file: str = "data/profiles.json"
     voiceprints_file: str = "data/voiceprints.json"
     webhook_url: str | None = None
+    max_streams: int = 4          # live analyses at once; more would make every call fall behind real time
 
     def path(self, p: str) -> Path:
         p = Path(p)

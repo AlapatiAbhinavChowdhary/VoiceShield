@@ -6,8 +6,8 @@
 <meta name="color-scheme" content="dark">
 <title>VoiceShield · Command center</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%2322d3ee'/%3E%3Cpath d='M7 12.5h1.6l1.4-3 2 5.5 1.5-3.5H17' fill='none' stroke='%2304131a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="/static/ui.css?v=2611j">
-<script src="/static/shell.js?v=2611j"></script>
+<link rel="stylesheet" href="/static/ui.css?v=2611k">
+<script src="/static/shell.js?v=2611k"></script>
 </head>
 <body>
 <header id="topbar"></header>
@@ -256,8 +256,15 @@
       <h1 id="h-call">Loading…</h1>
       <p id="cSub"></p>
     </div>
-    <div id="cBadge"></div>
+    <div class="call-actions">
+      <div id="cBadge"></div>
+      <div class="btn-row no-print">
+        <button class="btn sm" id="cPrint" type="button"><i data-i="printer" class="sm"></i>Print report</button>
+        <a class="btn sm" id="cEvidence" href="#" download><i data-i="download" class="sm"></i>Evidence file</a>
+      </div>
+    </div>
   </div>
+  <div class="print-only" id="cPrintHead"></div>
   <div class="grid-4" id="cKpis" style="margin-bottom:16px"></div>
   <div class="grid-3" style="gap:16px;margin-bottom:16px">
     <section class="card">
@@ -390,7 +397,7 @@
 </section>
 </main>
 
-<script src="/static/vs-client.js?v=2611j"></script>
-<script src="/static/app.js?v=2611j"></script>
+<script src="/static/vs-client.js?v=2611k"></script>
+<script src="/static/app.js?v=2611k"></script>
 </body>
 </html>

@@ -514,9 +514,12 @@ function onMessage(m) {
       VSUI.toast("warn", "Analysis warning", m.message);
       break;
     case "error":
-      $(S.mode === "enroll" ? "vpStatus" : "calStatus").textContent = m.message;
-      setVerdict("IDLE", { state: "Error", title: "Not saved", why: m.message });
-      VSUI.toast("crit", "Not saved", m.message);
+    {
+      const title = S.mode === "monitor" ? "Analysis could not run" : "Not saved";
+      if (S.mode !== "monitor") $(S.mode === "enroll" ? "vpStatus" : "calStatus").textContent = m.message;
+      setVerdict("IDLE", { state: "Error", title, why: m.message });
+      VSUI.toast("crit", title, m.message);
+    }
       break;
   }
 }
@@ -697,6 +700,15 @@ async function loadCall(id) {
   try { c = await api(`/api/calls/${encodeURIComponent(id)}`); } catch (e) {
     $("h-call").textContent = "Session not found"; $("cSub").textContent = `There is no session #${id} in the audit log.`; $("cKpis").innerHTML = ""; return;
   }
+  $("cEvidence").href = `/api/calls/${c.id}/evidence`;
+  $("cPrint").onclick = async () => {                    // stamp the report with the evidence digest, then print
+    try {
+      const ev = await api(`/api/calls/${c.id}/evidence`);
+      $("cPrintHead").innerHTML = `<b>VoiceShield incident report · session #${c.id}</b><span>Generated ${esc(fmtDate(Date.parse(ev.generated_at) / 1000))} · ` +
+        `detector ${esc(ev.server.detector_mode)} · SHA-256 of the record: <code>${esc(ev.sha256)}</code></span>`;
+    } catch (e) { $("cPrintHead").innerHTML = `<b>VoiceShield incident report · session #${c.id}</b>`; }
+    window.print();
+  };
   const W = c.window_log || [], E = c.events || [], monitor = c.mode === "monitor";
   const flagged = W.filter((w) => (w.window_score ?? 0) >= 0.5).length;
   const firstOf = (k) => { const e = E.find((x) => x.kind === k); return e ? e.t : null; };
